@@ -33,6 +33,7 @@
     "babel-runtime": "^6.9.2",
     "dva": "^1.2.1",
     "enquire": "0.0.2",
+    "prop-types": "^15.5.8",
     "rc-banner-anim": "^0.5.12",
     "rc-queue-anim": "^1.0.0",
     "rc-scroll-anim": "^1.0.3",

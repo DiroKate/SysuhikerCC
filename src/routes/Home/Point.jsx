@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'rc-scroll-anim';
+import PropTypes from 'prop-types';
+
 
 export default class Point extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    style: React.PropTypes.object,
-    data: React.PropTypes.array,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    data: PropTypes.array,
   };
 
   static defaultProps = {

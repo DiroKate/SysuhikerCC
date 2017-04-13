@@ -1,11 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import TweenOne from 'rc-tween-one';
 import { Menu, Icon } from 'antd';
+import PropTypes from 'prop-types';
+
 
 const Item = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-class Header extends React.Component {
+class Header extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    isMode: PropTypes.bool,
+    id: PropTypes.string,
+  };
+
+  static defaultProps = {
+    className: 'header1',
+  };
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -110,15 +123,5 @@ class Header extends React.Component {
     </TweenOne>);
   }
 }
-
-Header.propTypes = {
-  className: PropTypes.string,
-  isMode: PropTypes.bool,
-  id: PropTypes.string,
-};
-
-Header.defaultProps = {
-  className: 'header1',
-};
 
 export default Header;
