@@ -28,11 +28,15 @@
     "url": "https://github.com/DiroKate/SysuhikerCC/issues"
   },
   "homepage": "https://github.com/DiroKate/SysuhikerCC#readme",
-
   "dependencies": {
     "antd": "^2.9.1",
     "babel-runtime": "^6.9.2",
     "dva": "^1.2.1",
+    "enquire": "0.0.2",
+    "rc-banner-anim": "^0.5.12",
+    "rc-queue-anim": "^1.0.0",
+    "rc-scroll-anim": "^1.0.3",
+    "rc-tween-one": "^1.2.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0"
   },
