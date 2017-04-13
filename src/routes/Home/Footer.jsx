@@ -24,24 +24,25 @@ class Footer extends React.Component {
           </a>
         </li>);
       });
-      return (<li className={data.className} key={i} id={`${this.props.id}-block${i}`}>
-        <h2>{data.title}</h2>
-        <ul>
-          {content}
-        </ul>
-      </li>);
+    return (<li className={data.className} key={i} id={`${this.props.id}-block${i}`}>
+      <h2>{data.title}</h2>
+      <ul>
+        {content}
+      </ul>
+    </li>);
   }
 
   render() {
     const props = { ...this.props };
     const isMode = props.isMode;
     delete props.isMode;
-    const logoContent = { img: 'https://zos.alipayobjects.com/rmsportal/qqaimmXZVSwAhpL.svg', content: 'A efficient motion design solutions' };
+    const logoContent = { img: 'https://zos.alipayobjects.com/rmsportal/qqaimmXZVSwAhpL.svg', content: '逸仙徒步，自由的AA户外组织' };
     const dataSource = [
-      { title: '产品', content: '产品更新记录\nAPI文档\n快速入门\n参考指南', contentLink: '#\n#\n#\n#' },
-      { title: '关于', content: 'FAQ\n联系我们', contentLink: '#\n#' },
-      { title: '资源', content: 'Ant Design\nAnt Design Mobile\nAnt Cool\nAntD Library', contentLink: '#\n#\n#\n#' },
-      { title: '关注', content: ' https://zos.alipayobjects.com/rmsportal/AXtqVjTullNabao.svg\n https://zos.alipayobjects.com/rmsportal/fhJykUTtceAhYFz.svg\n https://zos.alipayobjects.com/rmsportal/IDZTVybHbaKmoEA.svg', contentLink: '#\n#\n#' },
+      // { title: '产品', content: '产品更新记录\nAPI文档\n快速入门\n参考指南', contentLink: '#\n#\n#\n#' },
+      { title: '', content: ' ', contentLink: ' ' },
+      { title: '', content: ' ', contentLink: ' ' },
+      { title: '关于', content: 'FAQ\n联系我们\n粤ICP备16111719号-2', contentLink: '#\n#\nhttp://www.miitbeian.gov.cn/' },
+      { title: '关注', content: ' https://zos.alipayobjects.com/rmsportal/AXtqVjTullNabao.svg\n https://zos.alipayobjects.com/rmsportal/IDZTVybHbaKmoEA.svg\n https://zos.alipayobjects.com/rmsportal/fhJykUTtceAhYFz.svg', contentLink: 'https://github.com/DiroKate/SysuhikerCC\n http://weibo.com/yixiantubu \n#' },
     ];
     const liChildrenToRender = dataSource.map(this.getLiChildren);
     return (<OverPack
@@ -64,7 +65,7 @@ class Footer extends React.Component {
         id={`${props.id}-content`}
       >
         <span>
-          Copyright © 2016 The Project by <a href="#">Ant Motion</a>. All Rights Reserved
+          Copyright © 2017 The Project by <a href="#">Sysuhiker</a>. All Rights Reserved
         </span>
       </TweenOne>
     </OverPack>);

@@ -14,14 +14,14 @@ class Banner extends React.Component {
     const childrenData = [
       {
         title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
-        content: '一个高效的页面动画解决方案',
+        content: '逸仙徒步，自由的AA户外组织',
         button: 'Learn More',
       },
       {
         title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
-        content: '一个高效的页面动画解决方案',
+        content: '逸仙徒步，自由的AA户外组织',
         button: 'Learn More',
-      }
+      },
     ];
     const childrenToRender = childrenData.map((item, i) => {
       const title = item.title;
@@ -101,4 +101,3 @@ Banner.defaultProps = {
 };
 
 export default Banner;
-

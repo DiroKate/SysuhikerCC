@@ -23,24 +23,32 @@ class Header extends React.Component {
     const props = { ...this.props };
     const isMode = props.isMode;
     delete props.isMode;
-    const navData = { menu1: '导航一', menu2: '导航二', menu3: '导航三', menu4: '导航四' };
-    const navChildren = Object.keys(navData).map((key, i) => (<Item key={i}>
-      {navData[key]}
-    </Item>));
+    const navData = {
+      menu1: '首页',
+      menu2: '活动',
+      menu3: '逸仙茶馆',
+      menu4: '关于',
+    };
+    const navChildren = Object.keys(navData).map((key, i) => (
+      <Item key={i}>
+        {navData[key]}
+      </Item>
+    ));
     const userTitle = (<div>
       <span className="img">
         <img
           src="https://zos.alipayobjects.com/rmsportal/iXsgowFDTJtGpZM.png"
           width="30"
           height="30"
+          role="presentation"
         />
       </span>
       <span>用户名</span>
     </div>);
     navChildren.push((<Item className="help" key="help">
-        <Icon type="question-circle-o" />
-        <span>帮助</span>
-      </Item>),
+      <Icon type="question-circle-o" />
+      <span>帮助</span>
+    </Item>),
       (<SubMenu className="user" title={userTitle} key="user">
         <Item key="a">用户中心</Item>
         <Item key="b">修改密码</Item>
@@ -56,45 +64,48 @@ class Header extends React.Component {
         animation={{ x: -30, delay: 100, type: 'from', ease: 'easeOutQuad' }}
         id={`${this.props.id}-logo`}
       >
-        <img width="100%" src="https://os.alipayobjects.com/rmsportal/mlcYmsRilwraoAe.svg" />
+        <img
+          role="presentation"
+          width="100%" src="https://os.alipayobjects.com/rmsportal/mlcYmsRilwraoAe.svg"
+        />
       </TweenOne>
       {isMode ? (<div
-          className={`${this.props.className}-phone-nav${this.state.phoneOpen ? ' open' : ''}`}
-          id={`${this.props.id}-menu`}
+        className={`${this.props.className}-phone-nav${this.state.phoneOpen ? ' open' : ''}`}
+        id={`${this.props.id}-menu`}
+      >
+        <div
+          className={`${this.props.className}-phone-nav-bar`}
+          onClick={() => {
+            this.phoneClick();
+          }}
         >
-          <div
-            className={`${this.props.className}-phone-nav-bar`}
-            onClick={() => {
-              this.phoneClick();
-            }}
-          >
-            <em />
-            <em />
-            <em />
-          </div>
-          <div
-            className={`${this.props.className}-phone-nav-text`}
-          >
-            <Menu
-              defaultSelectedKeys={['0']}
-              mode="inline"
-              theme="dark"
-            >
-              {navChildren}
-            </Menu>
-          </div>
-        </div>) :
-        <TweenOne
-          animation={{ x: 30, delay: 100, opacity: 0, type: 'from', ease: 'easeOutQuad' }}
-          className={`${this.props.className}-nav`}
+          <em />
+          <em />
+          <em />
+        </div>
+        <div
+          className={`${this.props.className}-phone-nav-text`}
         >
           <Menu
-            mode="horizontal" defaultSelectedKeys={['0']}
-            id={`${this.props.id}-menu`}
+            defaultSelectedKeys={['0']}
+            mode="inline"
+            theme="dark"
           >
             {navChildren}
           </Menu>
-        </TweenOne>
+        </div>
+      </div>) :
+      <TweenOne
+        animation={{ x: 30, delay: 100, opacity: 0, type: 'from', ease: 'easeOutQuad' }}
+        className={`${this.props.className}-nav`}
+      >
+        <Menu
+          mode="horizontal" defaultSelectedKeys={['0']}
+          id={`${this.props.id}-menu`}
+        >
+          {navChildren}
+        </Menu>
+      </TweenOne>
       }
     </TweenOne>);
   }
