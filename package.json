@@ -39,7 +39,8 @@
     "rc-scroll-anim": "^1.0.3",
     "rc-tween-one": "^1.2.1",
     "react": "^15.4.0",
-    "react-dom": "^15.4.0"
+    "react-dom": "^15.4.0",
+    "react-router": "^4.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

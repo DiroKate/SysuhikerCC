@@ -27,7 +27,7 @@ class Content extends React.Component {
       const id = `block${i}`;
       const delay = this.getDelay(i);
       const liAnim = { opacity: 0, type: 'from', ease: 'easeOutQuad', delay };
-      const childrenAnim = { ...liAnim, x: '+=10', delay: delay + 100,};
+      const childrenAnim = { ...liAnim, x: '+=10', delay: delay + 100 };
       return (<TweenOne
         component="li"
         animation={liAnim}
