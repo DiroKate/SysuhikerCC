@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>
+Created by FontForge 20120731 at Tue Apr 18 20:52:27 2017
+ By admin
+</metadata>
+<defs>
+<font id="sysuhiker" horiz-adv-x="1024" >
+  <font-face 
+    font-family="sysuhiker"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    panose-1="2 0 6 3 0 0 0 0 0 0"
+    ascent="896"
+    descent="-128"
+    x-height="792"
+    bbox="44 -108 971 876"
+    underline-thickness="0"
+    underline-position="0"
+    unicode-range="U+0078-E6F4"
+  />
+<missing-glyph 
+ />
+    <glyph glyph-name=".notdef" 
+ />
+    <glyph glyph-name=".notdef" 
+ />
+    <glyph glyph-name=".null" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="nonmarkingreturn" horiz-adv-x="341" 
+ />
+    <glyph glyph-name="x" unicode="x" horiz-adv-x="1001" 
+d="M281 543q-27 -1 -53 -1h-83q-18 0 -36.5 -6t-32.5 -18.5t-23 -32t-9 -45.5v-76h912v41q0 16 -0.5 30t-0.5 18q0 13 -5 29t-17 29.5t-31.5 22.5t-49.5 9h-133v-97h-438v97zM955 310v-52q0 -23 0.5 -52t0.5 -58t-10.5 -47.5t-26 -30t-33 -16t-31.5 -4.5q-14 -1 -29.5 -0.5
+t-29.5 0.5h-32l-45 128h-439l-44 -128h-29h-34q-20 0 -45 1q-25 0 -41 9.5t-25.5 23t-13.5 29.5t-4 30v167h911zM163 247q-12 0 -21 -8.5t-9 -21.5t9 -21.5t21 -8.5q13 0 22 8.5t9 21.5t-9 21.5t-22 8.5zM316 123q-8 -26 -14 -48q-5 -19 -10.5 -37t-7.5 -25t-3 -15t1 -14.5
+t9.5 -10.5t21.5 -4h37h67h81h80h64h36q23 0 34 12t2 38q-5 13 -9.5 30.5t-9.5 34.5q-5 19 -11 39h-368zM336 498v228q0 11 2.5 23t10 21.5t20.5 15.5t34 6h188q31 0 51.5 -14.5t20.5 -52.5v-227h-327z" />
+    <glyph glyph-name="arrowDown" unicode="&#xe662;" 
+d="M528 145l438 431q5 5 5 12.5t-5 12.5t-12 5t-12 -5l-426 -419l-425 424q-5 5 -12 5t-12 -5t-5 -12t5 -12l437 -437q5 -5 12 -5t12 5z" />
+    <glyph glyph-name="sysuhiker" unicode="&#xe6f4;" 
+d="M847 -108v758h41v-758h-41zM557 502l-38 -159l252 -451h-116l-177 308l-61 -308h-123q118 632 127 689q6 32 19.5 45.5t39.5 13.5h39q10 0 18.5 -4t12.5 -7.5t13.5 -14t13.5 -14.5l58 -59l171 48v-82q-141 -55 -171 -64q-8 -3 -27.5 12t-34.5 31zM557.5 679
+q-40.5 0 -69 29t-28.5 69.5t28.5 69.5t69 29t69 -29t28.5 -69.5t-28.5 -69.5t-69 -29zM390 638q-7 -35 -25.5 -136t-22.5 -122q-7 -37 -43 -37h-129q-40 0 -32 37q7 36 20.5 104t23 117l9.5 49q1 3 3.5 6t12.5 9t25 6h128q15 0 24.5 -8t5.5 -25z" />
+    <glyph glyph-name="hiker" unicode="&#xe616;" 
+d="M500 767.5q0 -41.5 29 -70.5t70.5 -29t71 29t29.5 70.5t-29.5 70.5t-71 29t-70.5 -29t-29 -70.5zM864 573h-3q-7 0 -9 -7l-62 -201q-1 17 -12 30t-28 16q-33 7 -61.5 24t-46.5 36.5t-33.5 43.5t-22.5 40.5t-12 31.5l2 8q3 8 3 17q0 21 -14.5 35.5t-35.5 14.5
+q-16 0 -28.5 -9t-18.5 -23l-6 -17q1 5 1 9q0 29 -20.5 49.5t-49.5 20.5q-22 0 -40 -12t-25 -32l-80 -217q-4 -12 -4 -25q0 -29 20.5 -49.5t49.5 -20.5q39 0 59 34l-149 -402q-3 -8 -3 -17q0 -21 15 -35.5t35 -14.5q16 0 29 9t18 23l110 296l132 -87l-53 -186q-2 -6 -2 -14
+q0 -21 14.5 -35.5t35.5 -14.5q16 0 29.5 10t18.5 26l64 222q2 7 2 14q0 27 -23 42l-182 119l49 133q37 -60 96 -99.5t129 -48.5l-14 3h3q26 0 41 21l-128 -427q-1 -1 -1 -3q0 -7 7 -10h2h1q7 0 10 7l196 659q1 2 1 3q0 7 -6 10v0z" />
+  </font>
+</defs></svg>
