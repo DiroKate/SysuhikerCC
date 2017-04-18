@@ -1,36 +1,32 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Button, Form, Input, Row, Col } from 'antd';
+import { Row, Col, Card } from 'antd';
 
-import styles from './Login.less';
-import config from '../../utils/config';
-
-const FormItem = Form.Item;
+import LoginForm from '../../components/login/LoginForm';
 
 
 function Login() {
   return (
-    <div>
-      <Row type="flex" justify="space-around">
-        <Col span={8}>
-          <Row type="flex" justify="center" align="middle" gutter={16}>
-            <img className={styles.logoImg} alt={'logo'} src={config.logoSrc} />
-            <span className={styles.logoFont}>逸仙徒步</span>
-          </Row>
-          <Form>
-            <FormItem hasFeedback>
-              <Input size="large" placeholder="用户名" />
-            </FormItem>
-            <FormItem hasFeedback>
-              <Input type="password" size="large" placeholder="密码" />
-            </FormItem>
-            <Button className={styles.loginBtn} type="primary" size="large">
-          登陆
-        </Button>
-          </Form>
+    <div style={{ background: '#ECECEC', padding: '30px' }}>
+      <Row type="flex" justify="space-around" align="middle">
+        <Col xs={{ span: 22 }} lg={{ span: 10 }}>
+          <Card title="欢迎登录逸仙徒步" bordered={false}>
+            <Row type="flex" justify="space-around" align="middle">
+              <img
+                src="https://zos.alipayobjects.com/rmsportal/iXsgowFDTJtGpZM.png"
+                role="presentation"
+              />
+            </Row>
+            <Row type="flex" justify="space-around" align="middle">
+              <Col span={22}>
+                <LoginForm />
+              </Col>
+            </Row>
+          </Card>
         </Col>
       </Row>
     </div>
+
   );
 }
 

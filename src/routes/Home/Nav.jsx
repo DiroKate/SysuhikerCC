@@ -79,7 +79,8 @@ class Header extends Component {
       >
         <img
           role="presentation"
-          width="100%" src="https://os.alipayobjects.com/rmsportal/mlcYmsRilwraoAe.svg"
+          width="100%"
+          src="/logo.svg"
         />
       </TweenOne>
       {isMode ? (<div
