@@ -13,7 +13,7 @@ function Login() {
           <Card title="欢迎登录逸仙徒步" bordered={false}>
             <Row type="flex" justify="space-around" align="middle">
               <img
-                src="https://zos.alipayobjects.com/rmsportal/iXsgowFDTJtGpZM.png"
+                src="/logo.svg"
                 role="presentation"
               />
             </Row>
