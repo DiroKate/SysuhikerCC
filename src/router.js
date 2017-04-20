@@ -17,7 +17,7 @@ function RouterConfig({ history, app }) {
       name: 'IndexPage',
       getComponent(nextState, cb) {
         require.ensure([], (require) => {
-          registerModel(app, require('./models/users'));
+          // registerModel(app, require('./models/users'));
           cb(null, require('./routes/Home'));
         });
       },
@@ -27,7 +27,7 @@ function RouterConfig({ history, app }) {
       name: 'Login',
       getComponent(nextState, cb) {
         require.ensure([], (require) => {
-          // registerModel(app, require('./models/users'));
+          registerModel(app, require('./models/users'));
           cb(null, require('./routes/login/Login'));
         });
       },

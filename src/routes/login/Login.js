@@ -5,7 +5,16 @@ import { Row, Col, Card } from 'antd';
 import LoginForm from '../../components/login/LoginForm';
 
 
-function Login() {
+function Login({ dispatch }) {
+  const loginProps = {
+    onOk(data) {
+      console.log('Received fadfads values of form: ', data);
+      dispatch({
+        type: 'users/login',
+        payload: data,
+      });
+    },
+  };
   return (
     <div style={{ background: '#ECECEC', padding: '30px' }}>
       <Row type="flex" justify="space-around" align="middle">
@@ -19,7 +28,7 @@ function Login() {
             </Row>
             <Row type="flex" justify="space-around" align="middle">
               <Col span={22}>
-                <LoginForm />
+                <LoginForm {...loginProps} />
               </Col>
             </Row>
           </Card>

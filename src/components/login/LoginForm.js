@@ -4,11 +4,19 @@ import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
+    const { onOk } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
+        onOk(values);
       }
     });
   }
@@ -28,7 +36,7 @@ class LoginForm extends React.Component {
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
+            rules: [{ required: true, message: '请输入密码!' }],
           })(
             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />,
           )}
