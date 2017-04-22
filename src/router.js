@@ -24,7 +24,7 @@ function RouterConfig({ history, app }) {
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'LoginPage',
       getComponent(nextState, cb) {
         require.ensure([], (require) => {
           registerModel(app, require('./models/users'));

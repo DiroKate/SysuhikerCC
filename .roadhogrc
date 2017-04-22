@@ -5,6 +5,13 @@
     "@primary-color": "#1DA57A",
     "@link-color": "#1DA57A"
   },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost/PhalApi/Public",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    }
+  },
   "env": {
     "development": {
       "extraBabelPlugins": [

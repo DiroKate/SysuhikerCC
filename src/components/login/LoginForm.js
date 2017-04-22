@@ -7,7 +7,8 @@ class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
   handleSubmit = (e) => {
@@ -15,7 +16,6 @@ class LoginForm extends React.Component {
     const { onOk } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
         onOk(values);
       }
     });
@@ -28,14 +28,14 @@ class LoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('user_email', {
             rules: [{ required: true, message: '请输入用户邮箱登陆' }],
           })(
             <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户邮箱" />,
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('password', {
+          {getFieldDecorator('user_psw', {
             rules: [{ required: true, message: '请输入密码!' }],
           })(
             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />,

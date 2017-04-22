@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Spin } from 'antd';
 
 import LoginForm from '../../components/login/LoginForm';
 
 
-function Login({ dispatch }) {
+function Login({ dispatch, loading }) {
   const loginProps = {
     onOk(data) {
-      console.log('Received fadfads values of form: ', data);
+      console.log('Received values of form: ', data);
       dispatch({
         type: 'users/login',
         payload: data,
@@ -28,7 +28,9 @@ function Login({ dispatch }) {
             </Row>
             <Row type="flex" justify="space-around" align="middle">
               <Col span={22}>
-                <LoginForm {...loginProps} />
+                <Spin tip="登录中..." spinning={loading} size="large">
+                  <LoginForm {...loginProps} />
+                </Spin>
               </Col>
             </Row>
           </Card>
@@ -39,8 +41,10 @@ function Login({ dispatch }) {
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  return {
+    loading: state.loading.models.users,
+  };
 }
 
 export default connect(mapStateToProps)(Login);

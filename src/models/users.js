@@ -9,11 +9,41 @@ export default {
       email: '',
     },
   },
-  reducers: {},
-  effects: {
-    *login({ payload: data }, { call }) {
-      yield call(UsersService.login, data);
+
+  reducers: {
+    loginSuccess(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+        login: true,
+      };
     },
   },
-  subscriptions: {},
+
+  effects: {
+    *login({ payload: params }, { call, put }) {
+      const { data } = yield call(UsersService.login, params);
+      const { code } = data.data;
+      if (code === 0) {
+        yield put({
+          type: 'loginSuccess',
+          payload: {
+            userId: data.data.userid,
+          },
+        });
+      }
+    },
+    *queryUser() {
+      console.log('queryUserqueryUserqueryUserqueryUserqueryUser');
+    },
+  },
+
+  subscriptions: {
+    setup({ dispatch }) {
+      dispatch({ type: 'queryUser' });
+      // window.onresize = () => {
+      //   dispatch({ type: 'changeNavbar' })
+      // }
+    },
+  },
 };
