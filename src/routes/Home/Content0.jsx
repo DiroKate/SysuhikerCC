@@ -15,12 +15,12 @@ class Banner extends React.Component {
       {
         title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
         content: '逸仙徒步，自由的AA户外组织',
-        button: 'Learn More',
+        button: '参加活动',
       },
       {
         title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
         content: '逸仙徒步，自由的AA户外组织',
-        button: 'Learn More',
+        button: '逸仙茶馆',
       },
     ];
     const childrenToRender = childrenData.map((item, i) => {

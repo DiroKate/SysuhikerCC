@@ -1,3 +1,4 @@
+import { routerRedux } from 'dva/router';
 import * as UsersService from '../services/users';
 
 export default {
@@ -31,6 +32,7 @@ export default {
             userId: data.data.userid,
           },
         });
+        yield put(routerRedux.push('/'));
       }
     },
     *queryUser() {

@@ -32,6 +32,10 @@ class Header extends Component {
     });
   }
 
+  menuClick = (e) => {
+    console.log(e);
+  }
+
   render() {
     const props = { ...this.props };
     const isMode = props.isMode;
@@ -104,6 +108,7 @@ class Header extends Component {
             defaultSelectedKeys={['0']}
             mode="inline"
             theme="dark"
+            onClick={this.menuClick}
           >
             {navChildren}
           </Menu>
@@ -114,8 +119,10 @@ class Header extends Component {
         className={`${this.props.className}-nav`}
       >
         <Menu
-          mode="horizontal" defaultSelectedKeys={['0']}
+          mode="horizontal"
+          defaultSelectedKeys={['0']}
           id={`${this.props.id}-menu`}
+          onClick={this.menuClick}
         >
           {navChildren}
         </Menu>

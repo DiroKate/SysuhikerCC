@@ -19,11 +19,13 @@ class Footer extends React.Component {
       .map((item, ii) => {
         const cItem = item.trim();
         const isImg = cItem.match(/\.(jpg|png|svg|bmp|jpeg)$/i);
-        return (<li className={isImg ? 'icon' : ''} key={ii}>
-          <a href={links[ii]} target="_blank">
-            {isImg ? <img src={cItem} width="100%" /> : cItem}
-          </a>
-        </li>);
+        return (
+          <li className={isImg ? 'icon' : ''} key={ii}>
+            <a href={links[ii]} target="_blank" rel="noopener noreferrer" >
+              {isImg ? <img src={cItem} width="100%" role="presentation" /> : cItem}
+            </a>
+          </li>
+        );
       });
     return (<li className={data.className} key={i} id={`${this.props.id}-block${i}`}>
       <h2>{data.title}</h2>
@@ -37,7 +39,7 @@ class Footer extends React.Component {
     const props = { ...this.props };
     const isMode = props.isMode;
     delete props.isMode;
-    const logoContent = { img: 'https://zos.alipayobjects.com/rmsportal/qqaimmXZVSwAhpL.svg', content: '逸仙徒步，自由的AA户外组织' };
+    const logoContent = { img: '/logo.svg', content: '逸起Hike，仙至High！' };
     const dataSource = [
       // { title: '产品', content: '产品更新记录\nAPI文档\n快速入门\n参考指南', contentLink: '#\n#\n#\n#' },
       { title: '', content: ' ', contentLink: ' ' },
@@ -53,7 +55,7 @@ class Footer extends React.Component {
       <QueueAnim type="bottom" component="ul" key="ul" leaveReverse id={`${props.id}-ul`}>
         <li key="logo" id={`${props.id}-logo`}>
           <p className="logo">
-            <img src={logoContent.img} width="100%" />
+            <img role="presentation" src={logoContent.img} width="100%" />
           </p>
           <p>{logoContent.content}</p>
         </li>
@@ -66,7 +68,7 @@ class Footer extends React.Component {
         id={`${props.id}-content`}
       >
         <span>
-          Copyright © 2017 The Project by <a href="#">Sysuhiker</a>. All Rights Reserved
+          Copyright © 2017 The Project by <a href="/">Sysuhiker</a>. All Rights Reserved
         </span>
       </TweenOne>
     </OverPack>);
