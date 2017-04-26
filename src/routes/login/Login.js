@@ -2,8 +2,11 @@ import React from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Spin } from 'antd';
 
-import LoginForm from '../../components/login/LoginForm';
+import Nav from '../Home/Nav';
+import Footer from '../Home/Footer';
 
+import LoginForm from '../../components/login/LoginForm';
+import '../Home/less/antMotion_style.less';
 
 function Login({ dispatch, loading }) {
   const loginProps = {
@@ -15,8 +18,9 @@ function Login({ dispatch, loading }) {
       });
     },
   };
-  return (
-    <div style={{ background: '#ECECEC', padding: '30px' }}>
+
+  const LoginPage = (
+    <div key="login_page" style={{ background: '#ECECEC', padding: '30px' }}>
       <Row type="flex" justify="space-around" align="middle">
         <Col xs={{ span: 22 }} lg={{ span: 10 }}>
           <Card title="欢迎登录逸仙徒步" bordered={false}>
@@ -37,7 +41,18 @@ function Login({ dispatch, loading }) {
         </Col>
       </Row>
     </div>
+  );
 
+  const children = [
+    <Nav isMode={false} />,
+    LoginPage,
+    <Footer isMode={false} />,
+  ];
+
+  return (
+    <div className="templates-wrapper">
+      {children}
+    </div>
   );
 }
 

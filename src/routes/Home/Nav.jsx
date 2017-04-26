@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TweenOne from 'rc-tween-one';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 import PropTypes from 'prop-types';
 
 
@@ -12,6 +12,7 @@ class Header extends Component {
     className: PropTypes.string,
     isMode: PropTypes.bool,
     id: PropTypes.string,
+    isLogin: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -62,15 +63,15 @@ class Header extends Component {
       </span>
       <span>用户名</span>
     </div>);
-    navChildren.push((<Item className="help" key="help">
-      <Icon type="question-circle-o" />
-      <span>帮助</span>
-    </Item>),
-      (<SubMenu className="user" title={userTitle} key="user">
-        <Item key="a">用户中心</Item>
-        <Item key="b">修改密码</Item>
-        <Item key="c">登出</Item>
-      </SubMenu>));
+    const loginMenu = true ? (<Item key="login">
+      登录
+    </Item>) : (<SubMenu className="user" title={userTitle} key="user">
+      <Item key="a">用户中心</Item>
+      <Item key="b">修改密码</Item>
+      <Item key="c">登出</Item>
+    </SubMenu>);
+
+    navChildren.push(loginMenu);
     return (<TweenOne
       component="header"
       animation={{ opacity: 0, type: 'from' }}
