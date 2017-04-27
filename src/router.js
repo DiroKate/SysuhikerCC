@@ -1,5 +1,8 @@
 import React from 'react';
 import { Router } from 'dva/router';
+import PropTypes from 'prop-types';
+import App from './routes/App.js';
+
 
 const cached = {};
 function registerModel(app, model) {
@@ -9,32 +12,54 @@ function registerModel(app, model) {
   }
 }
 
+const Routers = ({ history, app }) => {
+  // const handleChildRoute = ({ location, params, routes }) => {
+  //   console.log(location, params, routes);
+  // };
 
-function RouterConfig({ history, app }) {
   const routes = [
     {
       path: '/',
-      name: 'IndexPage',
-      getComponent(nextState, cb) {
+      component: App,
+      getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {
           registerModel(app, require('./models/users'));
-          cb(null, require('./routes/Home'));
-        });
+          cb(null, { component: require('./routes/Home') });
+        }, 'home');
       },
-    },
-    {
-      path: '/login',
-      name: 'LoginPage',
-      getComponent(nextState, cb) {
-        require.ensure([], (require) => {
-          registerModel(app, require('./models/users'));
-          cb(null, require('./routes/login/Login'));
-        });
-      },
+      childRoutes: [
+        {
+          path: 'home',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/users'));
+              cb(null, require('./routes/Home/'));
+            }, 'home');
+          },
+        }, {
+          path: 'login',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/users'));
+              cb(null, require('./routes/login/Login'));
+            }, 'login');
+          },
+        },
+      ],
     },
   ];
 
-  return <Router history={history} routes={routes} />;
-}
+  // routes[0].childRoutes.map((item) => {
+  //   item.onEnter = handleChildRoute;
+  //   return item;
+  // });
 
-export default RouterConfig;
+  return <Router history={history} routes={routes} />;
+};
+
+Routers.propTypes = {
+  history: PropTypes.object,
+  app: PropTypes.object,
+};
+
+export default Routers;
