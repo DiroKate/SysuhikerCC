@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Spin } from 'antd';
-
-import Nav from '../Home/Nav';
-import Footer from '../Home/Footer';
-
 import LoginForm from '../../components/login/LoginForm';
-import '../Home/less/antMotion_style.less';
 
 function Login({ dispatch, loading }) {
   const loginProps = {
@@ -43,15 +38,9 @@ function Login({ dispatch, loading }) {
     </div>
   );
 
-  const children = [
-    <Nav isMode={false} />,
-    LoginPage,
-    <Footer isMode={false} />,
-  ];
-
   return (
-    <div className="templates-wrapper">
-      {children}
+    <div>
+      { LoginPage }
     </div>
   );
 }
