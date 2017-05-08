@@ -24,6 +24,9 @@ export async function logout(params) {
 /**
  * 获取用户信息
  */
-export async function userInfo(id) {
-  return request(`/api/users/${id}`);
+export async function userInfo(params) {
+  return request('/api/?service=User.GetBaseInfo', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
 }

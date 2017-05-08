@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
+import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
 
 
@@ -10,9 +11,9 @@ const SubMenu = Menu.SubMenu;
 class Header extends Component {
   static propTypes = {
     className: PropTypes.string,
-    isMode: PropTypes.bool,
+    // isMode: PropTypes.bool,
     id: PropTypes.string,
-    isLogin: PropTypes.bool,
+    // isLogin: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -34,22 +35,29 @@ class Header extends Component {
   }
 
   menuClick = (e) => {
-    console.log(e);
+    console.log(`click Menu ${e.key}`);
   }
 
   render() {
     const props = { ...this.props };
     const isMode = props.isMode;
     delete props.isMode;
+
+    const isLogin = props.users.login;
+    console.log(this.props);
+    console.log(isLogin);
+
     const navData = {
-      menu1: '首页',
-      menu2: '活动',
-      menu3: '逸仙茶馆',
-      menu4: '关于',
+      home: '首页',
+      activity: '活动',
+      bbs: '逸仙茶馆',
+      about: '关于',
     };
-    const navChildren = Object.keys(navData).map((key, i) => (
-      <Item key={i}>
-        {navData[key]}
+    const navChildren = Object.keys(navData).map(key => (
+      <Item key={key}>
+        <Link to={key}>
+          {navData[key]}
+        </Link>
       </Item>
     ));
     const userTitle = (<div>
@@ -63,13 +71,13 @@ class Header extends Component {
       </span>
       <span>用户名</span>
     </div>);
-    const loginMenu = true ? (<Item key="login">
-      登录
-    </Item>) : (<SubMenu className="user" title={userTitle} key="user">
+    const loginMenu = isLogin ? (<SubMenu className="user" title={userTitle} key="user">
       <Item key="a">用户中心</Item>
       <Item key="b">修改密码</Item>
       <Item key="c">登出</Item>
-    </SubMenu>);
+    </SubMenu>) : (<Item key="login">
+      <Link to="login">登录</Link>
+    </Item>);
 
     navChildren.push(loginMenu);
     return (<TweenOne

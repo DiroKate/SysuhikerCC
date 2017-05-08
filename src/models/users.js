@@ -5,18 +5,21 @@ export default {
   namespace: 'users',
   state: {
     login: false,
-    user: {
-      name: '',
-      email: '',
-    },
+    userId: '',
   },
 
   reducers: {
     loginSuccess(state, action) {
       return {
         ...state,
-        ...action.payload,
+        userId: action.payload.userId,
         login: true,
+      };
+    },
+    getUserInfo(state, action) {
+      return {
+        ...state,
+        ...action.payload,
       };
     },
   },
@@ -24,6 +27,7 @@ export default {
   effects: {
     *login({ payload: params }, { call, put }) {
       const { data } = yield call(UsersService.login, params);
+      console.log(data);
       const { code } = data.data;
       if (code === 0) {
         yield put({
@@ -35,8 +39,19 @@ export default {
         yield put(routerRedux.push('/'));
       }
     },
-    *queryUser() {
-      console.log('queryUserqueryUserqueryUserqueryUserqueryUser');
+    *queryUser({ payload: params }, { call }) {
+      if (typeof (params) === 'undefined') {
+        console.log('params is none');
+        return;
+      }
+      console.log('queryUserqueryUserqueryUserqueryUserqueryUser', params);
+      const { data } = yield call(UsersService.userInfo, params);
+      const { code } = data.data;
+      if (code === 0) {
+        console.log('获取用户信息成功');
+      } else {
+        console.warn('获取用户信息失败');
+      }
     },
   },
 

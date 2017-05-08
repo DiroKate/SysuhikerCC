@@ -13,16 +13,8 @@ class App extends React.Component {
     children: PropTypes.element.isRequired,
     // location: PropTypes.object,
     // dispatch: PropTypes.func,
-    // app: PropTypes.object,
+    users: PropTypes.object,
     // loading: PropTypes.bool,
-  }
-
-  constructor(props) {
-    super(props);
-    console.log(this.props);
-    this.state = {
-      isMode: false,
-    };
   }
 
   componentDidMount() {
@@ -49,14 +41,35 @@ class App extends React.Component {
   }
 
   render() {
+    const { users } = this.props;
+
+    const navProps = {
+      id: 'nav_1_0',
+      key: 'nav_1_0',
+      isMode: false,
+    };
+
+    const footerProps = {
+      id: 'footer_1_0',
+      key: 'footer_1',
+      isMode: false,
+    };
+
     return (
       <div className="templates-wrapper" ref={(doc) => { this.doc = doc; }} >
-        <Nav id="nav_1_0" key="nav_1_0" isMode={this.state.isMode} />
-
-        {this.props.children}
-        <Footer id="footer_1_0" key="footer_1_0" isMode={this.state.isMode} />
+        <Nav {...navProps} users={users} />
+        {this.props.children }
+        <Footer {...footerProps} />
       </div>
     );
   }
 }
-export default connect(({ app, loading }) => ({ app, loading: loading.models.app }))(App);
+
+
+function mapStateToProps(state) {
+  return {
+    users: state.users,
+  };
+}
+
+export default connect(mapStateToProps)(App);
