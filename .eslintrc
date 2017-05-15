@@ -2,6 +2,7 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "rules": {
+    "semi": 2,
     "generator-star-spacing": [0],
     "consistent-return": [0],
     "react/forbid-prop-types": [0],
@@ -25,7 +26,10 @@
     "require-yield": [1]
   },
   "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 8,
     "ecmaFeatures": {
+      "jsx": true,
       "experimentalObjectRestSpread": true
     }
   }

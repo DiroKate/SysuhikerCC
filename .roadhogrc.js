@@ -1,5 +1,7 @@
-{
-  "disableCSSModules": true,
+const path = require('path');
+
+export default {
+  // "disableCSSModules": true,
   "entry": "src/index.js",
   "theme": {
     "@primary-color": "#1DA57A",
