@@ -1,10 +1,6 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
 import styles from './style/ItemFigure.less';
-// import './ItemFigure.less';
-console.log('*/*/*/*/*/*/*/*/*/*/*');
-console.log(styles);
-console.log('-*-*-*-*-*--*-*-*-*-*-*');
 
 function ItemFigure() {
   const itemData = {
@@ -14,13 +10,11 @@ function ItemFigure() {
   };
 
   return (
-    <div className={styles.activityItem}>
-      <Row type="flex" justify="left" align="top" gutter={16}>
+    <Row className={styles.activityItem}>
+      <Row className={styles.header} type="flex" justify="left" align="top" gutter={16}>
         <Col md={2}>
           <img
-            src="https://zos.alipayobjects.com/rmsportal/iXsgowFDTJtGpZM.png"
-            width="50"
-            height="50"
+            src="/icon.png"
             role="presentation"
           />
         </Col>
@@ -29,31 +23,33 @@ function ItemFigure() {
           <p>{itemData.author}</p>
         </Col>
       </Row>
-      <Row type="flex" justify="left" align="top" gutter={16}>
+      <Row className={styles.content} type="flex" justify="left" align="top" gutter={16}>
         <Col md={{ push: 2, span: 22 }}>
           <Row type="flex" justify="left" align="top" gutter={16}>
-            <Col md={{ span: 12 }}>
+            <Col md={{ span: 10 }}>
               <img
-                src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"
-                width="100%"
-                height="100%"
+                src="/yay.jpg"
                 role="presentation"
               />
             </Col>
-            <Col md={{ span: 12 }}>
+            <Col md={{ span: 14 }}>
               <p>{itemData.content}</p>
             </Col>
           </Row>
-          <Row type="flex" justify="left" align="top" gutter={16}>
+          <Row className={styles.tagNote} type="flex" justify="left" align="top" gutter={16}>
             <Tag color="orange">报名中</Tag>
             <Tag color="green">重装徒步</Tag>
-            <Icon type="environment-o" /><p>2017年5月11日</p>
+            <Row className={styles.alignItemsCenter} type="flex">
+              <Icon type="environment-o" /><p>2017年5月11日</p>
+            </Row>
             <p>3天</p>
-            <Icon type="team" /><p>12/12</p>
+            <Row className={styles.alignItemsCenter} type="flex">
+              <Icon type="team" /><p>12/12</p>
+            </Row>
           </Row>
         </Col>
       </Row>
-    </div>
+    </Row>
   );
 }
 

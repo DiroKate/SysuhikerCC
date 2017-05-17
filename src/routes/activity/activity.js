@@ -6,6 +6,9 @@ function Activity() {
   return (
     <div>
       <ItemFigure />
+      <ItemFigure />
+
+      <ItemFigure />
     </div>
   );
 }
