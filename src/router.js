@@ -24,7 +24,7 @@ const Routers = ({ history, app }) => {
       getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {
           registerModel(app, require('./models/users'));
-          cb(null, { component: require('./routes/Home') });
+          cb(null, { component: require('./routes/home') });
         }, 'home');
       },
       childRoutes: [
@@ -33,7 +33,7 @@ const Routers = ({ history, app }) => {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/users'));
-              cb(null, require('./routes/Home/'));
+              cb(null, require('./routes/home'));
             }, 'home');
           },
         }, {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
-import styles from './style/ItemFigure.less';
+import styles from './ItemFigure.less';
 
 function ItemFigure() {
   const itemData = {

@@ -31,6 +31,7 @@
   "dependencies": {
     "antd": "^2.9.1",
     "babel-runtime": "^6.9.2",
+    "classnames": "^2.2.5",
     "dva": "^1.2.1",
     "dva-loading": "^0.2.1",
     "enquire": "0.0.2",
