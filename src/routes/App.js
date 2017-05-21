@@ -59,7 +59,7 @@ class App extends React.Component {
       <div className="templates-wrapper" ref={(doc) => { this.doc = doc; }} >
         <Nav {...navProps} users={users} />
         <div className="user-templates-wrapper">
-        {this.props.children }
+          {this.props.children }
         </div>
         <Footer {...footerProps} />
       </div>
