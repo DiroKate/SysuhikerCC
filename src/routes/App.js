@@ -46,7 +46,7 @@ class App extends React.Component {
     const navProps = {
       id: 'nav_1_0',
       key: 'nav_1_0',
-      isMode: false,
+      // isMode: false,
     };
 
     return (
