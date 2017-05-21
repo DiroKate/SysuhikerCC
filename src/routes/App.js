@@ -58,7 +58,9 @@ class App extends React.Component {
     return (
       <div className="templates-wrapper" ref={(doc) => { this.doc = doc; }} >
         <Nav {...navProps} users={users} />
+        <div className="user-templates-wrapper">
         {this.props.children }
+        </div>
         <Footer {...footerProps} />
       </div>
     );
