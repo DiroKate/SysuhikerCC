@@ -10,12 +10,22 @@ const { SubMenu } = Menu;
 
 class Nav extends React.Component {
 
+  // static propTypes = {
+  //   className: PropTypes.string,
+  //   // isMode: PropTypes.bool,
+  //   id: PropTypes.string,
+  //   // isLogin: PropTypes.bool,
+  // };
+
   static defaultProps = {
     className: 'sysuhikerNav',
   }
 
   render() {
     const props = { ...this.props };
+    const isLogin = props.users.login;
+
+
     const navData = {
       home: '首页',
       activity: '活动',
@@ -41,7 +51,7 @@ class Nav extends React.Component {
       <span>用户名</span>
     </div>);
 
-    const loginMenu = true ? (<SubMenu className="user" title={userTitle} key="user">
+    const loginMenu = isLogin ? (<SubMenu className="user" title={userTitle} key="user">
       <Item key="a">用户中心</Item>
       <Item key="b">修改密码</Item>
       <Item key="c">登出</Item>
