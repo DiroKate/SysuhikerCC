@@ -78,6 +78,7 @@ class Banner extends React.Component {
           <div className={`${props.className}-wrapper`}>
             <BannerAnim
               key="banner"
+              autoPlay
             >
               {childrenToRender}
             </BannerAnim>

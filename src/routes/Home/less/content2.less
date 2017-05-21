@@ -1,20 +1,20 @@
 @import './custom.less';
-@content0: content0;
+@content1: content1;
 
 :global {
-  .@{content0} {
+  .@{content1} {
     &-img {
       height: 100%;
       width: 40%;
       overflow: hidden;
       position: absolute;
-      left: 0;
+      right: 0;
 
       span {
-        display: inline-block;
+        display: block;
         position: absolute;
         width: 55%;
-        right: 10%;
+        left: 10%;
         line-height: 50vh;
         height: 50vh;
         margin: auto;
@@ -36,12 +36,12 @@
       top: 0;
       bottom: 0;
       margin: auto;
-      right: 0;
 
       & h1,
       & p {
         position: relative !important;
         width: 75%;
+        float: right;
       }
 
       & h1 {
@@ -56,10 +56,10 @@
     }
   }
   @media screen and (max-width: 767px) {
-    .@{content0} -wrapper {
+    .@{content1}-wrapper {
       height: 400px;
 
-      .@{content0} {
+      .@{content1} {
         overflow: hidden;
         width: 90%;
         margin: auto;
@@ -73,8 +73,8 @@
         }
 
         &-img {
-          height: 200px;
           margin: 20px auto;
+          height: 200px;
 
           span {
             right: 0;
@@ -88,7 +88,7 @@
 
         &-text {
           height: 140px;
-          margin-bottom: 20px;
+          margin-top: 20px;
 
           h1,
           p {
@@ -96,8 +96,11 @@
             top: auto;
           }
 
+          p {
+            margin-top: 20px;
+          }
+
           h1 {
-            margin: 10px auto;
             font-size: 24px;
           }
         }
