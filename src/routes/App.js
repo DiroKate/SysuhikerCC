@@ -1,6 +1,6 @@
 import React from 'react';
 import enquire from 'enquire.js';
-import { scrollScreen } from 'rc-scroll-anim';
+// import { scrollScreen } from 'rc-scroll-anim';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
 
@@ -19,8 +19,8 @@ class App extends React.Component {
 
   componentDidMount() {
     // 实现整屏滚动
-    const docHeight = this.doc.getBoundingClientRect().height;
-    scrollScreen.init({ docHeight });
+    // const docHeight = this.doc.getBoundingClientRect().height;
+    // scrollScreen.init({ docHeight });
     // 适配手机屏幕;
     this.enquireScreen((isMode) => {
       this.setState({ isMode });

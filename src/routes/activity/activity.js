@@ -4,6 +4,8 @@ import QueueAnim from 'rc-queue-anim';
 import { Tabs } from 'antd';
 import ItemFigure from '../../components/activity/ItemFigure.js';
 
+import styles from './activity.less';
+
 const { TabPane } = Tabs;
 
 
@@ -16,7 +18,6 @@ function Activity() {
     <QueueAnim delay={500} className="queue-simple">
       <ItemFigure key="0" />
       <ItemFigure key="1" />
-
       <ItemFigure key="2" />
     </QueueAnim>
   );
@@ -29,7 +30,7 @@ function Activity() {
 
 
   return (
-    <div>
+    <div className={styles.content}>
       <Tabs defaultActiveKey="1" onChange={callback}>
         <TabPane tab="全部活动" key="1">
           {allActivity}
