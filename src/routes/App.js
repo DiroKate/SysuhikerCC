@@ -3,6 +3,7 @@ import enquire from 'enquire.js';
 // import { scrollScreen } from 'rc-scroll-anim';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
+import { BackTop } from 'antd';
 
 import Nav from './Home/Nav';
 import Footer from './Home/Footer';
@@ -57,6 +58,7 @@ class App extends React.Component {
 
     return (
       <div className="templates-wrapper" ref={(doc) => { this.doc = doc; }} >
+        <BackTop />
         <Nav {...navProps} users={users} />
         <div className="user-templates-wrapper">
           {this.props.children }
