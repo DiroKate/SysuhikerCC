@@ -52,6 +52,14 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/activity/activity'));
             }, 'activity');
           },
+        }, {
+          path: 'activity/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/users'));
+              cb(null, require('./routes/activity/details/'));
+            }, 'user-detail');
+          },
         },
       ],
     },

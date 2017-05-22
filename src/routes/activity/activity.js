@@ -4,6 +4,8 @@ import QueueAnim from 'rc-queue-anim';
 import { Tabs } from 'antd';
 import ItemFigure from '../../components/activity/ItemFigure.js';
 
+import Details from './details';
+
 import styles from './activity.less';
 
 const { TabPane } = Tabs;
@@ -29,17 +31,20 @@ function Activity() {
   );
 
 
+  // return (
+  //   <div className={styles.content}>
+  //     <Tabs defaultActiveKey="1" onChange={callback}>
+  //       <TabPane tab="全部活动" key="1">
+  //         {allActivity}
+  //       </TabPane>
+  //       <TabPane tab="报名ING" key="2">
+  //         {hotActivity}
+  //       </TabPane>
+  //     </Tabs>
+  //   </div>
+  // );
   return (
-    <div className={styles.content}>
-      <Tabs defaultActiveKey="1" onChange={callback}>
-        <TabPane tab="全部活动" key="1">
-          {allActivity}
-        </TabPane>
-        <TabPane tab="报名ING" key="2">
-          {hotActivity}
-        </TabPane>
-      </Tabs>
-    </div>
+    <Details />
   );
 }
 export default connect()(Activity);
