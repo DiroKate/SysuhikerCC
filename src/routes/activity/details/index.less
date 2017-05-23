@@ -2,20 +2,19 @@
   margin: 1rem;
   padding: 1rem;
 }
+
 .font-size {
   font-size: 14px;
 }
 
-.detailsPage {
+.details_page {
   .base;
   margin-left: 5%;
   margin-right: 5%;
   // background-color: yellow;
-
   .content {
     height: 800px;
     // background-color: grey;
-
     &_leader {
       padding-top: 1rem;
       width: 200px;
@@ -25,19 +24,40 @@
         height: 50px;
         border-radius: 100px;
       }
+
       & h2 {
         color: @link-color;
       }
 
       &_name {
         .font-size;
-
       }
-      &_comment {
 
-      }
+      &_comment {}
     }
 
+    .event_card {
+      background-color: #edf3f1;
+      // padding:16px 16px;
+      .base;
+
+      &_row {
+        max-width: 400px;
+      }
+
+      &_title {
+        padding-left: 5px;
+        font-size: 1rem;
+        color: grey;
+        display: inline;
+      }
+
+      &_content {
+        display: inline;
+        font-size: 1rem;
+        font-weight: bolder;
+      }
+    }
   }
 
   .teamList {

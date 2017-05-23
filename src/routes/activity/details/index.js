@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Breadcrumb, Row, Col, Timeline } from 'antd';
+import { Breadcrumb, Row, Col, Timeline, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import styles from './index.less';
 import example from '../../../assets/example.html';
@@ -16,16 +16,73 @@ const fakeData = {
   arrivals: '兰州',
   start_at: '2017-09-28',
   end_at: '2017-10-08',
-  collection_at: '2017-09-28 19:00',
+  collection_time: '2017-09-28 19:00',
+  collection_location: '白云机场',
   content: example,
 };
 
 function Details(props) {
   const { userDetails } = props;
 
+  const eventCardCallback = ({ iconType, title, content }) => {
+    return (
+      <Row className={styles.event_card_row}>
+        <Col span={8} >
+          <Icon type={iconType} />
+          <div className={styles.event_card_title}>
+            {title}
+          </div >
+        </Col >
+        <Col offset={1} className={styles.event_card_content}>
+          {content}
+        </Col>
+      </Row>
+    );
+  };
+
+  const eventCard = (
+    <Timeline className={styles.event_card}>
+      <Timeline.Item color="green">
+        {eventCardCallback({
+          iconType: 'rocket',
+          title: '出发地:',
+          content: fakeData.departure,
+        })}
+      </Timeline.Item>
+      <Timeline.Item color="green">
+        {eventCardCallback({
+          iconType: 'environment-o',
+          title: '目的地:',
+          content: fakeData.arrivals,
+        })}
+      </Timeline.Item>
+      <Timeline.Item color="red">
+        {eventCardCallback({
+          iconType: 'calendar',
+          title: '行程日期:',
+          content: `${fakeData.start_at}  至   ${fakeData.end_at}`,
+        })}
+      </Timeline.Item>
+      <Timeline.Item color="blue">
+        {eventCardCallback({
+          iconType: 'clock-circle-o',
+          title: '集合时间:',
+          content: fakeData.collection_time,
+        })}
+      </Timeline.Item>
+      <Timeline.Item color="blue">
+        {eventCardCallback({
+          iconType: 'star-o',
+          title: '集合地点:',
+          content: fakeData.collection_location,
+        })}
+      </Timeline.Item>
+    </Timeline>
+  );
+
 
   return (
-    <div className={styles.detailsPage}>
+    <div className={styles.details_page}>
       <Breadcrumb style={{ margin: '12px 0', 'font-size': '1.2em' }}>
         <BreadcrumbItem>
           <a href="/activity">活动列表</a>
@@ -35,8 +92,9 @@ function Details(props) {
       <Row>
         <Col span={15} className={styles.content}>
           <h1>{fakeData.title}</h1>
+
           <Row className={styles.content_leader} type="flex" justify="left" align="middle">
-            <Col span={8}>
+            <Col span={4}>
               <img
                 src={fakeData.leader_icon}
                 role="presentation"
@@ -49,20 +107,8 @@ function Details(props) {
               <div>{fakeData.create_at}</div>
             </Col>
           </Row>
-          <Timeline>
-            <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
-            <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
-            <Timeline.Item color="red">
-              <p>Solve initial network problems 1</p>
-              <p>Solve initial network problems 2</p>
-              <p>Solve initial network problems 3 2015-09-01</p>
-            </Timeline.Item>
-            <Timeline.Item>
-              <p>Technical testing 1</p>
-              <p>Technical testing 2</p>
-              <p>Technical testing 3 2015-09-01</p>
-            </Timeline.Item>
-          </Timeline>
+
+          {eventCard}
         </Col>
         <Col span={8} offset={1} className={styles.teamList}>
           aaaaaa
