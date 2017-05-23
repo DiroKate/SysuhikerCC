@@ -3,7 +3,8 @@ import { connect } from 'dva';
 import { Breadcrumb, Row, Col, Timeline, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import styles from './index.less';
-import example from '../../../assets/example.html';
+import Example from './example.js';
+
 
 const BreadcrumbItem = Breadcrumb.Item;
 
@@ -18,7 +19,7 @@ const fakeData = {
   end_at: '2017-10-08',
   collection_time: '2017-09-28 19:00',
   collection_location: '白云机场',
-  content: example,
+  // content: example,
 };
 
 function Details(props) {
@@ -80,10 +81,26 @@ function Details(props) {
     </Timeline>
   );
 
+  const leaderInfo = (
+    <Row className={styles.content_leader} type="flex" justify="left" align="middle">
+      <Col span={8}>
+        <img
+          src={fakeData.leader_icon}
+          role="presentation"
+        />
+      </Col>
+      <Col>
+        <h2>
+          {fakeData.leader}
+        </h2>
+        <div>{fakeData.create_at}</div>
+      </Col>
+    </Row>
+  );
 
   return (
     <div className={styles.details_page}>
-      <Breadcrumb style={{ margin: '12px 0', 'font-size': '1.2em' }}>
+      <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
         <BreadcrumbItem>
           <a href="/activity">活动列表</a>
         </BreadcrumbItem>
@@ -92,23 +109,9 @@ function Details(props) {
       <Row>
         <Col span={15} className={styles.content}>
           <h1>{fakeData.title}</h1>
-
-          <Row className={styles.content_leader} type="flex" justify="left" align="middle">
-            <Col span={4}>
-              <img
-                src={fakeData.leader_icon}
-                role="presentation"
-              />
-            </Col>
-            <Col>
-              <h2>
-                {fakeData.leader}
-              </h2>
-              <div>{fakeData.create_at}</div>
-            </Col>
-          </Row>
-
+          {leaderInfo}
           {eventCard}
+          <Example />
         </Col>
         <Col span={8} offset={1} className={styles.teamList}>
           aaaaaa
