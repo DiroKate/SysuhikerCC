@@ -1,4 +1,47 @@
-.content {
-  width: 100%;
-  margin: 48px 16px 48px 5%;
+.base {
+  margin: 1rem;
+  padding: 1rem;
+}
+.font-size {
+  font-size: 14px;
+}
+
+.detailsPage {
+  .base;
+  margin-left: 5%;
+  margin-right: 5%;
+  // background-color: yellow;
+
+  .content {
+    height: 800px;
+    // background-color: grey;
+
+    &_leader {
+      padding-top: 1rem;
+      width: 200px;
+
+      & img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100px;
+      }
+      & h2 {
+        color: @link-color;
+      }
+
+      &_name {
+        .font-size;
+
+      }
+      &_comment {
+
+      }
+    }
+
+  }
+
+  .teamList {
+    height: 200px;
+    background-color: green;
+  }
 }
