@@ -114,7 +114,9 @@ function Details(props) {
           <Example />
         </Col>
         <Col span={8} offset={1} className={styles.teamList}>
-          aaaaaa
+          程序员偷懒ing
+          这里还没有写。
+          这里要写报名列表的呀。
         </Col>
       </Row>
 
