@@ -12,8 +12,8 @@ function EventCard(props) {
           <Icon type={iconType} />
           <div className={styles.event_card_title}>
             {title}
-          </div >
-        </Col >
+          </div>
+        </Col>
         <Col offset={1} className={styles.event_card_content}>
           {content}
         </Col>
@@ -32,7 +32,7 @@ function EventCard(props) {
       </Timeline.Item>
       <Timeline.Item color="green">
         {eventCardCallback({
-          iconType: 'environment-o',
+          iconType: 'mudedi',
           title: '目的地:',
           content: data.arrivals,
         })}
@@ -46,14 +46,14 @@ function EventCard(props) {
       </Timeline.Item>
       <Timeline.Item color="blue">
         {eventCardCallback({
-          iconType: 'clock-circle-o',
+          iconType: 'clock',
           title: '集合时间:',
           content: data.collection_time,
         })}
       </Timeline.Item>
       <Timeline.Item color="blue">
         {eventCardCallback({
-          iconType: 'star-o',
+          iconType: 'jihedidian',
           title: '集合地点:',
           content: data.collection_location,
         })}

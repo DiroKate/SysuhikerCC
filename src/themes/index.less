@@ -1,4 +1,5 @@
 @import "./default.less";
+@import "/iconfont/iconfont.css";
 
 :global {
   .ant-layout-header {
@@ -6,5 +7,11 @@
     padding: 0 0;
     height: 64px;
     line-height: 64px;
+  }
+  /* iconfont */
+  .iconfont-mixin {
+    &:before {
+      font-family: "anticon", "anticon_user" !important;
+    }
   }
 }

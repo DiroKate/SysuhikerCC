@@ -1,4 +1,7 @@
 @import "~antd/lib/style/themes/default.less";
+@import "/iconfont/iconfont.css";
+
+@icon-url: "/iconfont/iconfont"; // 把 iconfont 地址改到本地
 @link-color: #019BF0;
 @link-hover-color: tint(@link-color, 20%);
 @link-active-color: shade(@link-color, 5%);
@@ -17,9 +20,11 @@
 @template-text-title-color: #BCBCBC;
 @template-text-color-light: #FFF;
 @template-footer-text-color: #666;
-@animate-duration: 0.45s;
-// 详细页图片或框框的样式;
+@animate-duration: 0.45s; // 详细页图片或框框的样式;
+
 :global {
+
+
   .page-shadow() {
     box-shadow: 0 5px 8px @shadow-color;
   }

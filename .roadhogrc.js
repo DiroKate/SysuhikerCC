@@ -5,7 +5,8 @@ export default {
   "entry": "src/index.js",
   "theme": {
     "@primary-color": "#1DA57A",
-    "@link-color": "#1DA57A"
+    "@link-color": "#1DA57A",
+    "@icon-url": '"/iconfont/iconfont"',
   },
   "proxy": {
     "/api": {
