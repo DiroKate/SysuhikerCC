@@ -37,7 +37,7 @@ var Icon = function Icon(props) {
     var classString = (0, _classnames2["default"])((0, _defineProperty3["default"])({
         anticon: true,
         'anticon-spin': !!spin || type === 'loading'
-    }, 'anticon-' + type, true), className);
+    }, 'anticon-sysuhiker-' + type, true), className);
     return React.createElement('i', (0, _extends3["default"])({}, (0, _omit2["default"])(props, ['type', 'spin']), { className: classString }));
 };
 exports["default"] = Icon;
