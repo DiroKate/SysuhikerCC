@@ -23,35 +23,35 @@ function EventCard(props) {
 
   return (
     <Timeline className={styles.event_card}>
-      <Timeline.Item color="green">
+      <Timeline.Item className={styles.timeLine} color="green">
         {eventCardCallback({
           iconType: 'rocket',
           title: '出发地:',
           content: data.departure,
         })}
       </Timeline.Item>
-      <Timeline.Item color="green">
+      <Timeline.Item className={styles.timeLine} color="green">
         {eventCardCallback({
           iconType: 'mudedi',
           title: '目的地:',
           content: data.arrivals,
         })}
       </Timeline.Item>
-      <Timeline.Item color="red">
+      <Timeline.Item className={styles.timeLine} color="red">
         {eventCardCallback({
           iconType: 'calendar',
           title: '行程日期:',
           content: `${data.start_at}  至   ${data.end_at}`,
         })}
       </Timeline.Item>
-      <Timeline.Item color="blue">
+      <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'clock',
           title: '集合时间:',
           content: data.collection_time,
         })}
       </Timeline.Item>
-      <Timeline.Item color="blue">
+      <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'jihedidian',
           title: '集合地点:',

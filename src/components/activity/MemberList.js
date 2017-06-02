@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Card } from 'antd';
+import { Button, Card, Icon } from 'antd';
 import styles from './MemberList.less';
+
 function MemberList(props) {
   const { data } = props;
   const gender = (
-    <p>男10 女10</p>
+    <p><Icon type="male" className={styles.iconMale} />10 <Icon className={styles.iconFemale} type="female" />10</p>
   );
   return (
     <div className={styles.memberList}>
