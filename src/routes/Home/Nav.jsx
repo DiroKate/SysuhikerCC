@@ -34,9 +34,9 @@ class Header extends Component {
     });
   }
 
-  menuClick = (e) => {
-    console.log(`click Menu ${e.key}`);
-  }
+  // menuClick = (e) => {
+  //   console.log(`click Menu ${e.key}`);
+  // }
 
   render() {
     const props = { ...this.props };
@@ -44,8 +44,6 @@ class Header extends Component {
     delete props.isMode;
 
     const isLogin = props.users.login;
-    console.log(this.props);
-    console.log(isLogin);
 
     const navData = {
       home: '首页',
@@ -117,7 +115,6 @@ class Header extends Component {
             defaultSelectedKeys={['0']}
             mode="inline"
             theme="dark"
-            onClick={this.menuClick}
           >
             {navChildren}
           </Menu>

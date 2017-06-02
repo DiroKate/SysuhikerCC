@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Icon } from 'antd';
+import { browserHistory } from 'dva/router';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element } from 'rc-banner-anim';
@@ -11,60 +12,86 @@ class Banner extends React.Component {
   render() {
     const props = { ...this.props };
     delete props.isMode;
-    const childrenData = [
-      {
-        title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
-        content: '逸仙徒步，自由的AA户外组织',
-        button: '参加活动',
-      },
-      {
-        title: '<img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png" />',
-        content: '逸仙徒步，自由的AA户外组织',
-        button: '逸仙茶馆',
-      },
-    ];
-    const childrenToRender = childrenData.map((item, i) => {
-      const title = item.title;
-      const content = item.content;
-      const button = item.button;
-      return (<Element
-        key={i}
+
+    const activityBtnCb = () => {
+      browserHistory.push('/activity');
+    };
+    const bbsBtnCb = () => {
+      browserHistory.push('/bbs');
+    };
+
+
+    const activityBanner = (
+      <Element
         prefixCls="banner-user-elem"
+        key={`${props.className}-banner-user-elem-1`}
       >
         <BgElement
-          className={`bg bg${i}`}
+          className={'bg bg0'}
           key="bg"
         />
         <QueueAnim
           type={['bottom', 'top']} delay={200}
           className={`${props.className}-title`}
           key="text"
-          id={`${props.id}-wrapperBlock${i}`}
         >
           <span
             className="logo"
             key="logo"
-            id={`${props.id}-titleBlock${i}`}
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-          />
-          <p
-            key="content"
-            id={`${props.id}-contentBlock${i}`}
           >
-            {content}
-          </p>
+            <img
+              width="100%"
+              src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"
+              role="presentation"
+            />
+          </span>
+          <p>逸仙徒步，自由的AA户外组织</p>
           <Button
             type="ghost"
             key="button"
-            id={`${props.id}-buttonBlock${i}`}
+            onClick={activityBtnCb}
           >
-            {button}
+            参加活动
           </Button>
         </QueueAnim>
-      </Element>);
-    });
+      </Element>
+    );
+
+    const bbsBanner = (
+      <Element
+        prefixCls="banner-user-elem"
+        key={`${props.className}-banner-user-elem-2`}
+      >
+        <BgElement
+          className={'bg bg1'}
+          key="bg"
+        />
+        <QueueAnim
+          type={['bottom', 'top']} delay={200}
+          className={`${props.className}-title`}
+          key="text"
+        >
+          <span
+            className="logo"
+            key="logo"
+          >
+            <img
+              width="100%"
+              src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"
+              role="presentation"
+            />
+          </span>
+          <p>逸仙徒步，自由的AA户外组织</p>
+          <Button
+            type="ghost"
+            key="button"
+            onClick={bbsBtnCb}
+          >
+            逸仙茶馆
+          </Button>
+        </QueueAnim>
+      </Element>
+    );
     return (
       <OverPack
         {...props}
@@ -80,7 +107,8 @@ class Banner extends React.Component {
               key="banner"
               autoPlay
             >
-              {childrenToRender}
+              {activityBanner}
+              {bbsBanner}
             </BannerAnim>
           </div>
         </TweenOneGroup>

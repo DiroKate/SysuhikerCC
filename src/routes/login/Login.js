@@ -6,7 +6,6 @@ import LoginForm from '../../components/login/LoginForm';
 function Login({ dispatch, loading }) {
   const loginProps = {
     onOk(data) {
-      console.log('Received values of form: ', data);
       dispatch({
         type: 'users/login',
         payload: data,

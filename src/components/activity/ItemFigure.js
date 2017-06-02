@@ -10,8 +10,7 @@ function ItemFigure() {
     content: '当人们纷纷奔向婺源、罗平等地赏花的时候，一些喜欢户外徒步的广东驴友在韶关发现了一个小镇，这个小镇有几个自然的村落，每年的春天，这里遍地都是桃花、梨花、油菜花、李花，成为花的海洋……于是，一传十，十传百，人们纷纷前往这里看花，这个小镇渐渐成为广东最著名的民间赏花圣地。九峰赏花有几个最佳观赏点，基本上都是在九峰镇的村里，他们是：茶料村、坪石村、小廊、上廊、横坑村、大廊、鹅颈凹（沿溪山茶场）。',
     id: 'abcdefg',
   };
-  const clickHandler = (e) => {
-    console.log(e);
+  const clickHandler = () => {
     browserHistory.push(`/activity/${itemData.id}`);
   };
 

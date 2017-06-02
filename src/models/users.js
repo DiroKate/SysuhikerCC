@@ -27,7 +27,6 @@ export default {
   effects: {
     *login({ payload: params }, { call, put }) {
       const { data } = yield call(UsersService.login, params);
-      console.log(data);
       const { code } = data.data;
       if (code === 0) {
         yield put({
@@ -41,10 +40,8 @@ export default {
     },
     *queryUser({ payload: params }, { call }) {
       if (typeof (params) === 'undefined') {
-        console.log('params is none');
         return;
       }
-      console.log('queryUserqueryUserqueryUserqueryUserqueryUser', params);
       const { data } = yield call(UsersService.userInfo, params);
       const { code } = data.data;
       if (code === 0) {

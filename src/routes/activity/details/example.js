@@ -16,7 +16,7 @@ function Example(){
           <br/>
       </p>
       <p>
-          <img src="/upload/imgUpload/201705/1495379119712250.png" title="1495379119712250.png" alt="xibei1.png"/>
+          <img src="http://sysuhiker.cchttp://sysuhiker.cc/upload/imgUpload/201705/1495379119712250.png" title="1495379119712250.png" alt="xibei1.png"/>
       </p>
       <h1>
           【我们的计划】
@@ -163,13 +163,13 @@ function Example(){
           </li>
       </ul>
       <p>
-          <img src="/upload/imgUpload/201705/1495379488252244.png" title="1495379488252244.png" alt="xibei3.png"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495379488252244.png" title="1495379488252244.png" alt="xibei3.png"/>
       </p>
       <h1>
           【线路地图】
       </h1>
       <p>
-          <img src="/upload/imgUpload/201705/1495380105122513.jpg" title="1495380105122513.jpg" alt="IMG_9584.jpg"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495380105122513.jpg" title="1495380105122513.jpg" alt="IMG_9584.jpg"/>
       </p>
       <h1>
           【具体安排】
@@ -557,13 +557,13 @@ function Example(){
           <br/>
       </p>
       <p>
-          <img src="/upload/imgUpload/201705/1495380469793722.jpeg" title="1495380469793722.jpeg"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495380469793722.jpeg" title="1495380469793722.jpeg"/>
       </p>
       <p>
-          <img src="/upload/imgUpload/201705/1495380469157264.jpeg" title="1495380469157264.jpeg"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495380469157264.jpeg" title="1495380469157264.jpeg"/>
       </p>
       <p>
-          <img src="/upload/imgUpload/201705/1495380469353733.jpeg" title="1495380469353733.jpeg"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495380469353733.jpeg" title="1495380469353733.jpeg"/>
       </p>
       <p>
           <br/>
