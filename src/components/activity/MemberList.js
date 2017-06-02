@@ -11,6 +11,7 @@ function MemberInfo(props) {
     notes: '传说中的备注',
     role: '发起人',
     iconUrl: '/icon.png',
+    state: '发起人',
   }, {
     key: '2',
     name: 'diroguan',
@@ -18,6 +19,7 @@ function MemberInfo(props) {
     notes: '传说中的备注',
     iconUrl: '/icon.png',
     role: '作业',
+    state: '活动成员',
   }, {
     key: '3',
     name: '吴彦祖',
@@ -25,6 +27,7 @@ function MemberInfo(props) {
     notes: '传说中的备注',
     iconUrl: '/icon.png',
     role: '摄影',
+    state: '未确认',
   }];
 
   const columns = [{
@@ -50,9 +53,9 @@ function MemberInfo(props) {
     dataIndex: 'notes',
     key: 'notes',
   }, {
-    title: '角色',
-    dataIndex: 'role',
-    key: 'role',
+    title: '状态',
+    dataIndex: 'state',
+    key: 'state',
   }];
 
   return (<Table dataSource={dataSource} columns={columns} showHeader={false} />);

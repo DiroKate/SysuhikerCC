@@ -7,6 +7,8 @@ import QueueAnim from 'rc-queue-anim';
 import EventCard from '../../../components/activity/EventCard.js';
 import LeaderInfo from '../../../components/activity/LeaderInfo.js';
 import MemberList from '../../../components/activity/MemberList.js';
+import ForumBoard from '../../../components/activity/ForumBoard.js';
+
 import styles from './index.less';
 import Example from './example.js';
 
@@ -26,6 +28,36 @@ const fakeData = {
   collection_time: '2017-09-28 19:00',
   collection_location: '白云机场',
   // content: example,
+};
+const forumBoardProps = {
+  totalNums: 5,
+  dataSource: [
+    {
+      key: '1',
+      iconUrl: '/icon.png',
+      userName: 'diroguan',
+      content: '博学，审问，慎思，明辨，笃行',
+      createAt: '2017-06-03 00:10:05',
+    }, {
+      key: '2',
+      iconUrl: '/icon.png',
+      userName: 'diroguan',
+      content: '博学，审问，慎思，明辨，笃行',
+      createAt: '2017-06-03 00:10:05',
+    }, {
+      key: '3',
+      iconUrl: '/icon.png',
+      userName: 'diroguan',
+      content: '博学，审问，慎思，明辨，笃行',
+      createAt: '2017-06-03 00:10:05',
+    }, {
+      key: '4',
+      iconUrl: '/icon.png',
+      userName: 'diroguan',
+      content: '博学，审问，慎思，明辨，笃行',
+      createAt: '2017-06-03 00:10:05',
+    },
+  ],
 };
 
 function Details(props) {
@@ -54,6 +86,9 @@ function Details(props) {
             </div>
             <div key="content">
               <Example />
+            </div>
+            <div key="forum">
+              <ForumBoard {...forumBoardProps} />
             </div>
           </QueueAnim>
         </Col>

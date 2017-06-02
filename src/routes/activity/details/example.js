@@ -16,7 +16,7 @@ function Example(){
           <br/>
       </p>
       <p>
-          <img src="http://sysuhiker.cchttp://sysuhiker.cc/upload/imgUpload/201705/1495379119712250.png" title="1495379119712250.png" alt="xibei1.png"/>
+          <img src="http://sysuhiker.cc/upload/imgUpload/201705/1495379119712250.png" title="1495379119712250.png" alt="xibei1.png"/>
       </p>
       <h1>
           【我们的计划】
