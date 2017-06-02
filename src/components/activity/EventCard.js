@@ -1,5 +1,6 @@
 import React from 'react';
-import { Timeline, Row, Col, Icon } from 'antd';
+import { Timeline, Row, Col } from 'antd';
+import LocalIcon from '../base/LocalIcon.js';
 import styles from './EventCard.less';
 
 function EventCard(props) {
@@ -9,7 +10,7 @@ function EventCard(props) {
     return (
       <Row className={styles.event_card_row}>
         <Col span={6} >
-          <Icon type={iconType} />
+          <LocalIcon type={iconType} />
           <div className={styles.event_card_title}>
             {title}
           </div>

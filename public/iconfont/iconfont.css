@@ -1,10 +1,10 @@
 
 @font-face {font-family: "anticon";
-  src: url('iconfont.eot?t=1496386850257'); /* IE9*/
-  src: url('iconfont.eot?t=1496386850257#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1496386850257') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1496386850257') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1496386850257#anticon') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1496393666190'); /* IE9*/
+  src: url('iconfont.eot?t=1496393666190#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1496393666190') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1496393666190') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1496393666190#anticon') format('svg'); /* iOS 4.1- */
 }
 
 .anticon {
@@ -15,37 +15,37 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.anticon-lock:before { content: "\e600"; }
+.anticon-sysuhiker-lock:before { content: "\e600"; }
 
-.anticon-left:before { content: "\e612"; }
+.anticon-sysuhiker-left:before { content: "\e612"; }
 
-.anticon-right:before { content: "\e613"; }
+.anticon-sysuhiker-right:before { content: "\e613"; }
 
-.anticon-clock:before { content: "\e71b"; }
+.anticon-sysuhiker-clock:before { content: "\e71b"; }
 
-.anticon-down:before { content: "\e7eb"; }
+.anticon-sysuhiker-down:before { content: "\e7eb"; }
 
-.anticon-user:before { content: "\e655"; }
+.anticon-sysuhiker-user:before { content: "\e655"; }
 
-.anticon-calendar:before { content: "\e658"; }
+.anticon-sysuhiker-calendar:before { content: "\e658"; }
 
-.anticon-male:before { content: "\e81f"; }
+.anticon-sysuhiker-male:before { content: "\e81f"; }
 
-.anticon-team:before { content: "\e7f8"; }
+.anticon-sysuhiker-team:before { content: "\e7f8"; }
 
-.anticon-to-top:before { content: "\ea1d"; }
+.anticon-sysuhiker-to-top:before { content: "\ea1d"; }
 
-.anticon-rocket:before { content: "\e681"; }
+.anticon-sysuhiker-rocket:before { content: "\e681"; }
 
-.anticon-environment-o:before { content: "\e624"; }
+.anticon-sysuhiker-environment-o:before { content: "\e624"; }
 
-.anticon-clock1:before { content: "\e63d"; }
+.anticon-sysuhiker-clock1:before { content: "\e63d"; }
 
-.anticon-female:before { content: "\e604"; }
+.anticon-sysuhiker-female:before { content: "\e604"; }
 
-.anticon-sysuhiker:before { content: "\e6f4"; }
+.anticon-sysuhiker-sysuhiker:before { content: "\e6f4"; }
 
-.anticon-mudedi:before { content: "\e67f"; }
+.anticon-sysuhiker-mudedi:before { content: "\e67f"; }
 
-.anticon-jihedidian:before { content: "\e621"; }
+.anticon-sysuhiker-jihedidian:before { content: "\e621"; }
 

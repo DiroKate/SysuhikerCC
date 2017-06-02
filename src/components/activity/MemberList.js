@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Card, Icon, Table } from 'antd';
+import { Button, Card, Table } from 'antd';
+import LocalIcon from '../base/LocalIcon.js';
 import styles from './MemberList.less';
 
 function MemberInfo(props) {
@@ -38,7 +39,7 @@ function MemberInfo(props) {
     render: (text, record) => (
       <p>
         {record.name}
-        <Icon
+        <LocalIcon
           type={record.gender}
           className={styles[`${record.gender}`]}
         />
@@ -61,9 +62,9 @@ function MemberList(props) {
   const { data } = props;
   const gender = (
     <div className={styles.gender}>
-      <Icon type="male" className={styles.iconMale} />
+      <LocalIcon type="male" className={styles.iconMale} />
       <p>10</p>
-      <Icon className={styles.iconFemale} type="female" />
+      <LocalIcon className={styles.iconFemale} type="female" />
       <p>10</p>
     </div>
   );
