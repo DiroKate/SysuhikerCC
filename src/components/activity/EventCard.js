@@ -8,7 +8,7 @@ function EventCard(props) {
   const eventCardCallback = ({ iconType, title, content }) => {
     return (
       <Row className={styles.event_card_row}>
-        <Col span={8} >
+        <Col span={6} >
           <Icon type={iconType} />
           <div className={styles.event_card_title}>
             {title}
@@ -42,6 +42,13 @@ function EventCard(props) {
           iconType: 'calendar',
           title: '行程日期:',
           content: `${data.start_at}  至   ${data.end_at}`,
+        })}
+      </Timeline.Item>
+      <Timeline.Item className={styles.timeLine} color="red">
+        {eventCardCallback({
+          iconType: 'clock1',
+          title: '报名截止:',
+          content: data.deadline,
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="blue">

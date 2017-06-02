@@ -1,10 +1,10 @@
 
 @font-face {font-family: "anticon";
-  src: url('iconfont.eot?t=1496369151878'); /* IE9*/
-  src: url('iconfont.eot?t=1496369151878#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1496369151878') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1496369151878') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1496369151878#anticon') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1496386850257'); /* IE9*/
+  src: url('iconfont.eot?t=1496386850257#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1496386850257') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1496386850257') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1496386850257#anticon') format('svg'); /* iOS 4.1- */
 }
 
 .anticon {
@@ -16,6 +16,10 @@
 }
 
 .anticon-lock:before { content: "\e600"; }
+
+.anticon-left:before { content: "\e612"; }
+
+.anticon-right:before { content: "\e613"; }
 
 .anticon-clock:before { content: "\e71b"; }
 
@@ -34,6 +38,8 @@
 .anticon-rocket:before { content: "\e681"; }
 
 .anticon-environment-o:before { content: "\e624"; }
+
+.anticon-clock1:before { content: "\e63d"; }
 
 .anticon-female:before { content: "\e604"; }
 

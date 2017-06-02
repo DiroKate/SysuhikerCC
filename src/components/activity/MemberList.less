@@ -11,15 +11,44 @@
     margin: 1rem 0;
   }
 
+  .gender {
+    display: inline-flex;
+    align-items: center;
+  }
+
   .icon {
     &Male {
       font-size: 12px;
       color: @iconBlue;
+      padding-right: 6px;
     }
 
     &Female {
+      padding-left: 12px;
+      padding-right: 6px;
       font-size: 12px;
       color: @iconRed;
     }
   }
+}
+
+.iconImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 60px;
+}
+
+.iconfont {
+  font-size: 12px;
+  padding-left: 6px;
+}
+
+.female {
+  .iconfont;
+  color: @iconRed;
+}
+
+.male {
+  .iconfont;
+  color: @iconBlue;
 }
