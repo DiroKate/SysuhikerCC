@@ -41,6 +41,7 @@
     "rc-tween-one": "^1.2.5",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-draft-wysiwyg": "^1.10.0",
     "react-router": "^4.1.1",
     "redux-logger": "^3.0.6"
   },
