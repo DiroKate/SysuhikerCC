@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>IconFont</title>
+    <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="iconfont.css">
+</head>
+<body>
+    <div class="main markdown">
+        <h1>IconFont 图标</h1>
+        <ul class="icon_lists clear">
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-lock"></i>
+                    <div class="name">lock</div>
+                    <div class="fontclass">.anticon-sysuhiker-lock</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-left"></i>
+                    <div class="name">left</div>
+                    <div class="fontclass">.anticon-sysuhiker-left</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-right"></i>
+                    <div class="name">right</div>
+                    <div class="fontclass">.anticon-sysuhiker-right</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-clock"></i>
+                    <div class="name">clock</div>
+                    <div class="fontclass">.anticon-sysuhiker-clock</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-down"></i>
+                    <div class="name">down</div>
+                    <div class="fontclass">.anticon-sysuhiker-down</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-user"></i>
+                    <div class="name">user</div>
+                    <div class="fontclass">.anticon-sysuhiker-user</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-calendar"></i>
+                    <div class="name">calendar</div>
+                    <div class="fontclass">.anticon-sysuhiker-calendar</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-male"></i>
+                    <div class="name">male</div>
+                    <div class="fontclass">.anticon-sysuhiker-male</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-team"></i>
+                    <div class="name">team</div>
+                    <div class="fontclass">.anticon-sysuhiker-team</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-to-top"></i>
+                    <div class="name">to-top</div>
+                    <div class="fontclass">.anticon-sysuhiker-to-top</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-rocket"></i>
+                    <div class="name">rocket</div>
+                    <div class="fontclass">.anticon-sysuhiker-rocket</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-environment-o"></i>
+                    <div class="name">environment-o</div>
+                    <div class="fontclass">.anticon-sysuhiker-environment-o</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-clock1"></i>
+                    <div class="name">截止时间</div>
+                    <div class="fontclass">.anticon-sysuhiker-clock1</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-female"></i>
+                    <div class="name">female</div>
+                    <div class="fontclass">.anticon-sysuhiker-female</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-sysuhiker"></i>
+                    <div class="name">徒步旅游</div>
+                    <div class="fontclass">.anticon-sysuhiker-sysuhiker</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-mudedi"></i>
+                    <div class="name">目的地</div>
+                    <div class="fontclass">.anticon-sysuhiker-mudedi</div>
+                </li>
+            
+                <li>
+                <i class="icon anticon anticon-sysuhiker-jihedidian"></i>
+                    <div class="name">集合地点</div>
+                    <div class="fontclass">.anticon-sysuhiker-jihedidian</div>
+                </li>
+            
+        </ul>
+
+        <h2 id="font-class-">font-class引用</h2>
+        <hr>
+
+        <p>font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。</p>
+        <p>与unicode使用方式相比，具有如下特点：</p>
+        <ul>
+        <li>兼容性良好，支持ie8+，及所有现代浏览器。</li>
+        <li>相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。</li>
+        <li>因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。</li>
+        <li>不过因为本质上还是使用的字体，所以多色图标还是不支持的。</li>
+        </ul>
+        <p>使用步骤如下：</p>
+        <h3 id="-fontclass-">第一步：引入项目下面生成的fontclass代码：</h3>
+
+
+        <pre><code class="lang-js hljs javascript"><span class="hljs-comment">&lt;link rel="stylesheet" type="text/css" href="./iconfont.css"&gt;</span></code></pre>
+        <h3 id="-">第二步：挑选相应图标并获取类名，应用于页面：</h3>
+        <pre><code class="lang-css hljs">&lt;<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">class</span>="<span class="hljs-selector-tag">anticon</span> <span class="hljs-selector-tag">anticon-sysuhiker-xxx</span>"&gt;&lt;/<span class="hljs-selector-tag">i</span>&gt;</code></pre>
+        <blockquote>
+        <p>"anticon"是你项目下的font-family。可以通过编辑项目查看，默认是"iconfont"。</p>
+        </blockquote>
+    </div>
+</body>
+</html>
