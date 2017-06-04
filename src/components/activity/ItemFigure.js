@@ -11,7 +11,7 @@ function ItemFigure() {
     id: 'abcdefg',
   };
   const clickHandler = () => {
-    browserHistory.push(`/activity/${itemData.id}`);
+    browserHistory.push(`/activity/details/${itemData.id}`);
   };
 
   return (
@@ -20,7 +20,7 @@ function ItemFigure() {
         <Col md={2}>
           <img
             src="/icon.png"
-            role="presentation"
+            alt=""
           />
         </Col>
         <Col>
@@ -34,7 +34,7 @@ function ItemFigure() {
             <Col md={{ span: 10 }}>
               <img
                 src="/yay.jpg"
-                role="presentation"
+                alt=""
               />
             </Col>
             <Col md={{ span: 14 }}>

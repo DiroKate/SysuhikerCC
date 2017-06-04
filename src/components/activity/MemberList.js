@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Card, Table } from 'antd';
+import { browserHistory } from 'dva/router';
 import LocalIcon from '../base/LocalIcon.js';
+
 import styles from './MemberList.less';
 
 function MemberInfo(props) {
@@ -34,7 +36,7 @@ function MemberInfo(props) {
     title: '头像',
     key: 'icon',
     render: (text, record) => (
-      <img className={styles.iconImg} src={record.iconUrl} role="presentation" />
+      <img className={styles.iconImg} src={record.iconUrl} alt="" />
     ),
   }, {
     title: '昵称性别',
@@ -63,6 +65,10 @@ function MemberInfo(props) {
 
 function MemberList(props) {
   const { data } = props;
+  const activityId = '12345678';
+  const onClick = () => {
+    browserHistory.push(`/activity/apply/${activityId}`);
+  };
   const gender = (
     <div className={styles.gender}>
       <LocalIcon type="male" className={styles.iconMale} />
@@ -73,10 +79,14 @@ function MemberList(props) {
   );
   return (
     <div className={styles.memberList}>
-      <Button type="primary" className={styles.joinBtn}>
+      <Button
+        type="primary"
+        className={styles.joinBtn}
+        onClick={onClick}
+      >
         立即参加
       </Button>
-      <Card title="已参加" extra={gender} bordered={false}>
+      <Card title="报名列表" extra={gender} bordered={false}>
         <MemberInfo />
       </Card>
     </div>
