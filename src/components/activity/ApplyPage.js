@@ -235,7 +235,12 @@ function ApplyPage(props) {
             id="sleepBag"
             hasFeedback
           >
-            <Input />
+            <Row gutter={8}>
+              <Col span={6}>
+                <Input />
+              </Col>
+              <Col><p>℃</p></Col>
+            </Row>
           </FormItem>
           <FormItem
             {...formItemLayout}

@@ -1,40 +1,33 @@
-@background-color: #fff;
-@hover-color: #f6f6f6;
-
-.alignItemsCenter {
-  align-items: center;
-}
-
-.activityItem {
-  max-width: 800px;
-  max-height: 400px;
-  background-color: @background-color;
-  padding: 8px 16px;
+.wrapper {
+  display: inline-flex;
 
   &:hover {
     & h1 {
       color: @link-color;
     }
-    background-color: @hover-color;
   }
 
-  .tagNote {
-    .alignItemsCenter;
+  .iconWrapper {
+    width: 150px;
   }
 
-  .header {
-    & img {
-      width: 50px;
-      height: 50px;
-      border-radius: 100px;
+  .contentWrapper {
+    margin-left: 1rem;
+
+    .leaderSpan {
+      display: flex;
+      margin-bottom: 1rem;
+
+      & p {
+        margin-left: 0.5rem;
+      }
     }
-  }
-
-  .content {
-    margin: 16px auto;
-    & img {
-      max-width: 100%;
-      max-height: 150px;
+    .tagInfo {
+      margin-top: 1rem;
+      align-items: center;
+      .inlineSpan {
+        display: inline-flex;
+      }
     }
   }
 }
