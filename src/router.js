@@ -3,7 +3,6 @@ import { Router } from 'dva/router';
 import PropTypes from 'prop-types';
 import App from './routes/App.js';
 
-
 const cached = {};
 function registerModel(app, model) {
   if (!cached[model.namespace]) {
@@ -59,6 +58,14 @@ const Routers = ({ history, app }) => {
               registerModel(app, require('./models/users'));
               cb(null, require('./routes/activity/details/'));
             }, 'user-detail');
+          },
+        }, {
+          path: 'activity/create',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/users'));
+              cb(null, require('./routes/activity/create/'));
+            }, 'user-create');
           },
         }, {
           path: 'activity/apply/:id',

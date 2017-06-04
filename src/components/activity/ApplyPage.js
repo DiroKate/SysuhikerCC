@@ -83,6 +83,16 @@ function ApplyPage(props) {
       sm: { span: 10 },
     },
   };
+  const formItemLayoutWide = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 6 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 14 },
+    },
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -155,7 +165,7 @@ function ApplyPage(props) {
             <Input />
           </FormItem>
           <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="团队角色"
             id="role"
           >
@@ -242,17 +252,9 @@ function ApplyPage(props) {
               <Col><p>℃</p></Col>
             </Row>
           </FormItem>
+
           <FormItem
-            {...formItemLayout}
-            label="帐篷"
-            id="camp"
-          >
-            <Checkbox.Group
-              options={roleOptions}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="帐篷"
             id="camp"
           >
@@ -261,7 +263,7 @@ function ApplyPage(props) {
             />
           </FormItem>
           <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="防潮垫"
             id="fangchaodian"
           >
@@ -270,7 +272,7 @@ function ApplyPage(props) {
             />
           </FormItem>
           <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="对讲机"
             id="duijiangji"
           >
@@ -279,7 +281,7 @@ function ApplyPage(props) {
             />
           </FormItem>
           <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="炉头"
             id="lutou"
           >
@@ -288,7 +290,7 @@ function ApplyPage(props) {
             />
           </FormItem>
           <FormItem
-            {...formItemLayout}
+            {...formItemLayoutWide}
             label="套锅"
             id="taoguo"
           >

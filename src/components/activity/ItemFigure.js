@@ -1,15 +1,11 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
-import { browserHistory } from 'dva/router';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
-  const { itemData } = props;
+  const { itemData, detailHandler } = props;
   const days = 3;// 计算出来
 
-  const clickHandler = () => {
-    browserHistory.push(`/activity/details/${itemData.id}`);
-  };
 
   const contentLayout = {
     xs: 24,
@@ -17,7 +13,7 @@ function ItemFigure(props) {
   };
 
   return (
-    <div className={styles.wrapper} onClick={clickHandler}>
+    <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
         <img
           alt=""

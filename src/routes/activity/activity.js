@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'dva';
 import QueueAnim from 'rc-queue-anim';
+import { browserHistory } from 'dva/router';
 import { Tabs, Table, Row, Col } from 'antd';
 import ItemFigure from '../../components/activity/ItemFigure.js';
+import CreateButton from '../../components/activity/CreateButton.js';
 
 import styles from './activity.less';
 
 const { TabPane } = Tabs;
 
 function Activity() {
-  // const callback = (key) => {
-  //   // console.log(key);
-  // };
-  //
-  //
+  const createHandler = () => {
+    browserHistory.push('/activity/create');
+  };
+
+  const detailHandler = () => {
+    browserHistory.push(`/activity/details/${itemData.id}`);
+  };
   const itemData = {
     title: '爬山爬山！！',
     leader: 'diroguan',
@@ -29,18 +33,22 @@ function Activity() {
     {
       key: 1,
       itemData,
+      detailHandler,
     }, {
       key: 2,
       itemData,
+      detailHandler,
     }, {
       key: 3,
       itemData,
+      detailHandler,
     },
   ];
   const hotActivityData = [
     {
       key: 1,
       itemData,
+      detailHandler,
     },
   ];
   const columns = [
@@ -54,6 +62,7 @@ function Activity() {
   const allActivity = (<Table dataSource={allActivityData} columns={columns} showHeader={false} />);
 
   const hotActivity = (<Table dataSource={hotActivityData} columns={columns} showHeader={false} />);
+
 
   return (
     <div className={styles.wrapper}>
@@ -70,7 +79,7 @@ function Activity() {
           </Tabs>
         </Col>
         <Col xs={24} sm={6}>
-          创建活动
+          <CreateButton createHandler={createHandler} />
         </Col>
       </Row>
     </div>
