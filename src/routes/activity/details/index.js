@@ -4,15 +4,12 @@ import { Breadcrumb, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import QueueAnim from 'rc-queue-anim';
 
-import EventCard from '../../../components/activity/EventCard.js';
-import LeaderInfo from '../../../components/activity/LeaderInfo.js';
-import MemberList from '../../../components/activity/MemberList.js';
-import ForumBoard from '../../../components/activity/ForumBoard.js';
+import { Activity } from '../../../components';
 
 import styles from './index.less';
 import Example from './example.js';
 
-
+const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
 
 const fakeData = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Timeline, Row, Col } from 'antd';
-import LocalIcon from '../base/LocalIcon.js';
+import { LocalIcon } from '..';
 import styles from './EventCard.less';
 
 function EventCard(props) {

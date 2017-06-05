@@ -2,7 +2,10 @@ import React from 'react';
 // import { connect } from 'dva';
 // import PropTypes from 'prop-types';
 
-import CreatePage from '../../../components/activity/CreatePage.js';
+// import CreatePage from '../../../components/activity/CreatePage.js';
+import { Activity } from '../../../components';
+
+const { CreatePage } = Activity;
 
 function CreateActivity(props) {
   console.log(props);

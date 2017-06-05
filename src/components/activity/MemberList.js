@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Table } from 'antd';
 import { browserHistory } from 'dva/router';
-import LocalIcon from '../base/LocalIcon.js';
+import { LocalIcon } from '..';
 
 import styles from './MemberList.less';
 

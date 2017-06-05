@@ -1,16 +1,18 @@
 import React from 'react';
 import { connect } from 'dva';
-import QueueAnim from 'rc-queue-anim';
+// import QueueAnim from 'rc-queue-anim';
 import { browserHistory } from 'dva/router';
 import { Tabs, Table, Row, Col } from 'antd';
-import ItemFigure from '../../components/activity/ItemFigure.js';
-import CreateButton from '../../components/activity/CreateButton.js';
+import { Activity } from '../../components';
 
 import styles from './activity.less';
 
+const { ItemFigure, CreateButton } = Activity;
+
+
 const { TabPane } = Tabs;
 
-function Activity() {
+function ActivityRoute() {
   const createHandler = () => {
     browserHistory.push('/activity/create');
   };
@@ -88,4 +90,4 @@ function Activity() {
   //   <Details />
   // );
 }
-export default connect()(Activity);
+export default connect()(ActivityRoute);

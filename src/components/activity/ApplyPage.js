@@ -1,7 +1,7 @@
 /* 报名页面 */
 import React from 'react';
 import { Breadcrumb, Alert, Form, notification, Icon, Checkbox, Button, Radio, Input, Row, Col } from 'antd';
-import LocalIcon from '../base/LocalIcon.js';
+import { LocalIcon } from '..';
 import styles from './ApplyPage.less';
 
 const BreadcrumbItem = Breadcrumb.Item;

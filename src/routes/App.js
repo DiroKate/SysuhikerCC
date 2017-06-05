@@ -4,10 +4,14 @@ import enquire from 'enquire.js';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
 import { BackTop } from 'antd';
+import { Helmet } from 'react-helmet';
+import { config } from '../utils';
 
 import Nav from './Home/Nav';
 import Footer from './Home/Footer';
-import './Home/less/antMotion_style.less';
+import '../themes/antless/antMotion_style.less';
+
+const { iconFontJS, iconFontCSS } = config;
 
 class App extends React.Component {
   static propTypes = {
@@ -58,6 +62,10 @@ class App extends React.Component {
 
     return (
       <div className="templates-wrapper" ref={(doc) => { this.doc = doc; }} >
+        <Helmet>
+          {iconFontJS && <script src={iconFontJS} />}
+          {iconFontCSS && <link rel="stylesheet" href={iconFontCSS} />}
+        </Helmet>
         <BackTop />
         <Nav {...navProps} users={users} />
         <div className="user-templates-wrapper">

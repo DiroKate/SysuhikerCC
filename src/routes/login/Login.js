@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Spin } from 'antd';
-import LoginForm from '../../components/login/LoginForm';
+import { LoginForm } from '../../components';
+
 
 function Login({ dispatch, loading }) {
   const loginProps = {

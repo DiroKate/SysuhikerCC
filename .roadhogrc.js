@@ -1,13 +1,20 @@
 const path = require('path');
+const svgSpriteDirs = [
+  path.resolve(__dirname, 'src/svg/'),
+  require.resolve('antd').replace(/index\.js$/, ''),
+]
 
 export default {
   // "disableCSSModules": true,
   entry: "src/index.js",
-  theme: {
-    "@primary-color": "#1DA57A",
-    "@link-color": "#1DA57A",
-    // "@icon-url": '"/iconfont/iconfont"',
-  },
+  svgSpriteLoaderDirs: svgSpriteDirs,
+  theme: "./theme.config.js",
+  //
+  // theme: {
+  //   "@primary-color": "#1DA57A",
+  //   "@link-color": "#1DA57A",
+  //   // "@icon-url": '"/iconfont/iconfont"',
+  // },
   proxy: {
     "/api": {
       "target": "http://localhost/PhalApi/Public",
@@ -16,23 +23,19 @@ export default {
     }
   },
   publicPath: "/",
-  extraBabelPlugins: [
-    'transform-runtime',
-    ['import', {
-      libraryName: 'antd',
-      style: true
-    }]
-  ],
-  env: {
-    production: {
-      define: {
-        __CDN__: ''
+  "env": {
+      "development": {
+        "extraBabelPlugins": [
+          "dva-hmr",
+          "transform-runtime",
+  		    ["import", { "libraryName": "antd", "style": true }]
+        ]
+      },
+      "production": {
+        "extraBabelPlugins": [
+          "transform-runtime",
+  		    ["import", { "libraryName": "antd", "style": true}]
+        ]
       }
-    },
-    development: {
-      extraBabelPlugins: [
-        'dva-hmr'
-      ]
-    }
   }
 }
