@@ -2,36 +2,36 @@ const path = require('path');
 
 export default {
   // "disableCSSModules": true,
-  "entry": "src/index.js",
-  "theme": {
+  entry: "src/index.js",
+  theme: {
     "@primary-color": "#1DA57A",
     "@link-color": "#1DA57A",
     // "@icon-url": '"/iconfont/iconfont"',
   },
-  "proxy": {
+  proxy: {
     "/api": {
       "target": "http://localhost/PhalApi/Public",
       "changeOrigin": true,
       "pathRewrite": { "^/api" : "" }
     }
   },
-  "env": {
-    "development": {
-      "extraBabelPlugins": [
-        "dva-hmr",
-        "transform-runtime",
-        [
-          "import",
-          {
-            "libraryName": "antd",
-            "style": true
-          }
-        ]
-      ]
+  publicPath: "/",
+  extraBabelPlugins: [
+    'transform-runtime',
+    ['import', {
+      libraryName: 'antd',
+      style: true
+    }]
+  ],
+  env: {
+    production: {
+      define: {
+        __CDN__: ''
+      }
     },
-    "production": {
-      "extraBabelPlugins": [
-        "transform-runtime"
+    development: {
+      extraBabelPlugins: [
+        'dva-hmr'
       ]
     }
   }
