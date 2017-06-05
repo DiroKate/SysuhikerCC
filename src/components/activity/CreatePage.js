@@ -127,10 +127,23 @@ function CreatePage(props) {
   );
   formItems.push(endAt);
 
+  const maxPeople = (
+    <Form.Item
+      labelCol={{ xs: { span: 24 }, sm: { span: 3 } }}
+      wrapperCol={{ xs: { span: 24 }, sm: { span: 3 } }}
+      label="人数上限"
+      id="maxPeople"
+      hasFeedback
+    >
+      <Input />
+    </Form.Item>
+  );
+  formItems.push(maxPeople);
+
   const collectionLocation = (
     <Form.Item
       {...formItemLayout}
-      label="集合时间"
+      label="集合地点"
       id="collectionLocation"
       hasFeedback
     >

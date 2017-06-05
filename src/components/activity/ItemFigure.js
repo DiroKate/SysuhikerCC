@@ -18,7 +18,6 @@ function ItemFigure(props) {
         <img
           alt=""
           src={itemData.iconUrl}
-          style={{ width: '150px', borderRadius: '300px' }}
         />
       </div>
       <div className={styles.contentWrapper}>
