@@ -9,12 +9,6 @@ export default {
   entry: "src/index.js",
   svgSpriteLoaderDirs: svgSpriteDirs,
   theme: "./theme.config.js",
-  //
-  // theme: {
-  //   "@primary-color": "#1DA57A",
-  //   "@link-color": "#1DA57A",
-  //   // "@icon-url": '"/iconfont/iconfont"',
-  // },
   proxy: {
     "/api": {
       "target": "http://localhost/PhalApi/Public",

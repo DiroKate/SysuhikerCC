@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "start": "PORT=3000 roadhog server",
-    "build": "roadhog build",
-    "lint": "eslint --ext .js src test"
+    "build": "roadhog build --analyze",
+    "lint": "eslint --ext .js src test",
+    "ghpage": "git subtree push --prefix dist origin gh-pages"
   },
   "engines": {
     "install-node": "6.9.2"

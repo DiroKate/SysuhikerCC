@@ -47,6 +47,7 @@ function MemberInfo(props) {
         <LocalIcon
           type={record.gender}
           className={styles[`${record.gender}`]}
+          colorful
         />
       </p>
     ),
@@ -71,9 +72,9 @@ function MemberList(props) {
   };
   const gender = (
     <div className={styles.gender}>
-      <LocalIcon type="male" className={styles.iconMale} />
+      <LocalIcon type="male" className={styles.iconMale} colorful />
       <p>10</p>
-      <LocalIcon className={styles.iconFemale} type="female" />
+      <LocalIcon className={styles.iconFemale} type="female" colorful />
       <p>10</p>
     </div>
   );

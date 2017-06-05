@@ -132,10 +132,10 @@ function ApplyPage(props) {
           >
             <Radio.Group>
               <Radio value="male">
-                <LocalIcon type="male" style={{ color: '#1296db' }} />GG
+                <LocalIcon type="male" colorful />GG
               </Radio>
               <Radio value="female">
-                <LocalIcon type="female" style={{ color: '#d4237a' }} />MM
+                <LocalIcon type="female" colorful />MM
               </Radio>
             </Radio.Group>
           </FormItem>
