@@ -51,9 +51,9 @@ class Header extends Component {
       bbs: '逸仙茶馆',
       about: '关于',
     };
-    const navChildren = Object.keys(navData).map(key => (
+    const navChildren = Object.keys(navData).map((key) => (
       <Item key={key}>
-        <Link to={key}>
+        <Link to={`/${key}`}>
           {navData[key]}
         </Link>
       </Item>
