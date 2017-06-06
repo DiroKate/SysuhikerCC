@@ -20,7 +20,7 @@ const LocalIcon = ({ type, colorful, className }) => {
   }
 
   const csFont = ClassNames(
-    { 'sysuhiker': true },
+    { sysuhiker: true },
     { [`sysuhikericon-${type}`]: true },
     { [`${propsClassName}`]: className !== undefined },
   );
@@ -30,6 +30,9 @@ const LocalIcon = ({ type, colorful, className }) => {
 LocalIcon.propTypes = {
   type: PropTypes.string.isRequired,
   colorful: PropTypes.bool,
+};
+LocalIcon.defaultProps = {
+  colorful: false,
 };
 
 export default LocalIcon;

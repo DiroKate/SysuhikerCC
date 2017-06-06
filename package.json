@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "PORT=3000 roadhog server",
-    "build": "roadhog build --analyze",
+    "build": "roadhog build",
     "lint": "eslint --ext .js src test",
     "ghpage": "git subtree push --prefix dist origin gh-pages"
   },
@@ -43,7 +43,6 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-draft-wysiwyg": "^1.10.0",
-    "react-helmet": "^5.1.3",
     "react-router": "^4.1.1",
     "redux-logger": "^3.0.6"
   },
