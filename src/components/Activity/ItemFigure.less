@@ -1,0 +1,40 @@
+.wrapper {
+  display: inline-flex;
+
+  &:hover {
+    & h1 {
+      color: @link-color;
+    }
+  }
+
+  .iconWrapper {
+    width: 10rem;
+
+    & img {
+      width: 10rem;
+      border-radius: 20rem;
+    }
+  }
+
+  .contentWrapper {
+    margin-left: 1rem;
+
+    .leaderSpan {
+      display: flex;
+      margin-bottom: 1rem;
+
+      & p {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .tagInfo {
+      margin-top: 1rem;
+      align-items: center;
+
+      .inlineSpan {
+        display: inline-flex;
+      }
+    }
+  }
+}
