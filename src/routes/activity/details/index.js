@@ -31,25 +31,25 @@ const forumBoardProps = {
   dataSource: [
     {
       key: '1',
-      iconUrl: '/icon.png',
+      userEmail:"111@qq.com",
       userName: 'diroguan',
       content: '博学，审问，慎思，明辨，笃行',
       createAt: '2017-06-03 00:10:05',
     }, {
       key: '2',
-      iconUrl: '/icon.png',
+      userEmail:"111@qq.com",
       userName: 'diroguan',
       content: '博学，审问，慎思，明辨，笃行',
       createAt: '2017-06-03 00:10:05',
     }, {
       key: '3',
-      iconUrl: '/icon.png',
+      userEmail:"111@qq.com",
       userName: 'diroguan',
       content: '博学，审问，慎思，明辨，笃行',
       createAt: '2017-06-03 00:10:05',
     }, {
       key: '4',
-      iconUrl: '/icon.png',
+      userEmail:"111@qq.com",
       userName: 'diroguan',
       content: '博学，审问，慎思，明辨，笃行',
       createAt: '2017-06-03 00:10:05',

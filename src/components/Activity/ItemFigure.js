@@ -1,10 +1,12 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
+import Gravatar from 'react-gravatar';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
   const { itemData, detailHandler } = props;
   const days = 3;// 计算出来
+  const userEmail = 'diroguan@foxmail.com';
 
 
   const contentLayout = {
@@ -15,9 +17,10 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        <img
-          alt=""
-          src={itemData.iconUrl}
+        <Gravatar 
+          email={userEmail} 
+          className={styles.gravatar}
+          default="monsterid"
         />
       </div>
       <div className={styles.contentWrapper}>

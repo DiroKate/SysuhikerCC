@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Table } from 'antd';
 import { browserHistory } from 'dva/router';
+import Gravatar from 'react-gravatar';
 import { LocalIcon } from '..';
 
 import styles from './MemberList.less';
@@ -9,6 +10,7 @@ function MemberInfo(props) {
   const dataSource = [{
     key: '1',
     name: '小邱',
+    userEmail: '111@qq.com',
     gender: 'female',
     notes: '传说中的备注',
     role: '发起人',
@@ -17,6 +19,7 @@ function MemberInfo(props) {
   }, {
     key: '2',
     name: 'diroguan',
+    userEmail: '222@qq.com',
     gender: 'male',
     notes: '传说中的备注',
     iconUrl: '/icon.png',
@@ -24,6 +27,7 @@ function MemberInfo(props) {
     state: '活动成员',
   }, {
     key: '3',
+    userEmail: '333@qq.com',
     name: '吴彦祖',
     gender: 'female',
     notes: '传说中的备注',
@@ -36,7 +40,7 @@ function MemberInfo(props) {
     title: '头像',
     key: 'icon',
     render: (text, record) => (
-      <img className={styles.iconImg} src={record.iconUrl} alt="" />
+      <Gravatar default="monsterid" email={record.userEmail} className={styles.iconImg} />
     ),
   }, {
     title: '昵称性别',
