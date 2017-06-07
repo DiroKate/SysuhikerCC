@@ -5,13 +5,13 @@ import styles from './LeaderInfo.less';
 
 function LeaderInfo(props) {
   const { data } = props;
-  const userEmail = 'diroguan@foxmail.com';
+  const userEmail = 'yuyun233@qq.com';
 
   return (
     <Row className={styles.content_leader} type="flex" justify="left" align="middle">
       <Col span={8}>
-        <Gravatar 
-          email={userEmail} 
+        <Gravatar
+          email={userEmail}
           className={styles.gravatar}
           default="monsterid"
         />

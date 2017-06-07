@@ -1,0 +1,40 @@
+@link-active-color: shade(@link-color, 5%);
+.logoFont {
+  font-size: 24px;
+}
+
+.logoImg {
+  width: 40px;
+}
+
+.loginBtn {
+  width: 100%;
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-self: auto;
+}
+
+.wrapper {
+  .flexCenter;
+
+  .card {
+    width: 500px;
+
+    .icon {
+      .flexCenter;
+      font-size: 3rem;
+      color: @link-active-color;
+      margin-bottom: 0.5rem;
+    }
+
+    .slogan {
+      .flexCenter;
+      margin: 0.5rem 0;
+      color: @link-color;
+    }
+  }
+
+}

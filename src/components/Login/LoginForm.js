@@ -5,12 +5,6 @@ const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     const { onOk } = this.props;
@@ -26,7 +20,7 @@ class LoginForm extends React.Component {
       float: right,
     };
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.handleSubmit}>
         <FormItem>
           {getFieldDecorator('user_email', {
             rules: [{ required: true, message: '请输入用户邮箱登陆' }],
@@ -58,7 +52,7 @@ class LoginForm extends React.Component {
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
             登录
           </Button>
-          或 <a href="">现在去注册!</a>
+          或 <a href="/register">现在去注册!</a>
         </FormItem>
       </Form>
     );
