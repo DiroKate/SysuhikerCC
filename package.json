@@ -4,7 +4,7 @@
   "description": "sysuhiker.cc",
   "private": true,
   "scripts": {
-    "start": "PORT=3000 roadhog server",
+    "start": "roadhog server",
     "build": "roadhog build",
     "lint": "eslint --ext .js src test",
     "ghpage": "git subtree push --prefix dist origin gh-pages"
@@ -43,6 +43,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-draft-wysiwyg": "^1.10.0",
+    "react-gravatar": "^2.6.3",
     "react-router": "^4.1.1",
     "redux-logger": "^3.0.6"
   },

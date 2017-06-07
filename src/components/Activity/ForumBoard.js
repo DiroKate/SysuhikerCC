@@ -12,8 +12,8 @@ function ForumItem(props) {
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Gravatar 
-          email={userEmail} 
+        <Gravatar
+          email={userEmail}
           className={styles.gravatar}
           default="monsterid"
         />

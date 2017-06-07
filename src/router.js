@@ -75,6 +75,14 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/activity/apply/'));
             }, 'apply-activity');
           },
+        }, {
+          path: 'about',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/users'));
+              cb(null, require('./routes/about'));
+            }, 'about');
+          },
         },
       ],
     },

@@ -5,7 +5,6 @@ import './LocalIcon.less';
 
 const LocalIcon = ({ type, colorful, className }) => {
   const propsClassName = className;
-
   const csSvg = ClassNames(
     { 'colorful-icon': true },
     { [`${propsClassName}`]: className !== undefined },
