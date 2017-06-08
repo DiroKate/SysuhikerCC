@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
-import Gravatar from 'react-gravatar';
+import { Avatar } from './..';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
@@ -17,8 +17,8 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        <Gravatar 
-          email={userEmail} 
+        <Avatar
+          email={userEmail}
           className={styles.gravatar}
           default="monsterid"
         />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Table } from 'antd';
 import { browserHistory } from 'dva/router';
-import Gravatar from 'react-gravatar';
+import { Avatar } from './..';
 import { LocalIcon } from '..';
 
 import styles from './MemberList.less';
@@ -40,7 +40,7 @@ function MemberInfo(props) {
     title: '头像',
     key: 'icon',
     render: (text, record) => (
-      <Gravatar default="monsterid" email={record.userEmail} className={styles.iconImg} />
+      <Avatar email={record.userEmail} className={styles.iconImg} />
     ),
   }, {
     title: '昵称性别',
