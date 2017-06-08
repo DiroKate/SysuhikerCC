@@ -1,20 +1,21 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import Gravatar from 'react-gravatar';
+import { Avatar } from './..';
 import styles from './LeaderInfo.less';
 
 function LeaderInfo(props) {
   const { data } = props;
-  const userEmail = 'yuyun233@qq.com';
+  // const userEmail = 'yuyun233@qq.com';
 
   return (
     <Row className={styles.content_leader} type="flex" justify="left" align="middle">
       <Col span={8}>
-        <Gravatar
-          email={userEmail}
+        <Avatar
+          path="/yay.jpg"
           className={styles.gravatar}
-          default="monsterid"
+          custom
         />
+
       </Col>
       <Col>
         <h2>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Table, Form, Button } from 'antd';
-import Gravatar from 'react-gravatar';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Avatar } from './..';
 import styles from './ForumBoard.less';
 
 const FormItem = Form.Item;
@@ -12,10 +12,9 @@ function ForumItem(props) {
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Gravatar
+        <Avatar
           email={userEmail}
           className={styles.gravatar}
-          default="monsterid"
         />
       </div>
       <div className={styles.forumItemWrapper}>
