@@ -1,29 +1,23 @@
 import React from 'react';
-import { Breadcrumb, DatePicker, TimePicker, Radio, Row, Col, Alert, Form, Input, Button } from 'antd';
+import { Breadcrumb, DatePicker, TimePicker, Radio, Row, Col, Alert, Form, Input, Button, Icon, Tooltip } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import styles from './CreatePage.less';
 
 
-function CreatePage(props) {
+function createForm(props) {
+  const { form } = props;
+  const { getFieldDecorator } = form;
+
   const uploadImageCallBack = () => {
     console.log('上传图片');
   };
-  const breadcrumbDiv = (
-    <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
-      <Breadcrumb.Item>
-        <a href="/activity">活动列表</a>
-      </Breadcrumb.Item>
-      <Breadcrumb.Item>
-        发布活动
-      </Breadcrumb.Item>
-    </Breadcrumb>
-);
 
-  const gridProps = {
-    xs: { offset: 1, span: 22 },
-    sm: { offset: 2, span: 20 },
+  const formItems = [];
+
+  const handleSubmit = () => {
+    console.log('submitsubmitsubmitsubmitsubmit');
   };
   const formItemLayout = {
     labelCol: {
@@ -36,21 +30,27 @@ function CreatePage(props) {
     },
   };
 
-  const formItems = [];
-
-  const handleSubmit = () => {
-    console.log('submitsubmitsubmitsubmitsubmit');
-  };
-
-  const title = (
+  const emptyInputValidate = ({ label, id, message }) => (
     <Form.Item
       {...formItemLayout}
-      label="活动名称"
-      id="activityTitle"
+      label={label}
+      id={id}
       hasFeedback
     >
-      <Input />
+      {getFieldDecorator(id, {
+        rules: [{ required: true, message, whitespace: true }],
+      })(
+        <Input />,
+      )}
     </Form.Item>
+  );
+
+  const title = (
+    emptyInputValidate({
+      label: '活动名称',
+      id: 'activityTitle',
+      message: '请输入活动名称',
+    })
   );
   formItems.push(title);
 
@@ -62,43 +62,36 @@ function CreatePage(props) {
       id="activityType"
       hasFeedback
     >
-      <Radio.Group>
-        {
-          Object.keys(activityTypesData).map(key => (
+      {getFieldDecorator('activityType', {
+        rules: [
+          { required: true, message: '请选择活动类型' },
+        ],
+      })(
+        <Radio.Group>
+          { Object.keys(activityTypesData).map(key => (
             <Radio value={key}>{activityTypesData[key]}</Radio>
-          ))
-          // Object.keys(activityTypesData).map((key) => {
-          //   console.log(key, activityTypesData[key]);
-          //   return (<Radio value={key}>{activityTypesData[key]}</Radio>);
-          // })
-        }
-      </Radio.Group>
+          ))}
+        </Radio.Group>,
+    )}
     </Form.Item>
   );
   formItems.push(activityType);
 
   const departure = (
-    <Form.Item
-      {...formItemLayout}
-      label="出发地"
-      id="departure"
-      hasFeedback
-    >
-      <Input />
-    </Form.Item>
+    emptyInputValidate({
+      label: '出发地',
+      id: 'departure',
+      message: '请输入出发地',
+    })
   );
-
   formItems.push(departure);
 
   const arrivals = (
-    <Form.Item
-      {...formItemLayout}
-      label="目的地"
-      id="arrivals"
-      hasFeedback
-    >
-      <Input />
-    </Form.Item>
+    emptyInputValidate({
+      label: '目的地',
+      id: 'arrivals',
+      message: '请输入目的地',
+    })
   );
   formItems.push(arrivals);
 
@@ -110,7 +103,11 @@ function CreatePage(props) {
       id="startAt"
       hasFeedback
     >
-      <DatePicker /><TimePicker />
+      {getFieldDecorator('startAt', {
+        rules: [{ required: true, messge: '请输入活动开始时间' }],
+      })(
+        <div><DatePicker /><TimePicker /></div>,
+      )}
     </Form.Item>
   );
   formItems.push(startAt);
@@ -122,7 +119,11 @@ function CreatePage(props) {
       id="endAt"
       hasFeedback
     >
-      <DatePicker /><TimePicker />
+      {getFieldDecorator('endAt', {
+        rules: [{ required: true, messge: '请输入活动结束时间' }],
+      })(
+        <div><DatePicker /><TimePicker /></div>,
+      )}
     </Form.Item>
   );
   formItems.push(endAt);
@@ -135,20 +136,21 @@ function CreatePage(props) {
       id="maxPeople"
       hasFeedback
     >
-      <Input />
+      {getFieldDecorator('endAt', {
+        rules: [{ type: 'string', pattern: /^[0-9]+$/, message: '请输入数字' }, { required: true, messge: '请输入活动结束时间' }],
+      })(
+        <Input />,
+      )}
     </Form.Item>
   );
   formItems.push(maxPeople);
 
   const collectionLocation = (
-    <Form.Item
-      {...formItemLayout}
-      label="集合地点"
-      id="collectionLocation"
-      hasFeedback
-    >
-      <Input />
-    </Form.Item>
+    emptyInputValidate({
+      label: '集合地点',
+      id: 'collectionLocation',
+      message: '请输入集合地点',
+    })
   );
   formItems.push(collectionLocation);
 
@@ -159,7 +161,11 @@ function CreatePage(props) {
       id="collectionTime"
       hasFeedback
     >
-      <DatePicker /><TimePicker />
+      {getFieldDecorator('collectionTime', {
+        rules: [{ required: true, messge: '请输入集合时间' }],
+      })(
+        <div><DatePicker /><TimePicker /></div>,
+      )}
     </Form.Item>
   );
   formItems.push(collectionTime);
@@ -171,7 +177,11 @@ function CreatePage(props) {
       id="startApply"
       hasFeedback
     >
-      <DatePicker /><TimePicker />
+      {getFieldDecorator('startApply', {
+        rules: [{ required: true, messge: '请输入开始报名时间' }],
+      })(
+        <div><DatePicker /><TimePicker /></div>,
+      )}
     </Form.Item>
   );
   formItems.push(startApply);
@@ -183,7 +193,11 @@ function CreatePage(props) {
       id="endApply"
       hasFeedback
     >
-      <DatePicker /><TimePicker />
+      {getFieldDecorator('endApply', {
+        rules: [{ required: true, messge: '请输入结束报名时间' }],
+      })(
+        <div><DatePicker /><TimePicker /></div>,
+      )}
     </Form.Item>
   );
   formItems.push(endApply);
@@ -191,7 +205,15 @@ function CreatePage(props) {
   const activityContent = (
     <Form.Item
       {...formItemLayout}
-      label="活动内容"
+      label={(
+        <span>
+            活动内容&nbsp;
+            <Tooltip title="写明活动的细节">
+              <Icon type="question-circle-o" />
+            </Tooltip>
+        </span>
+        )}
+
       id="activityContent"
       hasFeedback
     >
@@ -254,6 +276,32 @@ function CreatePage(props) {
   );
   formItems.push(submitBtn);
 
+  return (
+    <Form onSubmit={handleSubmit}>
+      {formItems}
+    </Form>
+  );
+}
+const CreateForm = Form.create()(createForm);
+
+
+function CreatePage(props) {
+  const breadcrumbDiv = (
+    <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+      <Breadcrumb.Item>
+        <a href="/activity">活动列表</a>
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>
+        发布活动
+      </Breadcrumb.Item>
+    </Breadcrumb>
+);
+
+  const gridProps = {
+    xs: { offset: 1, span: 22 },
+    sm: { offset: 2, span: 20 },
+  };
+
 
   return (
     <div className={styles.wrapper}>
@@ -264,9 +312,7 @@ function CreatePage(props) {
           message="请认真填写活动详情。"
           type="warning"
         />
-        <Form onSubmit={handleSubmit}>
-          {formItems}
-        </Form>
+        <CreateForm {...props} />
       </Col></Row>
     </div>
   );

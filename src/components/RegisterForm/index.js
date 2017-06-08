@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Radio, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { LocalIcon } from '..';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -8,6 +9,10 @@ const Option = Select.Option;
 function RegisterForm(props) {
   const { form } = props;
   const { getFieldDecorator, validateFieldsAndScroll, getFieldValue, validateFields } = form;
+
+  const roleOptions = [
+    '领队', '协作', '头驴', '尾驴', '财务', '后勤', '环保', '作业', '摄影', '医护', '厨师', '无线', '通讯', '骑行', '游泳', '跑步', '定向', '攀岩', '奢靡腐败',
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +31,7 @@ function RegisterForm(props) {
 
   const checkPassword = (rule, value, callback) => {
     if (value && value !== getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('两次输入的密码不一致');
     } else {
       callback();
     }
@@ -78,9 +83,9 @@ function RegisterForm(props) {
       >
         {getFieldDecorator('email', {
           rules: [{
-            type: 'email', message: 'The input is not valid E-mail!',
+            type: 'email', message: '这不是一个邮箱地址',
           }, {
-            required: true, message: 'Please input your E-mail!',
+            required: true, message: '请填写常用email，email将用来接收报名确认信息等各种活动通知',
           }],
         })(
           <Input />,
@@ -92,8 +97,8 @@ function RegisterForm(props) {
         hasFeedback
       >
         {getFieldDecorator('password', {
-          rules: [{
-            required: true, message: 'Please input your password!',
+          rules: [{ required: true, message: '密码至少6位', min: 6 }, {
+            required: true, message: '请设置用户密码',
           }, {
             validator: checkConfirm,
           }],
@@ -108,7 +113,7 @@ function RegisterForm(props) {
       >
         {getFieldDecorator('confirm', {
           rules: [{
-            required: true, message: 'Please confirm your password!',
+            required: true, message: '请设置用户密码',
           }, {
             validator: checkPassword,
           }],
@@ -120,8 +125,8 @@ function RegisterForm(props) {
         {...formItemLayout}
         label={(
           <span>
-              Nickname&nbsp;
-              <Tooltip title="What do you want other to call you?">
+              昵称&nbsp;
+              <Tooltip title="户外小昵称">
                 <Icon type="question-circle-o" />
               </Tooltip>
           </span>
@@ -129,49 +134,89 @@ function RegisterForm(props) {
         hasFeedback
       >
         {getFieldDecorator('nickname', {
-          rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+          rules: [{ required: true, message: '请输入昵称', whitespace: true }],
         })(
           <Input />,
           )}
       </FormItem>
       <FormItem
         {...formItemLayout}
-        label="Phone Number"
+        label="性别"
+        id="gender"
+      >
+        {getFieldDecorator('gender', {
+          rules: [{
+            required: true, message: '请输入邮箱',
+          }],
+        })(
+          <Radio.Group>
+            <Radio value="male">
+              <LocalIcon type="male" colorful />GG
+          </Radio>
+            <Radio value="female">
+              <LocalIcon type="female" colorful />MM
+          </Radio>
+          </Radio.Group>,
+      )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="电话号码"
       >
         {getFieldDecorator('phone', {
-          rules: [{ required: true, message: 'Please input your phone number!' }],
+          rules: [{ type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' }, { required: true, message: '输入手机号' }],
         })(
           <Input addonBefore={prefixSelector} />,
           )}
       </FormItem>
-
       <FormItem
         {...formItemLayout}
-        label="Captcha"
-        extra="We must make sure that your are a human."
+        label="住址"
       >
-        <Row gutter={8}>
-          <Col span={12}>
-            {getFieldDecorator('captcha', {
-              rules: [{ required: true, message: 'Please input the captcha you got!' }],
-            })(
-              <Input size="large" />,
-              )}
-          </Col>
-          <Col span={12}>
-            <Button size="large">Get captcha</Button>
-          </Col>
-        </Row>
-      </FormItem>
-      <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-        {getFieldDecorator('agreement', {
-          valuePropName: 'checked',
+        {getFieldDecorator('address', {
+          rules: [{ required: true, message: '输入手机号' }],
         })(
-          <Checkbox>I have read the <a href="">agreement</a></Checkbox>,
+          <Input />,
           )}
       </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="QQ"
+      >
+        {getFieldDecorator('QQ')(
+          <Input />,
+          )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="微博"
+      >
+        {getFieldDecorator('weibo')(
+          <Input />,
+          )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label={(
+          <span>
+              兴趣领域&nbsp;
+              <Tooltip title="感兴趣的方面">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+          </span>
+        )}
+        id="role"
+      >
+        {getFieldDecorator('role')(
+          <Checkbox.Group
+            options={roleOptions}
+          />,
+      )}
+      </FormItem>
+
+
       <FormItem {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" size="large">Register</Button>
+        <Button type="primary" htmlType="submit" size="large">注册</Button>
       </FormItem>
     </Form>
   );
