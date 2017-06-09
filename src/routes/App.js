@@ -46,13 +46,11 @@ class App extends React.Component {
     const navProps = {
       id: 'nav_1_0',
       key: 'nav_1_0',
-      isMode: false,
     };
 
     const footerProps = {
       id: 'footer_1_0',
       key: 'footer_1',
-      isMode: false,
     };
 
     return (
