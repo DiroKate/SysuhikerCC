@@ -11,7 +11,6 @@ const SubMenu = Menu.SubMenu;
 class Header extends Component {
   static propTypes = {
     className: PropTypes.string,
-    // isMode: PropTypes.bool,
     id: PropTypes.string,
     // isLogin: PropTypes.bool,
   };
@@ -40,8 +39,6 @@ class Header extends Component {
 
   render() {
     const props = { ...this.props };
-    const isMode = props.isMode;
-    delete props.isMode;
 
     const isLogin = props.users.login;
 
@@ -94,32 +91,6 @@ class Header extends Component {
           src="/logo.svg"
         />
       </TweenOne>
-      {isMode ? (<div
-        className={`${this.props.className}-phone-nav${this.state.phoneOpen ? ' open' : ''}`}
-        id={`${this.props.id}-menu`}
-      >
-        <div
-          className={`${this.props.className}-phone-nav-bar`}
-          onClick={() => {
-            this.phoneClick();
-          }}
-        >
-          <em />
-          <em />
-          <em />
-        </div>
-        <div
-          className={`${this.props.className}-phone-nav-text`}
-        >
-          <Menu
-            defaultSelectedKeys={['0']}
-            mode="inline"
-            theme="dark"
-          >
-            {navChildren}
-          </Menu>
-        </div>
-      </div>) :
       <TweenOne
         animation={{ x: 30, delay: 100, opacity: 0, type: 'from', ease: 'easeOutQuad' }}
         className={`${this.props.className}-nav`}
@@ -133,7 +104,6 @@ class Header extends Component {
           {navChildren}
         </Menu>
       </TweenOne>
-      }
     </TweenOne>);
   }
 }
