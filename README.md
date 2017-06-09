@@ -5,15 +5,14 @@
 
 ## 主要用到的技术框架
 1. **[nodejs](https://nodejs.org/zh-cn/)**
-2. **[dva](https://github.com/dvajs/dva)**，一种轻量化的React／Redux框架
-3. **[dva知识地图](https://github.com/dvajs/dva-knowledgemap)**
+2. **[dva](https://github.com/dvajs/dva)**，一种轻量化的React／Redux框架. [dva知识地图](https://github.com/dvajs/dva-knowledgemap)
 4. 前端框架使用的是 **[antd](https://ant.design/index-cn)**
 5. 打包工具是 **[roadhog](https://github.com/sorrycc/roadhog)**, 详见[配置](https://github.com/sorrycc/roadhog/blob/master/README.md)
 5. 使用 **[Ant Motion](https://motion.ant.design/)**
 6. 使用了 **[Wysiwyg editor](https://github.com/jpuri/react-draft-wysiwyg)** 富文本编辑器.
 
 ## 对应后端项目
-from @later2015 https://github.com/later2015/sysuhiker
+from @[later2015/sysuhiker](https://github.com/later2015/sysuhiker)
 
 ## 安装
 - 请准备好node环境
