@@ -5,7 +5,8 @@ import request from '../utils/request';
  * @param  {dict} params json体
  */
 export async function login(params) {
-  return request('/api/?service=User.Login', {
+  // return request('/api/?service=User.Login', {
+  return request('/api/serviceUser.Login', {
     method: 'POST',
     body: JSON.stringify(params),
   });
@@ -25,7 +26,8 @@ export async function logout(params) {
  * 获取用户信息
  */
 export async function userInfo(params) {
-  return request('/api/?service=User.GetBaseInfo', {
+  // return request('/api/?service=User.GetBaseInfo', {
+  return request('/api/serviceUser.GetBaseInfo', {
     method: 'POST',
     body: JSON.stringify(params),
   });

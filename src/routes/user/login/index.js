@@ -21,7 +21,6 @@ function Login({ dispatch, loading }) {
 
   const LoginPage = (
     <Card
-      title="欢迎登录逸仙徒步"
       className={styles.card}
     >
       <QueueAnim delay={300} className="queue-simple">
