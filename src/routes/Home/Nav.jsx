@@ -38,9 +38,8 @@ class Header extends Component {
   // }
 
   render() {
-    const props = { ...this.props };
-
-    const isLogin = props.users.login;
+    const { app } = this.props;
+    const isLogin = app.login;
 
     const navData = {
       home: '首页',
@@ -48,7 +47,7 @@ class Header extends Component {
       bbs: '逸仙茶馆',
       about: '关于',
     };
-    const navChildren = Object.keys(navData).map((key) => (
+    const navChildren = Object.keys(navData).map(key => (
       <Item key={key}>
         <Link to={`/${key}`}>
           {navData[key]}
@@ -78,7 +77,7 @@ class Header extends Component {
     return (<TweenOne
       component="header"
       animation={{ opacity: 0, type: 'from' }}
-      {...props}
+      {...this.props}
     >
       <TweenOne
         className={`${this.props.className}-logo`}
