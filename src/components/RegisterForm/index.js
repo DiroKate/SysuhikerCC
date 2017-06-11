@@ -7,7 +7,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 function RegisterForm(props) {
-  const { form } = props;
+  const { form, dispatch } = props;
   const { getFieldDecorator, validateFieldsAndScroll, getFieldValue, validateFields } = form;
 
   const roleOptions = [
@@ -19,6 +19,7 @@ function RegisterForm(props) {
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        dispatch({ type: 'users/register', payload: values });
       }
     });
   };
@@ -125,8 +126,26 @@ function RegisterForm(props) {
         {...formItemLayout}
         label={(
           <span>
+              真实姓名&nbsp;
+              <Tooltip title="户外属于高风险活动，需记录真实姓名。">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+          </span>
+          )}
+        hasFeedback
+      >
+        {getFieldDecorator('realName', {
+          rules: [{ required: true, message: '请输入真实姓名', whitespace: true }],
+        })(
+          <Input />,
+          )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label={(
+          <span>
               昵称&nbsp;
-              <Tooltip title="户外小昵称">
+              <Tooltip title="个性户外小昵称，方便队友间互认">
                 <Icon type="question-circle-o" />
               </Tooltip>
           </span>
@@ -145,15 +164,13 @@ function RegisterForm(props) {
         id="gender"
       >
         {getFieldDecorator('gender', {
-          rules: [{
-            required: true, message: '请输入邮箱',
-          }],
+          rules: [{ required: true }],
         })(
           <Radio.Group>
-            <Radio value="male">
+            <Radio value="gg">
               <LocalIcon type="male" colorful />GG
-          </Radio>
-            <Radio value="female">
+            </Radio>
+            <Radio value="mm">
               <LocalIcon type="female" colorful />MM
           </Radio>
           </Radio.Group>,
@@ -174,9 +191,37 @@ function RegisterForm(props) {
         label="住址"
       >
         {getFieldDecorator('address', {
-          rules: [{ required: true, message: '输入手机号' }],
+          rules: [{ required: true, message: '输入住址' }],
         })(
           <Input />,
+          )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label={(
+          <span>
+              紧急联系人&nbsp;
+              <Tooltip title="户外属于高风险活动，需记录紧急联系人。紧急联系人不能互为同一个活动的成员。">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+          </span>
+          )}
+        hasFeedback
+      >
+        {getFieldDecorator('emergency', {
+          rules: [{ required: true, message: '请输入真实姓名', whitespace: true }],
+        })(
+          <Input />,
+          )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="电话号码"
+      >
+        {getFieldDecorator('emergencyPhone', {
+          rules: [{ type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' }, { required: true, message: '输入紧急联系人手机号' }],
+        })(
+          <Input addonBefore={prefixSelector} />,
           )}
       </FormItem>
       <FormItem
@@ -211,6 +256,15 @@ function RegisterForm(props) {
           <Checkbox.Group
             options={roleOptions}
           />,
+      )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="个性签名"
+        id="role"
+      >
+        {getFieldDecorator('notes')(
+          <Input type="textarea" />,
       )}
       </FormItem>
 

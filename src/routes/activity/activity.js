@@ -26,12 +26,6 @@ function ActivityRoute({ activity }) {
     },
   }));
 
-
-  // function isBigEnough(element, index, array) {
-  //     return (element >= 10);
-  // }
-  // var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
-
   const getHotActivityData = () => (
     allActivityData.filter(element => (compareDays(element.event_join_endtime, Date())))
   );
@@ -73,7 +67,6 @@ function ActivityRoute({ activity }) {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
   return {
     activity: state.activity,
   };

@@ -12,6 +12,14 @@ export async function login(params) {
   });
 }
 
+export async function register(params) {
+  // return request('/api/?service=User.Register', {
+  return request('/api/serviceUser.Register', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 /**
  * 用户登出
  */
