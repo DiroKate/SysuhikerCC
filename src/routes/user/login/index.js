@@ -10,10 +10,11 @@ import styles from './index.less';
 
 
 function Login({ dispatch, loading }) {
+  // console.log(loading);
   const loginProps = {
     onOk(data) {
       dispatch({
-        type: 'users/login',
+        type: 'login/login',
         payload: data,
       });
     },
@@ -21,7 +22,6 @@ function Login({ dispatch, loading }) {
 
   const LoginPage = (
     <Card
-      title="欢迎登录逸仙徒步"
       className={styles.card}
     >
       <QueueAnim delay={300} className="queue-simple">
@@ -48,7 +48,7 @@ function Login({ dispatch, loading }) {
 
 function mapStateToProps(state) {
   return {
-    loading: state.loading.models.users,
+    loading: state.loading.models.app,
   };
 }
 

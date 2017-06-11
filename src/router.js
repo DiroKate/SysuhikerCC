@@ -22,7 +22,7 @@ const Routers = ({ history, app }) => {
       component: App,
       getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {
-          registerModel(app, require('./models/users'));
+          // registerModel(app, require('./models/users'));
           cb(null, { component: require('./routes/Home') });
         }, 'home');
       },
@@ -39,7 +39,7 @@ const Routers = ({ history, app }) => {
           path: 'login',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/login'));
               cb(null, require('./routes/user/login'));
             }, 'login');
           },
@@ -55,7 +55,7 @@ const Routers = ({ history, app }) => {
           path: 'activity',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/activity'));
             }, 'activity');
           },

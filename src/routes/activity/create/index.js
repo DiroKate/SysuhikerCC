@@ -8,7 +8,7 @@ import { Activity } from '../../../components';
 const { CreatePage } = Activity;
 
 function CreateActivity(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <CreatePage />
   );

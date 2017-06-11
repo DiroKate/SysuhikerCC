@@ -9,13 +9,13 @@ export default {
   entry: "src/index.js",
   svgSpriteLoaderDirs: svgSpriteDirs,
   theme: "./theme.config.js",
-  proxy: {
-    "/api": {
-      "target": "http://localhost/PhalApi/Public",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api" : "" }
-    }
-  },
+  // proxy: {
+  //   "/api": {
+  //     "target": "http://localhost/PhalApi/Public",
+  //     "changeOrigin": true,
+  //     "pathRewrite": { "^/api" : "" }
+  //   }
+  // },
   publicPath: "/",
   "env": {
       "development": {
