@@ -5,6 +5,8 @@ export default {
   state: {
     login: false,
     userId: '',
+    loginUser: {},
+
   },
 
   reducers: {
@@ -16,22 +18,35 @@ export default {
       };
     },
     getUserInfo(state, action) {
+      console.log(action);
+      state.loginUser = action.payload;
+      console.log(state);
       return {
         ...state,
-        ...action.payload,
       };
     },
   },
 
   effects: {
-    *queryUser({ payload: params }, { call }) {
-      if (typeof (params) === 'undefined') {
+    *queryUser({ payload }, { call, put, select }) {
+      const userId = yield select(state => state.app.userId);
+      let params;
+      if (userId === '') {
         return;
+      } else {
+        params = payload || { userId };
       }
+
       const { data } = yield call(UsersService.userInfo, params);
-      const { code } = data.data;
+      const { code, info } = data.data;
       if (code === 0) {
         console.log('获取用户信息成功');
+        yield put({
+          type: 'getUserInfo',
+          payload: {
+            ...info,
+          },
+        });
       } else {
         console.warn('获取用户信息失败');
       }

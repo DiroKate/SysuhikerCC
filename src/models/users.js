@@ -4,8 +4,7 @@ import * as UserService from '../services/users.js';
 export default {
   namespace: 'users',
   state: {
-    login: false,
-    userId: '',
+    loginUser: {},
   },
 
   reducers: {

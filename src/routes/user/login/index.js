@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'dva';
 import classNames from 'classnames';
-import { Card, Spin } from 'antd';
+import { Card, Spin, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 
 import { LoginForm, LocalIcon } from '../../../components';
 
 import styles from './index.less';
-
 
 function Login({ dispatch, loading }) {
   // console.log(loading);
@@ -35,13 +34,23 @@ function Login({ dispatch, loading }) {
   );
 
   const cNs = classNames(
-    { 'sysuhiker-top-wrapper': true },
+    // { 'sysuhiker-top-wrapper': true },
     { [`${styles.wrapper}`]: true },
-);
+  );
+
+  const cardLayout = {
+    xs: { span: 20, offset: 2 },
+    sm: { span: 11, offset: 12 },
+    md: { span: 8, offset: 15 },
+  };
 
   return (
     <div className={cNs}>
-      { LoginPage }
+      <Row type="flex">
+        <Col {...cardLayout} >
+          { LoginPage }
+        </Col>
+      </Row>
     </div>
   );
 }

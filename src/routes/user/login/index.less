@@ -1,4 +1,6 @@
 @link-active-color: shade(@link-color, 5%);
+@minHeight: 650px;
+
 .logoFont {
   font-size: 24px;
 }
@@ -18,10 +20,14 @@
 }
 
 .wrapper {
-  .flexCenter;
+  background-image: url('../../../assets/login_pic.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: @minHeight;
 
   .card {
-    width: 500px;
+    margin: 3rem 0;
+    background-color: tint(white, 50%);
 
     .icon {
       .flexCenter;
@@ -36,5 +42,4 @@
       color: @link-color;
     }
   }
-
 }
