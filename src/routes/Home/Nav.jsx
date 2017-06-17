@@ -3,6 +3,7 @@ import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
+import { LocalIcon } from '../../components';
 
 
 const Item = Menu.Item;
@@ -84,10 +85,10 @@ class Header extends Component {
         animation={{ x: -30, delay: 100, type: 'from', ease: 'easeOutQuad' }}
         id={`${this.props.id}-logo`}
       >
-        <img
-          role="presentation"
-          width="100%"
-          src="/logo.svg"
+        <LocalIcon
+          key="logo"
+          type="LOGO-"
+          className={`${this.props.className}-logo-img`}
         />
       </TweenOne>
       <TweenOne

@@ -16,9 +16,6 @@ class LoginForm extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const right = {
-      float: right,
-    };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem>
@@ -37,7 +34,7 @@ class LoginForm extends React.Component {
         </FormItem>
         <FormItem>
           <Row type="flex">
-            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+            <Col span={12}>
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
                 initialValue: true,
@@ -45,8 +42,8 @@ class LoginForm extends React.Component {
                 <Checkbox>Remember me</Checkbox>,
               )}
             </Col>
-            <Col lg={{ span: 6, offset: 6 }} xs={{ offset: 0, span: 24 }}>
-              <a href="">Forgot password</a>
+            <Col span={11}>
+              <a href="" style={{ float: 'right' }}>Forgot password</a>
             </Col>
           </Row>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
