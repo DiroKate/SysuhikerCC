@@ -5,7 +5,6 @@ import { RegisterForm } from '../../../components';
 import styles from './index.less';
 
 function Register(props) {
-  console.log(props);
   const { dispatch } = props;
   // const handleSubmit = (e) => {
   //   console.log(e);

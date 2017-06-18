@@ -3,7 +3,7 @@ import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
-import { LocalIcon } from '../../components';
+import { LocalIcon, Avatar } from '../../components';
 
 
 const Item = Menu.Item;
@@ -40,7 +40,8 @@ class Header extends Component {
 
   render() {
     const { app } = this.props;
-    const isLogin = app.login;
+    // const isLogin = app.login;
+    const { login, userId, userEmail, userName } = app;
 
     const navData = {
       home: '首页',
@@ -56,17 +57,15 @@ class Header extends Component {
       </Item>
     ));
     const userTitle = (<div>
-      <span className="img">
-        <img
-          src="https://zos.alipayobjects.com/rmsportal/iXsgowFDTJtGpZM.png"
-          width="30"
-          height="30"
-          role="presentation"
+      <span>
+        <Avatar
+          email={userEmail}
+          className={`${this.props.className}-user-avatar`}
         />
       </span>
-      <span>用户名</span>
+      <span>{userName}</span>
     </div>);
-    const loginMenu = isLogin ? (<SubMenu className="user" title={userTitle} key="user">
+    const loginMenu = login ? (<SubMenu className="user" title={userTitle} key="user">
       <Item key="a">用户中心</Item>
       <Item key="b">修改密码</Item>
       <Item key="c">登出</Item>

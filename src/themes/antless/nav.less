@@ -11,6 +11,13 @@
     position: relative;
     top: 0;
 
+    &-user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 80px;
+      vertical-align: middle;
+    }
+
     &-logo {
       display: inline-block;
       position: absolute;
@@ -113,14 +120,6 @@
       .user {
         font-size: 14px;
         border-left: 1px solid fade(@line-color, 5) !important;
-
-        .img {
-          margin-left: 0;
-
-          img {
-            vertical-align: middle;
-          }
-        }
 
         span {
           margin-left: 10px;
