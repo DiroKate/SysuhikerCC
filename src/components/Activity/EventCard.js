@@ -28,42 +28,42 @@ function EventCard(props) {
         {eventCardCallback({
           iconType: 'rocket',
           title: '出发地:',
-          content: data.departure,
+          content: data.event_place_of_departure ? data.event_place_of_departure : '未知',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="green">
         {eventCardCallback({
           iconType: 'mudedi',
           title: '目的地:',
-          content: data.arrivals,
+          content: data.event_destination ? data.event_destination : '未知',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="red">
         {eventCardCallback({
           iconType: 'calendar',
           title: '行程日期:',
-          content: `${data.start_at}  至   ${data.end_at}`,
+          content: `${data.event_starttime}  至   ${data.event_endtime}`,
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="red">
         {eventCardCallback({
           iconType: 'clock1',
           title: '报名截止:',
-          content: data.deadline,
+          content: data.event_join_endtime,
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'clock',
           title: '集合时间:',
-          content: data.collection_time,
+          content: data.event_gather_time ? data.event_gather_time : '未指定',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'jihedidian',
           title: '集合地点:',
-          content: data.collection_location,
+          content: data.event_gather_location ? data.event_gather_location : '未指定',
         })}
       </Timeline.Item>
     </Timeline>

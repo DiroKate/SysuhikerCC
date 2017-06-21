@@ -1,12 +1,14 @@
 import { routerRedux } from 'dva/router';
+import pathToRegexp from 'path-to-regexp';
 import * as UsersService from '../services/users';
+import * as ActivityService from '../services/activity';
 import { activityPostUitls, registerPostUitls } from '../utils';
 
 
 export default {
   namespace: 'app',
   state: {
-    login: false, // 是否已经登录
+    isLogin: false, // 是否已经登录
     userId: null, // 已登录用户的ID
     userEmail: null, // 已登录用户的邮箱
     userName: null,  // 已登陆用户的昵称
@@ -18,7 +20,7 @@ export default {
       return {
         ...state,
         userId: action.payload.userId,
-        login: true,
+        isLogin: true,
       };
     },
     getUserInfo(state, action) {
@@ -63,12 +65,25 @@ export default {
     /**
      * 发布活动
      * */
-    *postActivity({ payload: params }, { select }) {
-      const userId = yield select(state => state.app.userId);
-      console.log('into postActivity', userId);
-      const retValues = activityPostUitls(params, userId);
-      console.log('after post change: ', retValues);
+    *postActivity({ payload: params }, { select, call, put }) {
+      const login = yield select(state => state.app.login);
+      console.log('into postActivity', login);
+      if (login) {
+        const userId = yield select(state => state.app.userId);
+        const retValues = activityPostUitls(params, userId);
+        console.log('after post change: ', retValues);
+        const { data } = yield call(ActivityService.createActivities, params);
+        console.log('data', data);
+        const { code } = data.data;
+        if (code === 0) {
+          console.log('创建成功');
+        }
+      } else {
+        console.log('转到登录界面');
+        yield put(routerRedux.push('/login'));
+      }
     },
+
 
     /**
      * 用户登录
@@ -101,7 +116,8 @@ export default {
         });
 
         // 回到主页
-        yield put(routerRedux.push('/'));
+        // yield put(routerRedux.push('/'));
+        yield put(routerRedux.goBack());
       }
     },
 
@@ -111,10 +127,8 @@ export default {
      */
     *register({ payload }, { call, put }) {
       const params = registerPostUitls(payload);
-      console.log(params);
       const { data } = yield call(UsersService.register, params);
       const { code } = data.data;
-      console.log(data);
       if (code === 0) {
         const userId = data.data.userid;
         yield put({
@@ -138,19 +152,14 @@ export default {
           },
         });
 
-        yield put(routerRedux.push('/'));
+        yield put(routerRedux.goBack());
       }
     },
-
-
   },
 
   subscriptions: {
-    setup({ dispatch }) {
+    setup({ dispatch, history }) {
       dispatch({ type: 'queryUser' });
-      // window.onresize = () => {
-      //   dispatch({ type: 'changeNavbar' })
-      // }
     },
   },
 };

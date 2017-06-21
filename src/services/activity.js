@@ -8,3 +8,10 @@ export async function getActivities(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function getActivityDetails(params) {
+  return request('/api/?service=Event.GetEventInfo', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

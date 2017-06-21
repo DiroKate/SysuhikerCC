@@ -63,7 +63,7 @@ const Routers = ({ history, app }) => {
           path: 'activity/details/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              // registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/details/'));
             }, 'user-detail');
           },

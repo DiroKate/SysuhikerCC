@@ -36,6 +36,7 @@
     "dva-loading": "^0.2.1",
     "enquire": "0.0.2",
     "moment": "^2.18.1",
+    "path-to-regexp": "^1.7.0",
     "prop-types": "^15.5.10",
     "rc-banner-anim": "^0.5.12",
     "rc-queue-anim": "^1.0.3",

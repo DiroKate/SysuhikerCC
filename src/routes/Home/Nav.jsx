@@ -41,7 +41,7 @@ class Header extends Component {
   render() {
     const { app } = this.props;
     // const isLogin = app.login;
-    const { login, userId, userEmail, userName } = app;
+    const { isLogin, userId, userEmail, userName } = app;
 
     const navData = {
       home: '首页',
@@ -65,7 +65,7 @@ class Header extends Component {
       </span>
       <span>{userName}</span>
     </div>);
-    const loginMenu = login ? (<SubMenu className="user" title={userTitle} key="user">
+    const loginMenu = isLogin ? (<SubMenu className="user" title={userTitle} key="user">
       <Item key="a">用户中心</Item>
       <Item key="b">修改密码</Item>
       <Item key="c">登出</Item>
