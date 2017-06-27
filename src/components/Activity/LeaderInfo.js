@@ -7,7 +7,6 @@ import styles from './LeaderInfo.less';
 
 function LeaderInfo(props) {
   const { data } = props;
-  const userEmail = 'yuyun233@qq.com';
   const rightNow = moment().format('YYYY-MM-DD HH:mm:ss');
 
 
@@ -15,16 +14,16 @@ function LeaderInfo(props) {
     <Row className={styles.content_leader} type="flex" justify="left" align="middle">
       <Col span={8}>
         <Avatar
-          email={userEmail}
+          email={data.email}
           className={styles.gravatar}
         />
 
       </Col>
       <Col>
         <h2>
-          {data.event_createUserId}
+          {data.nick}
         </h2>
-        <div>{`${days(data.event_createtime, rightNow)} 天之前`}</div>
+        <div>{`${days(data.createtime, rightNow)}天 之前`}</div>
       </Col>
     </Row>
   );

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Card, Table } from 'antd';
+import { Button, Card, Table, Modal } from 'antd';
 import { browserHistory } from 'dva/router';
-import { Avatar } from './..';
-import { LocalIcon } from '..';
+import { Avatar, LocalIcon } from './..';
 
 import styles from './MemberList.less';
 
@@ -69,10 +68,21 @@ function MemberInfo(props) {
 }
 
 function MemberList(props) {
-  const { data } = props;
-  const activityId = '12345678';
+  const { event_id, isLogin } = props.data;
+
   const onClick = () => {
-    browserHistory.push(`/activity/apply/${activityId}`);
+    if (isLogin) {
+      browserHistory.push(`/activity/apply/${event_id}`);
+    } else {
+      Modal.confirm({
+        title: '尚未登录',
+        content: '还没登录哦，请先登录再报名～',
+        iconType: 'meh-o',
+        onOk() {
+          browserHistory.push('/login');
+        },
+      });
+    }
   };
   const gender = (
     <div className={styles.gender}>

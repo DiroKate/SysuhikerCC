@@ -356,10 +356,16 @@ const ApplyForm = Form.create()(applyForm);
 
 
 function ApplyPage(props) {
-  const activityName = '一起出去浪';
+  console.log('ApplyPage', props);
+  const { data } = props;
+
+  const activity = {
+    name: data.event_name,
+    id: data.event_id,
+  };
   const activityLeader = {
-    name: '邱霸天',
-    id: '77777',
+    name: data.nick,
+    id: data.id,
   };
 
 
@@ -370,7 +376,7 @@ function ApplyPage(props) {
         <a href="/activity">活动列表</a>
       </BreadcrumbItem>
       <BreadcrumbItem>
-        <a>{activityName}</a>
+        <a href={`/activity/details/${activity.id}`}>{activity.name}</a>
       </BreadcrumbItem>
       <BreadcrumbItem>
         报名活动
@@ -384,7 +390,7 @@ function ApplyPage(props) {
   const activityTitle = (
     <div className={styles.activityTitle}>
       <p>你正在报名的是 <a href={activityLeader.id}>{activityLeader.name}</a> 发起的活动：</p>
-      <h1>{activityName}</h1>
+      <h1>{activity.name}</h1>
     </div>
   );
 

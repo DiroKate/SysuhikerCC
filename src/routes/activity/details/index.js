@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
+import PropTypes from 'prop-types';
 import { Breadcrumb, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-
 import { Activity } from '../../../components';
-
 import styles from './index.less';
-// import Example from './example.js';
 
 const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
@@ -44,12 +42,20 @@ const forumBoardProps = {
 };
 
 function Details(props) {
-  const { activity } = props;
-  console.log(activity);
-  const { activityDetails } = activity;
+  const { activityDetails, activityLeader, isLogin } = props;
 
   const createMarkup = () => {
     return { __html: activityDetails.event_detail };
+  };
+
+  const leaderInfoProps = {
+    ...activityLeader,
+    createtime: activityDetails.event_createtime,
+  };
+
+  const memberListProps = {
+    ...activityDetails,
+    isLogin,
   };
 
   return (
@@ -67,7 +73,7 @@ function Details(props) {
               <h1>{activityDetails.event_name}</h1>
             </div>
             <div key="LeaderInfo">
-              <LeaderInfo data={activityDetails} />
+              <LeaderInfo data={leaderInfoProps} />
             </div>
             <div key="EventCard">
               <EventCard data={activityDetails} />
@@ -82,20 +88,21 @@ function Details(props) {
           </QueueAnim>
         </Col>
         <Col span={9}>
-          <MemberList />
+          <MemberList data={memberListProps} />
         </Col>
       </Row>
     </div>
   );
 }
-// Details.propTypes = {
-//   userDetails: PropTypes.object,
-// };
-//
+Details.propTypes = {
+  activityDetails: PropTypes.object.isRequired,
+};
+
 function mapStateToProps(state) {
   return {
-    app: state.app,
-    activity: state.activity,
+    isLogin: state.app.isLogin,
+    activityDetails: state.activity.activityDetails,
+    activityLeader: state.activity.activityLeader,
   };
 }
 

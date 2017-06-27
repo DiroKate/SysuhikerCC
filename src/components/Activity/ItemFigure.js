@@ -5,12 +5,28 @@ import { days, compareDays } from '../../utils';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
-  const { detailHandler, event_leader_email } = props;
+  console.log(props);
+  const { detailHandler, event_createUserAvatarUrl, event_createUserEmail } = props;
 
   const OpenTag = (
     compareDays(props.event_starttime, Date()) ?
       (<Tag color="orange">报名中</Tag>) : (<Tag color="red">报名结束</Tag>)
   );
+
+  const userAvatar = () => {
+    if (event_createUserAvatarUrl) {
+      return (<Avatar
+        path={event_createUserAvatarUrl}
+        className={styles.gravatar}
+        custom
+      />);
+    } else {
+      return (<Avatar
+        email={event_createUserEmail}
+        className={styles.gravatar}
+      />);
+    }
+  };
 
   const contentLayout = {
     xs: 24,
@@ -20,15 +36,12 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        <Avatar
-          email={event_leader_email}
-          className={styles.gravatar}
-        />
+        {userAvatar()}
       </div>
       <div className={styles.contentWrapper}>
         <h1>{props.event_name}</h1>
         <span className={styles.leaderSpan}>
-          <h3>{props.event_leader}</h3>
+          <h3>{props.event_createUserNick}</h3>
           <p>{props.event_comments}</p>
         </span>
         <Row gutter={16}>
@@ -59,7 +72,7 @@ function ItemFigure(props) {
           <Col><p>{days(props.event_starttime, props.event_endtime)}天</p></Col>
           <Col>
             <span className={styles.inlineSpan}>
-              <Icon type="team" /><p>{props.event_membernum}/{props.event_membermax}</p>
+              <Icon type="team" /><p>{props.event_memberNum}/{props.event_maxhiker}</p>
             </span>
           </Col>
         </Row>

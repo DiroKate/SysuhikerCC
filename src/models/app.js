@@ -1,8 +1,6 @@
 import { routerRedux } from 'dva/router';
-import pathToRegexp from 'path-to-regexp';
 import * as UsersService from '../services/users';
-import * as ActivityService from '../services/activity';
-import { activityPostUitls, registerPostUitls } from '../utils';
+import { registerPostUitls } from '../utils';
 
 
 export default {
@@ -24,12 +22,16 @@ export default {
       };
     },
     getUserInfo(state, action) {
+      const userInfo = {
+        ...action.payload,
+        user_psw: '*********************',
+      };
       return {
         ...state,
         userId: action.payload.user_id,
         userEmail: action.payload.user_email,
         userName: action.payload.user_nick,
-        loginUser: action.payload,
+        loginUser: userInfo,
       };
     },
   },
@@ -59,28 +61,6 @@ export default {
         });
       } else {
         console.warn('获取用户信息失败');
-      }
-    },
-
-    /**
-     * 发布活动
-     * */
-    *postActivity({ payload: params }, { select, call, put }) {
-      const login = yield select(state => state.app.login);
-      console.log('into postActivity', login);
-      if (login) {
-        const userId = yield select(state => state.app.userId);
-        const retValues = activityPostUitls(params, userId);
-        console.log('after post change: ', retValues);
-        const { data } = yield call(ActivityService.createActivities, params);
-        console.log('data', data);
-        const { code } = data.data;
-        if (code === 0) {
-          console.log('创建成功');
-        }
-      } else {
-        console.log('转到登录界面');
-        yield put(routerRedux.push('/login'));
       }
     },
 
@@ -158,7 +138,7 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup({ dispatch }) {
       dispatch({ type: 'queryUser' });
     },
   },

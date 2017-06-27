@@ -40,7 +40,7 @@ class createForm extends React.Component {
           retValues.activityDetail = contentValue;
           console.log('Received values of form: ', retValues);
           dispatch({
-            type: 'app/postActivity',
+            type: 'activity/postActivity',
             payload: retValues,
           });
         }

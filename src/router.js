@@ -57,7 +57,7 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/activity'));
-            }, 'activity');
+            }, 'activityPage');
           },
         }, {
           path: 'activity/details/:id',
@@ -79,7 +79,7 @@ const Routers = ({ history, app }) => {
           path: 'activity/apply/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              // registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/apply/'));
             }, 'apply-activity');
           },
