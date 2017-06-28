@@ -8,12 +8,14 @@ import styles from './ForumBoard.less';
 const FormItem = Form.Item;
 
 function ForumItem(props) {
-  const { userEmail, userName, content, createAt } = props;
+  const { dataSource } = props;
+  console.log('ForumItem: ', props);
+  const { userEmail, re_createUserNick: userName, re_detail: content, re_createTime: createAt } = props;
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
         <Avatar
-          email={userEmail}
+          email="default@default.com"
           className={styles.gravatar}
         />
       </div>
@@ -21,9 +23,11 @@ function ForumItem(props) {
         <p className={styles.forumItemWrapperUser}>
           {userName}
         </p>
-        <p className={styles.forumItemWrapperContent}>
-          {content}
-        </p>
+        <div
+          className={styles.forumItemWrapperContent}
+          key="content"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
         <p>{createAt}</p>
       </div>
     </div>
@@ -31,7 +35,9 @@ function ForumItem(props) {
 }
 
 function ForumBoard(props) {
-  const { totalNums, dataSource, handleSubmit } = props;
+  const { dataSource, handleSubmit } = props;
+
+  const totalNums = dataSource.length;
 
   const header = (
     <div className={styles.header}>

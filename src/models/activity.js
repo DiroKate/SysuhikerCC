@@ -13,6 +13,7 @@ export default {
     activityId: '',
     activityLeader: {}, // 活动领队信息
     activityJoinList: [], // 活动队员信息
+    activityReList: [], // 活动评论信息
   },
 
   reducers: {
@@ -54,6 +55,14 @@ export default {
         activityJoinList: action.payload.list,
       };
     },
+
+    updateReList(state, action) {
+      return {
+        ...state,
+        activityReList: action.payload.list,
+      };
+    },
+
 
   },
 
@@ -137,13 +146,29 @@ export default {
      * 获取活动报名列表
      */
     *getEventJoinList({ payload }, { call, put }) {
-      console.log('start get event join list');
       const { data } = yield call(ActivityService.getEventJoinList, { event_id: payload.id });
-      console.log(data);
       const { code, list } = data.data;
       if (code === 0) {
         yield put({
           type: 'updateJoinList',
+          payload: { list },
+        });
+      } else {
+        throw Error('获取用户报名列表失败');
+      }
+    },
+
+    /**
+     * 获取活动评论列表
+     */
+    *getEventReList({ payload }, { call, put }) {
+      console.log('start get event re list');
+      const { data } = yield call(ActivityService.getEventReList, { event_id: payload.id });
+      console.log(data);
+      const { code, list } = data.data;
+      if (code === 0) {
+        yield put({
+          type: 'updateReList',
           payload: { list },
         });
       } else {
@@ -169,6 +194,7 @@ export default {
         if (match) {
           dispatch({ type: 'getActivityDetails', payload: { id: match[1] } });
           dispatch({ type: 'getEventJoinList', payload: { id: match[1] } });
+          dispatch({ type: 'getEventReList', payload: { id: match[1] } });
         }
         const match2 = pathToRegexp('/activity/apply/:id').exec(pathname);
         if (match2) {

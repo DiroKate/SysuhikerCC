@@ -42,7 +42,7 @@ const forumBoardProps = {
 };
 
 function Details(props) {
-  const { activityDetails, activityLeader, isLogin, activityJoinList } = props;
+  const { activityDetails, activityLeader, isLogin, activityJoinList, activityReList } = props;
 
   const createMarkup = () => {
     return { __html: activityDetails.event_detail };
@@ -84,7 +84,7 @@ function Details(props) {
               dangerouslySetInnerHTML={createMarkup()}
             />
             <div key="forum">
-              <ForumBoard {...forumBoardProps} />
+              <ForumBoard dataSource={activityReList} />
             </div>
           </QueueAnim>
         </Col>
@@ -105,6 +105,7 @@ function mapStateToProps(state) {
     activityDetails: state.activity.activityDetails,
     activityLeader: state.activity.activityLeader,
     activityJoinList: state.activity.activityJoinList,
+    activityReList: state.activity.activityReList,
   };
 }
 

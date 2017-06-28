@@ -39,6 +39,7 @@ function MemberInfo(props) {
     },
   }, {
     title: '备注',
+    width: '40%',
     dataIndex: 'event_joinlist_comments',
     key: 'event_joinlist_comments',
   }, {
@@ -47,11 +48,18 @@ function MemberInfo(props) {
     key: 'event_joinlist_status',
   }];
 
-  return (<Table dataSource={dataSource} columns={columns} showHeader={false} />);
+  return (<Table dataSource={dataSource} columns={columns} showHeader={false} pagination={{ pageSize: 20 }} />);
 }
 
 function MemberList(props) {
   const { event_id, isLogin, activityJoinList } = props.data;
+  let maleNum = 0;
+  let femaleNum = 0;
+  for (const memberInfo of activityJoinList) {
+    if (memberInfo.event_joinlist_usergender === 'mm') { femaleNum += 1; }
+    if (memberInfo.event_joinlist_usergender === 'gg') { maleNum += 1; }
+  }
+
 
   const onClick = () => {
     if (isLogin) {
@@ -70,9 +78,9 @@ function MemberList(props) {
   const gender = (
     <div className={styles.gender}>
       <LocalIcon type="male" className={styles.iconMale} colorful />
-      <p>10</p>
+      <p>{maleNum}</p>
       <LocalIcon className={styles.iconFemale} type="female" colorful />
-      <p>10</p>
+      <p>{femaleNum}</p>
     </div>
   );
   return (

@@ -32,3 +32,14 @@ export async function getEventJoinList(params) {
     body: JSON.stringify(params),
   });
 }
+
+/**
+ * 获取活动的评论列表
+ * @param  { dict } params {event_id: number}
+ */
+export async function getEventReList(params) {
+  return request('/api/?service=Event.GetEventReList', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
