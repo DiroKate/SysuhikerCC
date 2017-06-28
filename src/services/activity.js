@@ -21,3 +21,14 @@ export async function joinActivity(params) {
     body: JSON.stringify(params),
   });
 }
+
+/**
+ * 获取活动的报名列表
+ * @param  { dict } params {event_id: number}
+ */
+export async function getEventJoinList(params) {
+  return request('/api/?service=Event.GetEventJoinList', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

@@ -42,7 +42,7 @@ const forumBoardProps = {
 };
 
 function Details(props) {
-  const { activityDetails, activityLeader, isLogin } = props;
+  const { activityDetails, activityLeader, isLogin, activityJoinList } = props;
 
   const createMarkup = () => {
     return { __html: activityDetails.event_detail };
@@ -56,6 +56,7 @@ function Details(props) {
   const memberListProps = {
     ...activityDetails,
     isLogin,
+    activityJoinList,
   };
 
   return (
@@ -103,6 +104,7 @@ function mapStateToProps(state) {
     isLogin: state.app.isLogin,
     activityDetails: state.activity.activityDetails,
     activityLeader: state.activity.activityLeader,
+    activityJoinList: state.activity.activityJoinList,
   };
 }
 

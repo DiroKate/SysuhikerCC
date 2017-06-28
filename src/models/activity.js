@@ -12,6 +12,7 @@ export default {
     activityName: '',
     activityId: '',
     activityLeader: {}, // 活动领队信息
+    activityJoinList: [], // 活动队员信息
   },
 
   reducers: {
@@ -46,6 +47,14 @@ export default {
         activityLeader: leaderInfo,
       };
     },
+
+    updateJoinList(state, action) {
+      return {
+        ...state,
+        activityJoinList: action.payload.list,
+      };
+    },
+
   },
 
   effects: {
@@ -124,6 +133,24 @@ export default {
       }
     },
 
+    /**
+     * 获取活动报名列表
+     */
+    *getEventJoinList({ payload }, { call, put }) {
+      console.log('start get event join list');
+      const { data } = yield call(ActivityService.getEventJoinList, { event_id: payload.id });
+      console.log(data);
+      const { code, list } = data.data;
+      if (code === 0) {
+        yield put({
+          type: 'updateJoinList',
+          payload: { list },
+        });
+      } else {
+        throw Error('获取用户报名列表失败');
+      }
+    },
+
   },
 
   subscriptions: {
@@ -141,6 +168,7 @@ export default {
         const match = pathToRegexp('/activity/details/:id').exec(pathname);
         if (match) {
           dispatch({ type: 'getActivityDetails', payload: { id: match[1] } });
+          dispatch({ type: 'getEventJoinList', payload: { id: match[1] } });
         }
         const match2 = pathToRegexp('/activity/apply/:id').exec(pathname);
         if (match2) {

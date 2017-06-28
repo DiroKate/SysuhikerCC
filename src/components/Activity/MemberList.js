@@ -6,69 +6,52 @@ import { Avatar, LocalIcon } from './..';
 import styles from './MemberList.less';
 
 function MemberInfo(props) {
-  const dataSource = [{
-    key: '1',
-    name: '小邱',
-    userEmail: '111@qq.com',
-    gender: 'female',
-    notes: '传说中的备注',
-    role: '发起人',
-    iconUrl: '/icon.png',
-    state: '发起人',
-  }, {
-    key: '2',
-    name: 'diroguan',
-    userEmail: '222@qq.com',
-    gender: 'male',
-    notes: '传说中的备注',
-    iconUrl: '/icon.png',
-    role: '作业',
-    state: '活动成员',
-  }, {
-    key: '3',
-    userEmail: '333@qq.com',
-    name: '吴彦祖',
-    gender: 'female',
-    notes: '传说中的备注',
-    iconUrl: '/icon.png',
-    role: '摄影',
-    state: '未确认',
-  }];
+  const { dataSource } = props;
+  const genderMap = {
+    mm: 'female',
+    gg: 'male',
+  };
 
   const columns = [{
     title: '头像',
     key: 'icon',
-    render: (text, record) => (
-      <Avatar email={record.userEmail} className={styles.iconImg} />
-    ),
+    render: (text, record) => {
+      const email = record.userEmail ? record.userEmail : 'default@default.com';
+      return (
+        <Avatar email={email} className={styles.iconImg} />
+      );
+    },
   }, {
     title: '昵称性别',
     key: 'name_gender',
-    render: (text, record) => (
-      <p>
-        {record.name}
-        <LocalIcon
-          type={record.gender}
-          className={styles[`${record.gender}`]}
-          colorful
-        />
-      </p>
-    ),
+    render: (text, record) => {
+      const gender = genderMap[record.event_joinlist_usergender];
+      return (
+        <p>
+          {record.event_joinlist_usernick}
+          <LocalIcon
+            type={gender}
+            className={styles[`${gender}`]}
+            colorful
+          />
+        </p>
+      );
+    },
   }, {
     title: '备注',
-    dataIndex: 'notes',
-    key: 'notes',
+    dataIndex: 'event_joinlist_comments',
+    key: 'event_joinlist_comments',
   }, {
     title: '状态',
-    dataIndex: 'state',
-    key: 'state',
+    dataIndex: 'event_joinlist_status',
+    key: 'event_joinlist_status',
   }];
 
   return (<Table dataSource={dataSource} columns={columns} showHeader={false} />);
 }
 
 function MemberList(props) {
-  const { event_id, isLogin } = props.data;
+  const { event_id, isLogin, activityJoinList } = props.data;
 
   const onClick = () => {
     if (isLogin) {
@@ -102,7 +85,7 @@ function MemberList(props) {
         立即参加
       </Button>
       <Card title="报名列表" extra={gender} bordered={false}>
-        <MemberInfo />
+        <MemberInfo dataSource={activityJoinList} />
       </Card>
     </div>
   );

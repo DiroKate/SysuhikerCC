@@ -5,7 +5,6 @@ import { days, compareDays } from '../../utils';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
-  console.log(props);
   const { detailHandler, event_createUserAvatarUrl, event_createUserEmail } = props;
 
   const OpenTag = (

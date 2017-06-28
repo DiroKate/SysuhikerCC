@@ -356,7 +356,6 @@ const ApplyForm = Form.create()(applyForm);
 
 
 function ApplyPage(props) {
-  console.log('ApplyPage', props);
   const { data } = props;
 
   const activity = {
