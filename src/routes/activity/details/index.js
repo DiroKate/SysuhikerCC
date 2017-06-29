@@ -9,41 +9,8 @@ import styles from './index.less';
 const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
 
-
-const forumBoardProps = {
-  totalNums: 5,
-  dataSource: [
-    {
-      key: '1',
-      userEmail: '111@qq.com',
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '2',
-      userEmail: '111@qq.com',
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '3',
-      userEmail: '111@qq.com',
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '4',
-      userEmail: '111@qq.com',
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    },
-  ],
-};
-
 function Details(props) {
-  const { activityDetails, activityLeader, isLogin, activityJoinList, activityReList } = props;
-
+  const { dispatch, activityDetails, activityLeader, isLogin, activityJoinList, activityReList } = props;
   const createMarkup = () => {
     return { __html: activityDetails.event_detail };
   };
@@ -57,6 +24,13 @@ function Details(props) {
     ...activityDetails,
     isLogin,
     activityJoinList,
+  };
+
+  const addReForumHandle = (params) => {
+    dispatch({
+      type: 'activity/addReForum',
+      payload: params,
+    });
   };
 
   return (
@@ -84,7 +58,7 @@ function Details(props) {
               dangerouslySetInnerHTML={createMarkup()}
             />
             <div key="forum">
-              <ForumBoard dataSource={activityReList} />
+              <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
             </div>
           </QueueAnim>
         </Col>

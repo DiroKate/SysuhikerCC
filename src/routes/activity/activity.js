@@ -11,9 +11,6 @@ const { ItemFigure, CreateButton } = Activity;
 const { TabPane } = Tabs;
 
 function ActivityRoute({ activityList, isLogin }) {
-  // const { list } = activity;
-  console.log(activityList);
-
   const createHandler = () => {
     if (isLogin) {
       browserHistory.push('/activity/create');

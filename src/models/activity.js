@@ -1,3 +1,4 @@
+import { routerRedux } from 'dva/router';
 import pathToRegexp from 'path-to-regexp';
 import * as ActivityService from '../services/activity';
 import * as UsersService from '../services/users';
@@ -32,6 +33,7 @@ export default {
         ...state,
         activityLeader: leaderInfo,
         activityDetails: action.payload,
+        activityId: action.payload.event_id,
       };
     },
 
@@ -162,9 +164,7 @@ export default {
      * 获取活动评论列表
      */
     *getEventReList({ payload }, { call, put }) {
-      console.log('start get event re list');
       const { data } = yield call(ActivityService.getEventReList, { event_id: payload.id });
-      console.log(data);
       const { code, list } = data.data;
       if (code === 0) {
         yield put({
@@ -172,8 +172,23 @@ export default {
           payload: { list },
         });
       } else {
-        throw Error('获取用户报名列表失败');
+        yield put({
+          type: 'updateReList',
+          payload: { list },
+        });
       }
+    },
+
+    /**
+     * 增加活动评论
+     */
+    *addReForum({ payload }, { call, select, put }) {
+      const userId = yield select(state => state.app.userId);
+      const activityId = yield select(state => state.activity.activityId);
+      const { data } = yield call(
+        ActivityService.addReForum,
+        { eventId: activityId, userId, userComments: payload },
+      );
     },
 
   },

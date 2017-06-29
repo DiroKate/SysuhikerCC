@@ -16,7 +16,7 @@ function MemberInfo(props) {
     title: '头像',
     key: 'icon',
     render: (text, record) => {
-      const email = record.userEmail ? record.userEmail : 'default@default.com';
+      const email = record.event_joinlist_useremail ? record.event_joinlist_useremail : 'default@default.com';
       return (
         <Avatar email={email} className={styles.iconImg} />
       );
@@ -48,7 +48,13 @@ function MemberInfo(props) {
     key: 'event_joinlist_status',
   }];
 
-  return (<Table dataSource={dataSource} columns={columns} showHeader={false} pagination={{ pageSize: 20 }} />);
+  return (
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      showHeader={false}
+      pagination={{ pageSize: 20 }}
+    />);
 }
 
 function MemberList(props) {

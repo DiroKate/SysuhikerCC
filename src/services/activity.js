@@ -43,3 +43,15 @@ export async function getEventReList(params) {
     body: JSON.stringify(params),
   });
 }
+
+/**
+ * 增加活动评论
+ * @param  { dict } params {eventId: int, userId: int, userComments: string}
+ */
+export async function addReForum(params) {
+  console.log('params: ', params);
+  return request('/api/?service=Event.AddEventRe', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
