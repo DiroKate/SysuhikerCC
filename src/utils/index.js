@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import config from './config';
 
 const days = (start, end) => {
@@ -44,10 +45,15 @@ const registerPostUitls = params => ({
   user_comments: params.notes,
 });
 
+const notificaionUtils = (type, content) => {
+  message[type](content);
+};
+
 module.exports = {
   config,
   days,
   compareDays,
   activityPostUitls,
   registerPostUitls,
+  notificaionUtils,
 };
