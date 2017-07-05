@@ -57,6 +57,9 @@ class ForumBoard extends React.Component {
       const { editorContent } = this.state;
       const contentValue = editorContent ? draftToHtml(convertToRaw(editorContent.getCurrentContent())) : '';
       this.props.handle(contentValue);
+      this.setState({
+        editorContent: null,
+      });
     } else {
       Modal.warning({
         title: '尚未登录',
