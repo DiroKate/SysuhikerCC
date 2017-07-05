@@ -1,9 +1,8 @@
-import { routerRedux } from 'dva/router';
 import pathToRegexp from 'path-to-regexp';
+import { routerRedux } from 'dva/router';
 import * as ActivityService from '../services/activity';
 import * as UsersService from '../services/users';
-import { activityPostUitls } from '../utils';
-
+import { activityPostUitls, notificaionUtils } from '../utils';
 
 export default {
   namespace: 'activity',
@@ -18,14 +17,14 @@ export default {
   },
 
   reducers: {
-    getActivities(state, action) {
+    getActivitiesReducer(state, action) {
       return {
         ...state,
         list: action.payload.list,
       };
     },
 
-    activityDetail(state, action) {
+    activityDetailReducer(state, action) {
       const leaderInfo = {
         id: action.payload.event_createUserId,
       };
@@ -37,7 +36,7 @@ export default {
       };
     },
 
-    getLeaderInfo(state, action) {
+    getLeaderInfoReducer(state, action) {
       const { user_id, user_nick, user_email, user_avatar_url } = action.payload;
       const leaderInfo = {
         id: user_id,
@@ -51,14 +50,14 @@ export default {
       };
     },
 
-    updateJoinList(state, action) {
+    updateJoinListReducer(state, action) {
       return {
         ...state,
         activityJoinList: action.payload.list,
       };
     },
 
-    updateReList(state, action) {
+    updateReListReducer(state, action) {
       return {
         ...state,
         activityReList: action.payload.list,
@@ -74,7 +73,7 @@ export default {
       const { code, list } = data.data;
       if (code === 0) {
         yield put({
-          type: 'getActivities',
+          type: 'getActivitiesReducer',
           payload: {
             list,
           },
@@ -97,13 +96,11 @@ export default {
       const { code } = data.data;
       if (code === 0) {
         yield put({
-          type: 'activityDetail',
+          type: 'activityDetailReducer',
           payload: {
             ...data.data.info,
           },
         });
-      } else {
-        throw Error('获取活动信息失败');
       }
 
       const userId = yield select(state => state.activity.activityLeader.id);
@@ -112,7 +109,7 @@ export default {
       const userInfo = userData.data.data.info;
       if (userCode === 0) {
         yield put({
-          type: 'getLeaderInfo',
+          type: 'getLeaderInfoReducer',
           payload: {
             ...userInfo,
           },
@@ -132,15 +129,19 @@ export default {
     /**
      * 发布活动
      * */
-    *postActivity({ payload: params }, { select, call }) {
+    *postActivity({ payload: params }, { select, call, put }) {
       const userId = yield select(state => state.app.userId);
       const retValues = activityPostUitls(params, userId);
-      console.log('after post change: ', retValues);
-      const { data } = yield call(ActivityService.createActivities, params);
-      console.log('data', data);
+      const { data } = yield call(ActivityService.addActivity, retValues);
       const { code } = data.data;
       if (code === 0) {
-        console.log('创建成功');
+        notificaionUtils('success', '已经发布活动啦');
+
+        yield put(routerRedux.push('/activity'));
+        yield put({
+          type: 'getAllActivities',
+          payload: { pagesize: 10, page: 1 },
+        });
       }
     },
 
@@ -152,11 +153,14 @@ export default {
       const { code, list } = data.data;
       if (code === 0) {
         yield put({
-          type: 'updateJoinList',
+          type: 'updateJoinListReducer',
           payload: { list },
         });
       } else {
-        throw Error('获取用户报名列表失败');
+        yield put({
+          type: 'updateJoinListReducer',
+          payload: { list: [] },
+        });
       }
     },
 
@@ -168,13 +172,13 @@ export default {
       const { code, list } = data.data;
       if (code === 0) {
         yield put({
-          type: 'updateReList',
+          type: 'updateReListReducer',
           payload: { list },
         });
       } else {
         yield put({
-          type: 'updateReList',
-          payload: { list },
+          type: 'updateReListReducer',
+          payload: { list: [] },
         });
       }
     },
@@ -189,6 +193,16 @@ export default {
         ActivityService.addReForum,
         { eventId: activityId, userId, userComments: payload },
       );
+      if (data.data.code === 0) {
+        notificaionUtils('success', '评论成功');
+        yield put({ type: 'getEventReList', payload: { id: activityId } });
+      }
+    },
+
+    *uploadImage({ payload }, { call }) {
+      console.log('xxxxxxxxxxxx');
+      const xxxx = yield call(ActivityService.uploadImage, payload);
+      console.log(xxxx);
     },
 
   },

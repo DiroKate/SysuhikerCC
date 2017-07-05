@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import * as UsersService from '../services/users';
-import { registerPostUitls } from '../utils';
+import { registerPostUitls, notificaionUtils } from '../utils';
 
 
 export default {
@@ -14,14 +14,14 @@ export default {
   },
 
   reducers: {
-    loginSuccess(state, action) {
+    loginSuccessReducer(state, action) {
       return {
         ...state,
         userId: action.payload.userId,
         isLogin: true,
       };
     },
-    getUserInfo(state, action) {
+    getUserInfoReducer(state, action) {
       const userInfo = {
         ...action.payload,
         user_psw: '*********************',
@@ -44,23 +44,23 @@ export default {
     *queryUser({ payload }, { call, put, select }) {
       const userId = yield select(state => state.app.userId);
       let params;
-      if (userId === '') {
-        return;
+      if (userId) {
+        params = payload || { user_id: userId };
       } else {
-        params = payload || { userId };
+        return;
       }
 
       const { data } = yield call(UsersService.userInfo, params);
       const { code, info } = data.data;
       if (code === 0) {
         yield put({
-          type: 'getUserInfo',
+          type: 'getUserInfoReducer',
           payload: {
             ...info,
           },
         });
       } else {
-        console.warn('获取用户信息失败');
+        throw Error(`获取用户信息失败: ${userId}`);
       }
     },
 
@@ -75,29 +75,20 @@ export default {
       if (code === 0) {
         const userId = data.data.userid;
         yield put({
-          type: 'loginSuccess',
+          type: 'loginSuccessReducer',
           payload: {
             userId,
           },
         });
 
-        // 获取登录用户行基本信息
-        const userParams = {
-          user_id: userId,
-        };
-        const userInfo = yield call(UsersService.userInfo, userParams);
-        const userData = userInfo.data;
-        const loginUserInfo = userData.data.info;
         yield put({
-          type: 'getUserInfo',
-          payload: {
-            ...loginUserInfo,
-          },
+          type: 'queryUser',
+          payload: { user_id: userId },
         });
 
-        // 回到主页
-        // yield put(routerRedux.push('/'));
+        // 回到上页
         yield put(routerRedux.goBack());
+        notificaionUtils('success', '登录成功！');
       }
     },
 
@@ -112,27 +103,18 @@ export default {
       if (code === 0) {
         const userId = data.data.userid;
         yield put({
-          type: 'loginSuccess',
+          type: 'loginSuccessReducer',
           payload: {
             userId,
           },
         });
 
-        // 获取登录用户行基本信息
-        const userParams = {
-          user_id: userId,
-        };
-        const userInfo = yield call(UsersService.userInfo, userParams);
-        const userData = userInfo.data;
-        const loginUserInfo = userData.data.info;
         yield put({
-          type: 'getUserInfo',
-          payload: {
-            ...loginUserInfo,
-          },
+          type: 'queryUser',
+          payload: { user_id: userId },
         });
-
         yield put(routerRedux.goBack());
+        notificaionUtils('success', '注册成功！');
       }
     },
   },

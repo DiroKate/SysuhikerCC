@@ -2,7 +2,6 @@ import request from '../utils/request';
 
 export async function getActivities(params) {
   return request('/api/?service=Event.GetEventList', {
-  // return request('/api/serviceUser.GetEventList', {
     method: 'POST',
     body: JSON.stringify(params),
   });
@@ -49,8 +48,26 @@ export async function getEventReList(params) {
  * @param  { dict } params {eventId: int, userId: int, userComments: string}
  */
 export async function addReForum(params) {
-  console.log('params: ', params);
   return request('/api/?service=Event.AddEventRe', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
+/**
+ * 创建活动
+ */
+export async function addActivity(params) {
+  console.log('params: ', params);
+  return request('/api/?service=Event.AddEvent', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
+export async function uploadImage(params) {
+  console.log(params);
+  return request('/api/?service=Upload.Upload', {
     method: 'POST',
     body: JSON.stringify(params),
   });
