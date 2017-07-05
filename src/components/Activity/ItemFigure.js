@@ -1,31 +1,21 @@
 import React from 'react';
 import { Row, Col, Tag, Icon } from 'antd';
-import { Avatar } from './..';
+import Avatar from 'react-avatar';
 import { days, compareDays } from '../../utils';
 import styles from './ItemFigure.less';
 
 function ItemFigure(props) {
-  const { detailHandler, event_createUserAvatarUrl, event_createUserEmail } = props;
+  const { detailHandler,
+          event_createUserAvatarUrl: avatarUrl,
+          event_createUserEmail: userEmail,
+        event_createUserNick: userName } = props;
+  console.log(props);
 
   const OpenTag = (
     compareDays(props.event_starttime, Date()) ?
       (<Tag color="orange">报名中</Tag>) : (<Tag color="red">报名结束</Tag>)
   );
 
-  const userAvatar = () => {
-    if (event_createUserAvatarUrl) {
-      return (<Avatar
-        path={event_createUserAvatarUrl}
-        className={styles.gravatar}
-        custom
-      />);
-    } else {
-      return (<Avatar
-        email={event_createUserEmail}
-        className={styles.gravatar}
-      />);
-    }
-  };
 
   const contentLayout = {
     xs: 24,
@@ -35,7 +25,14 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        {userAvatar()}
+        <Avatar
+          name={userName}
+          email={userEmail}
+          src={avatarUrl}
+          round
+          size={75}
+          className={styles.gravatar}
+        />
       </div>
       <div className={styles.contentWrapper}>
         <h1>{props.event_name}</h1>

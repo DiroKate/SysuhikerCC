@@ -3,7 +3,8 @@ import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
-import { LocalIcon, Avatar } from '../../components';
+import Avatar from 'react-avatar';
+import { LocalIcon } from '../../components';
 
 
 const Item = Menu.Item;
@@ -42,6 +43,7 @@ class Header extends Component {
     const { app } = this.props;
     // const isLogin = app.login;
     const { isLogin, userId, userEmail, userName } = app;
+    console.log(app);
 
     const navData = {
       home: '首页',
@@ -59,7 +61,10 @@ class Header extends Component {
     const userTitle = (<div>
       <span>
         <Avatar
+          name={userName}
           email={userEmail}
+          size={40}
+          round
           className={`${this.props.className}-user-avatar`}
         />
       </span>

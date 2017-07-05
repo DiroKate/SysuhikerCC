@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Card, Table, Modal } from 'antd';
 import { browserHistory } from 'dva/router';
-import { Avatar, LocalIcon } from './..';
+import Avatar from 'react-avatar';
+import { LocalIcon } from './..';
 
 import styles from './MemberList.less';
 
@@ -15,12 +16,15 @@ function MemberInfo(props) {
   const columns = [{
     title: '头像',
     key: 'icon',
-    render: (text, record) => {
-      const email = record.event_joinlist_useremail ? record.event_joinlist_useremail : 'default@default.com';
-      return (
-        <Avatar email={email} className={styles.iconImg} />
-      );
-    },
+    render: (text, record) => (
+      <Avatar
+        name={record.event_joinlist_usernick}
+        email={record.event_joinlist_useremail}
+        src={record.event_joinlist_userAvatarUrl}
+        size={40}
+        round
+      />
+      ),
   }, {
     title: '昵称性别',
     key: 'name_gender',
