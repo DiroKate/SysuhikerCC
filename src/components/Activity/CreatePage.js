@@ -4,6 +4,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import request from '../../utils/request';
+
 import styles from './CreatePage.less';
 
 const { RangePicker } = DatePicker;
@@ -20,8 +22,19 @@ class createForm extends React.Component {
       editorContent,
     });
   }
-  uploadImageCallBack = () => {
-    console.log('上传图片');
+  uploadImageCallBack = async (file) => {
+    console.log('callback: ', file);
+    console.log('上传图片', this.props);
+
+    const result = await request('/api/?service=Upload.Upload', {
+      method: 'POST',
+      body: JSON.stringify({ file }),
+    });
+    console.log('result', result);
+
+    return new Promise((resolve, reject) => {
+      resolve({ data: { link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg' } });
+    });
   }
 
   render() {
@@ -122,7 +135,7 @@ class createForm extends React.Component {
         })(
           <Radio.Group>
             { Object.keys(activityTypesData).map(key => (
-              <Radio value={key}>{activityTypesData[key]}</Radio>
+              <Radio value={activityTypesData[key]}>{activityTypesData[key]}</Radio>
           ))}
           </Radio.Group>,
     )}
