@@ -19,7 +19,6 @@ function MemberInfo(props) {
     render: (text, record) => (
       <Avatar
         name={record.event_joinlist_usernick}
-        email={record.event_joinlist_useremail}
         src={record.event_joinlist_userAvatarUrl}
         size={40}
         round

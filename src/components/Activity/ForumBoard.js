@@ -21,7 +21,6 @@ function ForumItem(props) {
       <div className={styles.forumItemIconWrapper}>
         <Avatar
           name={userName}
-          email={userEmail}
           size={40}
           src={avatarUrl}
           round

@@ -15,7 +15,6 @@ function LeaderInfo(props) {
       <Col span={8}>
         <Avatar
           name={data.nick}
-          email={data.email}
           src={data.avatar}
           round
           size={50}

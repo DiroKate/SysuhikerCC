@@ -9,7 +9,6 @@ function ItemFigure(props) {
           event_createUserAvatarUrl: avatarUrl,
           event_createUserEmail: userEmail,
         event_createUserNick: userName } = props;
-  console.log(props);
 
   const OpenTag = (
     compareDays(props.event_starttime, Date()) ?
@@ -27,7 +26,6 @@ function ItemFigure(props) {
       <div className={styles.iconWrapper}>
         <Avatar
           name={userName}
-          email={userEmail}
           src={avatarUrl}
           round
           size={75}

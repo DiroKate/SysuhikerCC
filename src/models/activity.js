@@ -2,7 +2,7 @@ import pathToRegexp from 'path-to-regexp';
 import { routerRedux } from 'dva/router';
 import * as ActivityService from '../services/activity';
 import * as UsersService from '../services/users';
-import { activityPostUitls, notificaionUtils } from '../utils';
+import { activityPostUitls, notificaionUtils, joinActivityUtils } from '../utils';
 
 export default {
   namespace: 'activity',
@@ -122,8 +122,22 @@ export default {
     /**
      * 报名活动
      */
-    joinActivity({ payload }, { call, put, select }) {
-      console.log('join the activity');
+    *joinActivity({ payload }, { call, put, select }) {
+      const userId = yield select(state => state.app.userId);
+      console.log('join the activity', { ...payload, userId });
+      console.log(joinActivityUtils({ ...payload, userId }));
+      const { data } = yield call(
+        ActivityService.joinActivity,
+        joinActivityUtils({ ...payload, userId }),
+       );
+      const { code } = data.data;
+      if (code === 0) {
+        yield put(routerRedux.push(`/activity/details/${payload.eventId}`));
+        yield put({ type: 'getEventJoinList', payload: { id: payload.eventId } });
+        notificaionUtils('success', '报名成功');
+      } else {
+        notificaionUtils('error', '报名失败');
+      }
     },
 
     /**
@@ -135,13 +149,12 @@ export default {
       const { data } = yield call(ActivityService.addActivity, retValues);
       const { code } = data.data;
       if (code === 0) {
-        notificaionUtils('success', '已经发布活动啦');
-
         yield put(routerRedux.push('/activity'));
         yield put({
           type: 'getAllActivities',
           payload: { pagesize: 10, page: 1 },
         });
+        notificaionUtils('success', '已经发布活动啦');
       }
     },
 

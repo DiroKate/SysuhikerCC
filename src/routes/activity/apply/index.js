@@ -8,15 +8,14 @@ import { Activity } from '../../../components';
 const { ApplyPage } = Activity;
 
 function Apply(props) {
-  console.log(props);
-  const { activityDetails, activityLeader, loginUser } = props;
+  const { activityDetails, activityLeader, loginUser, dispatch } = props;
   const applyProps = {
     ...activityDetails,
     ...activityLeader,
     loginUser,
   };
   return (
-    <ApplyPage data={applyProps} />
+    <ApplyPage data={applyProps} dispatch={dispatch} />
   );
 }
 Apply.propTypes = {
