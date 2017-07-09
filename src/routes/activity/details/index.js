@@ -4,13 +4,27 @@ import PropTypes from 'prop-types';
 import { Breadcrumb, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import { Activity } from '../../../components';
+import { compareDays } from '../../../utils';
+
 import styles from './index.less';
 
 const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
 
 function Details(props) {
-  const { dispatch, activityDetails, activityLeader, isLogin, activityJoinList, activityReList } = props;
+  const { dispatch, activityDetails, activityLeader,
+     isLogin, activityJoinList, activityReList, userId } = props;
+
+  const isExpired = compareDays(Date(), activityDetails.event_endtime);
+  const isAdmin = (userId === activityLeader.id);
+  const isMember = () => {
+    for (const member of activityJoinList) {
+      if (member.event_joinlist_userid === userId) {
+        return true;
+      }
+    }
+    return false;
+  };
   const createMarkup = () => {
     return { __html: activityDetails.event_detail };
   };
@@ -24,6 +38,9 @@ function Details(props) {
     ...activityDetails,
     isLogin,
     activityJoinList,
+    isAdmin,
+    isMember: isMember(),
+    isExpired,
   };
 
   const addReForumHandle = (params) => {
@@ -42,7 +59,7 @@ function Details(props) {
         <BreadcrumbItem>活动详情</BreadcrumbItem>
       </Breadcrumb>
       <Row>
-        <Col span={15}>
+        <Col xs={{ span: 24 }} sm={{ span: 15 }}>
           <QueueAnim delay={200}>
             <div key="title">
               <h1>{activityDetails.event_name}</h1>
@@ -57,15 +74,15 @@ function Details(props) {
               key="content"
               dangerouslySetInnerHTML={createMarkup()}
             />
-            <div key="forum">
-              <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
-            </div>
           </QueueAnim>
         </Col>
-        <Col span={9}>
+        <Col xs={{ span: 24 }} sm={{ span: 9 }}>
           <MemberList data={memberListProps} />
         </Col>
       </Row>
+      <Row><Col xs={{ span: 24 }} sm={{ span: 15 }}>
+        <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
+      </Col></Row>
     </div>
   );
 }
@@ -76,6 +93,7 @@ Details.propTypes = {
 function mapStateToProps(state) {
   return {
     isLogin: state.app.isLogin,
+    userId: state.app.userId,
     activityDetails: state.activity.activityDetails,
     activityLeader: state.activity.activityLeader,
     activityJoinList: state.activity.activityJoinList,

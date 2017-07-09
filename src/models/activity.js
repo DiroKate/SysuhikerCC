@@ -152,7 +152,7 @@ export default {
         yield put(routerRedux.push('/activity'));
         yield put({
           type: 'getAllActivities',
-          payload: { pagesize: 10, page: 1 },
+          payload: { pagesize: 100, page: 1 },
         });
         notificaionUtils('success', '已经发布活动啦');
       }
@@ -225,7 +225,7 @@ export default {
       dispatch({
         type: 'getAllActivities',
         payload: {
-          pagesize: 10,
+          pagesize: 100,
           page: 1,
         },
       });
