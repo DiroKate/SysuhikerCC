@@ -19,7 +19,7 @@ function RegisterForm(props) {
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        dispatch({ type: 'users/register', payload: values });
+        dispatch({ type: 'app/register', payload: values });
       }
     });
   };

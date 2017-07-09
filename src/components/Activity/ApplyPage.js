@@ -1,15 +1,42 @@
 /* 报名页面 */
 import React from 'react';
-import { Breadcrumb, Alert, Form, notification, Icon, Checkbox, Button, Radio, Input, Tooltip } from 'antd';
+import { Breadcrumb, Alert, Form, Icon, Checkbox, Button, Radio, Input, Tooltip, Modal } from 'antd';
+import { browserHistory } from 'dva/router';
+
 import { LocalIcon } from '..';
+import { config } from '../../utils';
 import styles from './ApplyPage.less';
 
 const BreadcrumbItem = Breadcrumb.Item;
 const FormItem = Form.Item;
 
 function applyForm(props) {
-  const { form, handleSubmit } = props;
-  const { getFieldDecorator } = form;
+  const { form, userdata, joinBtnHandle } = props;
+  const { getFieldDecorator, validateFieldsAndScroll } = form;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (userdata.user_id) {
+      validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          const retValues = values;
+          joinBtnHandle(retValues);
+        }
+      });
+    } else {
+      Modal.confirm({
+        title: '尚未登录',
+        content: '还没登录哦，请先登录再报名～',
+        iconType: 'meh-o',
+        onOk() {
+          browserHistory.push('/login');
+        },
+      });
+    }
+  };
+
+
+  const userRoles = userdata.user_interest ? userdata.user_interest.split('+') : [];
 
   const roleOptions = ['领队', '协作', '头驴', '尾驴', '财务', '后勤', '环保', '作业', '摄影', '医护', '厨师'];
   const campOptions = ['暂无', '单人帐篷', '双人帐篷', '三人帐篷', '其他请在备注说明'];
@@ -47,28 +74,29 @@ function applyForm(props) {
         请认真阅读活动声明：
       </h3>
       <div className={styles.activityStatement}>
-        <p>1. 认同“安全、环保、自助”的磨房户外理念。遵从《磨房告示》户外活动规则。</p>
-        <p>2. 服从统一指挥，发扬团队协作精神，倡导自助与必要的互助相结合的户外理念。不擅自离开活动路线。</p>
-        <p>3. 注意安全，不作无保护、无必要的攀爬、冒险。注意保持队伍行进紧凑，严防迷路和被打劫。</p>
-        <p>4. 不乱丢垃圾，不破坏植被。注意环保，鼓励拾捡垃圾。做到“只留下你的脚印，只带走你的回忆”。</p>
-        <p>5. 自行购买保险。出发前请把组织人的联系方式留给紧急联系人。</p>
-        <p>6. 如果在活动中遇到异常情况，领队有权决定修改线路。 （转帖磨房免责声明，在此表示感谢）</p>
+        <ol>
+          {config.statement.map(value => (
+            <li type="1">{value}</li>
+          ))}
+        </ol>
       </div>
     </div>
   );
   const formData1 = [
     {
-      label: '真实姓名',
-      id: 'realName',
-      required: true,
-      message: '请输入你的真实姓名!',
-      whitespace: true,
-    }, {
       label: '昵称',
       id: 'nickName',
       required: true,
       message: '请输入你的昵称!',
       whitespace: true,
+      initialValue: userdata.user_nick,
+    }, {
+      label: '真实姓名',
+      id: 'realName',
+      required: true,
+      message: '请输入你的真实姓名!',
+      whitespace: true,
+      initialValue: userdata.user_name,
     },
   ];
   const formData2 = [
@@ -114,12 +142,14 @@ function applyForm(props) {
               rules: [
                 { required: item.required, message: item.message, whitespace: item.whitespace },
               ],
+              initialValue: item.initialValue,
             })(
               <Input />,
             )}
           </FormItem>
         ))
       }
+
       <FormItem
         {...formItemLayout}
         label="性别"
@@ -129,6 +159,7 @@ function applyForm(props) {
           rules: [{
             required: true, message: '请输入邮箱',
           }],
+          initialValue: userdata.user_gender === 'gg' ? 'male' : 'fefemale',
         })(
           <Radio.Group>
             <Radio value="male">
@@ -152,6 +183,7 @@ function applyForm(props) {
           }, {
             required: true, message: '请输入邮箱',
           }],
+          initialValue: userdata.user_email,
         })(
           <Input />,
       )}
@@ -166,6 +198,7 @@ function applyForm(props) {
           rules: [
             { type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' },
             { required: true, message: 'Please input your phone number!' }],
+          initialValue: userdata.user_phone,
         })(
           <Input />,
         )}
@@ -177,16 +210,21 @@ function applyForm(props) {
         id="address"
         hasFeedback
       >
-        <Input />
+        {getFieldDecorator('address')(<Input value={userdata.user_address} />)}
       </FormItem>
       <FormItem
         {...formItemLayoutWide}
         label="团队角色"
         id="role"
       >
-        <Checkbox.Group
-          options={roleOptions}
-        />
+        {getFieldDecorator('role', {
+          initialValue: userRoles,
+        })(
+          <Checkbox.Group
+            options={roleOptions}
+          />,
+        )}
+
       </FormItem>
       <FormItem
         {...formItemLayout}
@@ -194,7 +232,10 @@ function applyForm(props) {
         id="qq"
         hasFeedback
       >
-        <Input />
+        {getFieldDecorator('qq')(
+          <Input value={userdata.user_qq} />,
+        )}
+
       </FormItem>
       <FormItem
         {...formItemLayout}
@@ -202,7 +243,9 @@ function applyForm(props) {
         id="weibo"
         hasFeedback
       >
-        <Input />
+        {getFieldDecorator('weibo')(
+          <Input value={userdata.user_weiboLink} />,
+        )}
       </FormItem>
 
       {/* ========== 基本信息 ========== */}
@@ -219,6 +262,7 @@ function applyForm(props) {
       >
         {getFieldDecorator('emergencyMan', {
           rules: [{ required: true, message: '请输入紧急联系人', whitespace: true }],
+          initialValue: userdata.user_urgentName,
         })(
           <Input />,
         )}
@@ -233,6 +277,7 @@ function applyForm(props) {
           rules: [
             { type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' },
             { required: true, message: '请输入紧急联系人电话号码' }],
+          initialValue: userdata.user_urgentPhone,
         })(
           <Input />,
         )}
@@ -250,7 +295,9 @@ function applyForm(props) {
         id="insurance"
         hasFeedback
       >
-        <Input type="textarea" />
+        {getFieldDecorator('insurance')(
+          <Input type="textarea" />,
+      )}
       </FormItem>
       {/* ========== 保险信息 ========== */}
 
@@ -271,7 +318,9 @@ function applyForm(props) {
         id="backpack"
         hasFeedback
       >
-        <Input addonAfter="L" />
+        {getFieldDecorator('backpack')(
+          <Input addonAfter="L" />,
+        )}
       </FormItem>
       <FormItem
         labelCol={{
@@ -286,7 +335,9 @@ function applyForm(props) {
         id="sleepBag"
         hasFeedback
       >
-        <Input addonAfter="℃" />
+        {getFieldDecorator('sleepBag')(
+          <Input addonAfter="℃" />,
+        )}
       </FormItem>
 
       {
@@ -324,7 +375,9 @@ function applyForm(props) {
         id="notes"
         hasFeedback
       >
-        <Input type="textarea" />
+        {getFieldDecorator('notes')(
+          <Input type="textarea" />,
+      )}
       </FormItem>
       {/* ========== 备注信息 ========== */}
 
@@ -334,6 +387,11 @@ function applyForm(props) {
       <FormItem>
         {getFieldDecorator('agreement', {
           valuePropName: 'checked',
+          rules: [{
+            required: true,
+            transform: value => (value ? 'true' : null),
+            message: '请先同意声明条款',
+          }],
         })(
           <Checkbox>本人已经仔细阅读以上声明内容，认为完全符合本人意愿并同意签署.</Checkbox>,
       )}
@@ -356,12 +414,27 @@ const ApplyForm = Form.create()(applyForm);
 
 
 function ApplyPage(props) {
-  const activityName = '一起出去浪';
+  const { data, dispatch } = props;
+  const { loginUser } = data;
+
+  const activity = {
+    name: data.event_name,
+    id: data.event_id,
+  };
   const activityLeader = {
-    name: '邱霸天',
-    id: '77777',
+    name: data.nick,
+    id: data.id,
   };
 
+  const joinBtnHandle = (payload) => {
+    dispatch({
+      type: 'activity/joinActivity',
+      payload: {
+        ...payload,
+        eventId: data.event_id,
+      },
+    });
+  };
 
   /* 面包屑模块 */
   const breadcrumbDiv = (
@@ -370,7 +443,7 @@ function ApplyPage(props) {
         <a href="/activity">活动列表</a>
       </BreadcrumbItem>
       <BreadcrumbItem>
-        <a>{activityName}</a>
+        <a href={`/activity/details/${activity.id}`}>{activity.name}</a>
       </BreadcrumbItem>
       <BreadcrumbItem>
         报名活动
@@ -384,18 +457,9 @@ function ApplyPage(props) {
   const activityTitle = (
     <div className={styles.activityTitle}>
       <p>你正在报名的是 <a href={activityLeader.id}>{activityLeader.name}</a> 发起的活动：</p>
-      <h1>{activityName}</h1>
+      <h1>{activity.name}</h1>
     </div>
   );
-
-
-  const handleSubmit = () => {
-    notification.open({
-      message: 'Notification Title',
-      description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-      icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
-    });
-  };
 
 
   return (
@@ -409,7 +473,8 @@ function ApplyPage(props) {
           type="warning"
         />
         <ApplyForm
-          handleSubmit={handleSubmit}
+          userdata={loginUser}
+          joinBtnHandle={joinBtnHandle}
         />
 
       </div>

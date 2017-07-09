@@ -13,7 +13,7 @@ function Login({ dispatch, loading }) {
   const loginProps = {
     onOk(data) {
       dispatch({
-        type: 'login/login',
+        type: 'app/login',
         payload: data,
       });
     },

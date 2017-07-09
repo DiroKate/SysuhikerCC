@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { browserHistory } from 'dva/router';
-import { Tabs, Table, Row, Col } from 'antd';
+import { Tabs, Table, Row, Col, Modal } from 'antd';
 import { Activity } from '../../components';
 import { compareDays } from '../../utils';
 
@@ -10,15 +10,24 @@ const { ItemFigure, CreateButton } = Activity;
 
 const { TabPane } = Tabs;
 
-function ActivityRoute({ activity }) {
-  const { list } = activity;
-
+function ActivityRoute({ activityList, isLogin }) {
   const createHandler = () => {
-    browserHistory.push('/activity/create');
+    if (isLogin) {
+      browserHistory.push('/activity/create');
+    } else {
+      Modal.warning({
+        title: '尚未登录',
+        content: '报名活动需要先注册登录，跳转到登录页面？',
+        iconType: 'meh-o',
+        onOk() {
+          browserHistory.push('/login');
+        },
+      });
+    }
   };
 
 
-  const allActivityData = list.map(item => ({
+  const allActivityData = activityList.map(item => ({
     key: item.event_id,
     ...item,
     detailHandler: () => {
@@ -68,7 +77,8 @@ function ActivityRoute({ activity }) {
 
 function mapStateToProps(state) {
   return {
-    activity: state.activity,
+    activityList: state.activity.list,
+    isLogin: state.app.isLogin,
   };
 }
 

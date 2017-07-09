@@ -31,7 +31,7 @@ const Routers = ({ history, app }) => {
           path: 'home',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              // registerModel(app, require('./models/users'));
               cb(null, require('./routes/Home/'));
             }, 'home');
           },
@@ -39,7 +39,7 @@ const Routers = ({ history, app }) => {
           path: 'login',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/login'));
+              // registerModel(app, require('./models/sysuhiker'));
               cb(null, require('./routes/user/login'));
             }, 'login');
           },
@@ -47,7 +47,7 @@ const Routers = ({ history, app }) => {
           path: 'register',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              // registerModel(app, require('./models/users'));
               cb(null, require('./routes/user/register'));
             }, 'register');
           },
@@ -57,13 +57,13 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/activity'));
-            }, 'activity');
+            }, 'activityPage');
           },
         }, {
           path: 'activity/details/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/details/'));
             }, 'user-detail');
           },
@@ -71,7 +71,7 @@ const Routers = ({ history, app }) => {
           path: 'activity/create',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              // registerModel(app, require('./models/users'));
               cb(null, require('./routes/activity/create/'));
             }, 'user-create');
           },
@@ -79,7 +79,7 @@ const Routers = ({ history, app }) => {
           path: 'activity/apply/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/apply/'));
             }, 'apply-activity');
           },
@@ -87,7 +87,7 @@ const Routers = ({ history, app }) => {
           path: 'about',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/users'));
+              // registerModel(app, require('./models/users'));
               cb(null, require('./routes/about'));
             }, 'about');
           },

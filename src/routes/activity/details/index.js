@@ -1,65 +1,54 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Breadcrumb, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
+import { Breadcrumb, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-
 import { Activity } from '../../../components';
+import { compareDays } from '../../../utils';
 
 import styles from './index.less';
-import Example from './example.js';
 
 const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
 
-const fakeData = {
-  title: '国庆西北大环线+额济纳胡杨林自驾游',
-  leader: 'diroguan',
-  leader_icon: '/icon.png',
-  create_at: '2017-05-11 11:55',
-  departure: '广州',
-  arrivals: '兰州',
-  start_at: '2017-09-28',
-  end_at: '2017-10-08',
-  deadline: '2017-08-01 00:00:00',
-  collection_time: '2017-09-28 19:00',
-  collection_location: '白云机场',
-  // content: example,
-};
-const forumBoardProps = {
-  totalNums: 5,
-  dataSource: [
-    {
-      key: '1',
-      userEmail:"111@qq.com",
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '2',
-      userEmail:"111@qq.com",
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '3',
-      userEmail:"111@qq.com",
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    }, {
-      key: '4',
-      userEmail:"111@qq.com",
-      userName: 'diroguan',
-      content: '博学，审问，慎思，明辨，笃行',
-      createAt: '2017-06-03 00:10:05',
-    },
-  ],
-};
-
 function Details(props) {
-  const { userDetails } = props;
+  const { dispatch, activityDetails, activityLeader,
+     isLogin, activityJoinList, activityReList, userId } = props;
 
+  const isExpired = compareDays(Date(), activityDetails.event_endtime);
+  const isAdmin = (userId === activityLeader.id);
+  const isMember = () => {
+    for (const member of activityJoinList) {
+      if (member.event_joinlist_userid === userId) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const createMarkup = () => {
+    return { __html: activityDetails.event_detail };
+  };
+
+  const leaderInfoProps = {
+    ...activityLeader,
+    createtime: activityDetails.event_createtime,
+  };
+
+  const memberListProps = {
+    ...activityDetails,
+    isLogin,
+    activityJoinList,
+    isAdmin,
+    isMember: isMember(),
+    isExpired,
+  };
+
+  const addReForumHandle = (params) => {
+    dispatch({
+      type: 'activity/addReForum',
+      payload: params,
+    });
+  };
 
   return (
     <div className={styles.details_page}>
@@ -70,39 +59,45 @@ function Details(props) {
         <BreadcrumbItem>活动详情</BreadcrumbItem>
       </Breadcrumb>
       <Row>
-        <Col span={15}>
+        <Col xs={{ span: 24 }} sm={{ span: 15 }}>
           <QueueAnim delay={200}>
             <div key="title">
-              <h1>{fakeData.title}</h1>
+              <h1>{activityDetails.event_name}</h1>
             </div>
             <div key="LeaderInfo">
-              <LeaderInfo data={fakeData} />
+              <LeaderInfo data={leaderInfoProps} />
             </div>
             <div key="EventCard">
-              <EventCard data={fakeData} />
+              <EventCard data={activityDetails} />
             </div>
-            <div key="content">
-              <Example />
-            </div>
-            <div key="forum">
-              <ForumBoard {...forumBoardProps} />
-            </div>
+            <div
+              key="content"
+              dangerouslySetInnerHTML={createMarkup()}
+            />
           </QueueAnim>
         </Col>
-        <Col span={9}>
-          <MemberList />
+        <Col xs={{ span: 24 }} sm={{ span: 9 }}>
+          <MemberList data={memberListProps} />
         </Col>
       </Row>
+      <Row><Col xs={{ span: 24 }} sm={{ span: 15 }}>
+        <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
+      </Col></Row>
     </div>
   );
 }
 Details.propTypes = {
-  userDetails: PropTypes.object,
+  activityDetails: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    userDetails: state.userDetails,
+    isLogin: state.app.isLogin,
+    userId: state.app.userId,
+    activityDetails: state.activity.activityDetails,
+    activityLeader: state.activity.activityLeader,
+    activityJoinList: state.activity.activityJoinList,
+    activityReList: state.activity.activityReList,
   };
 }
 

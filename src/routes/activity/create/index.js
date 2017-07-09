@@ -1,23 +1,16 @@
 import React from 'react';
-// import { connect } from 'dva';
-// import PropTypes from 'prop-types';
-
-// import CreatePage from '../../../components/activity/CreatePage.js';
+import { connect } from 'dva';
 import { Activity } from '../../../components';
 
 const { CreatePage } = Activity;
 
 function CreateActivity(props) {
-  // console.log(props);
+  const createPagesProps = {
+    dispatch: props.dispatch,
+  };
   return (
-    <CreatePage />
+    <CreatePage {...createPagesProps} />
   );
 }
-// CreateActivity.propTypes = {
-// };
 
-// function mapStateToProps() {
-// }
-
-// export default connect(mapStateToProps)(CreateActivity);
-export default CreateActivity;
+export default connect()(CreateActivity);
