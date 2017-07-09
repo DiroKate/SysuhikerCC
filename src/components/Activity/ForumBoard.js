@@ -1,11 +1,10 @@
 import React from 'react';
 import { browserHistory } from 'dva/router';
-import { Table, Form, Button, Modal } from 'antd';
+import { Table, Form, Button, Modal, Avatar } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import Avatar from 'react-avatar';
 import styles from './ForumBoard.less';
 
 const FormItem = Form.Item;
@@ -19,12 +18,7 @@ function ForumItem(props) {
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Avatar
-          name={userName}
-          size={40}
-          src={avatarUrl}
-          round
-        />
+        <Avatar src={avatarUrl} size="large">{userName}</Avatar>
       </div>
       <div className={styles.forumItemWrapper}>
         <p className={styles.forumItemWrapperUser}>

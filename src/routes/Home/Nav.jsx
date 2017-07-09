@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import TweenOne from 'rc-tween-one';
-import { Menu } from 'antd';
+import { Menu, Avatar } from 'antd';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
-import Avatar from 'react-avatar';
 import { LocalIcon } from '../../components';
 
 
@@ -59,12 +58,7 @@ class Header extends Component {
     ));
     const userTitle = (<div>
       <span>
-        <Avatar
-          name={userName}
-          size={40}
-          round
-          className={`${this.props.className}-user-avatar`}
-        />
+        <Avatar className={`${this.props.className}-user-avatar`}>{userName}</Avatar>
       </span>
       <span>{userName}</span>
     </div>);

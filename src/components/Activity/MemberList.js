@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Card, Table, Modal, Menu, Dropdown } from 'antd';
+import { Button, Card, Table, Modal, Menu, Dropdown, Avatar } from 'antd';
 import { browserHistory } from 'dva/router';
-import Avatar from 'react-avatar';
 import { LocalIcon } from './..';
 
 import styles from './MemberList.less';
@@ -18,11 +17,11 @@ function MemberInfo(props) {
     key: 'icon',
     render: (text, record) => (
       <Avatar
-        name={record.event_joinlist_usernick}
         src={record.event_joinlist_userAvatarUrl}
-        size={40}
-        round
-      />
+        size="large"
+      >
+        {record.event_joinlist_usernick}
+      </Avatar>
       ),
   }, {
     title: '昵称性别',
