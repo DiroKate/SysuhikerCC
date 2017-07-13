@@ -57,8 +57,12 @@ class Header extends Component {
       </Item>
     ));
     const userTitle = (<div>
-      <span className="nav-user-icon">
-        <Avatar src={userAvatarUrl}>{userName ? userName.substr(0, 1).toUpperCase() : '' }</Avatar>
+      <span>
+        <Avatar
+          className={`${this.props.className}-user-avatar`}
+          src={userAvatarUrl}
+          size="large"
+        >{userName ? userName.substr(0, 1).toUpperCase() : ''}</Avatar>
       </span>
       <span>{userName}</span>
     </div>);
