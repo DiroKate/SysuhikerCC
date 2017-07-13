@@ -10,7 +10,7 @@ function ItemFigure(props) {
         event_createUserNick: userName } = props;
 
   const OpenTag = (
-    compareDays(props.event_starttime, Date()) ?
+    compareDays(props.event_join_endtime, Date()) ?
       (<Tag color="orange">报名中</Tag>) : (<Tag color="red">报名结束</Tag>)
   );
 
@@ -24,7 +24,7 @@ function ItemFigure(props) {
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
         <Avatar src={avatarUrl} className={styles.gravatar}>
-          {userName}
+          {userName.substr(0, 1).toUpperCase()}
         </Avatar>
       </div>
       <div className={styles.contentWrapper}>

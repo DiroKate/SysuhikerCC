@@ -15,7 +15,7 @@ function LeaderInfo(props) {
         <Avatar
           src={data.avatar}
           size="large"
-        >{data.nick}</Avatar>
+        >{data.nick.substr(0, 1).toUpperCase()}</Avatar>
 
       </Col>
       <Col>

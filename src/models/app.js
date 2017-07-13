@@ -10,6 +10,7 @@ export default {
     userId: null, // 已登录用户的ID
     userEmail: null, // 已登录用户的邮箱
     userName: null,  // 已登陆用户的昵称
+    userAvatarUrl: null, // 已登陆用户头像
     loginUser: {}, // 已登陆用户的所有信息
   },
 
@@ -31,6 +32,7 @@ export default {
         userId: action.payload.user_id,
         userEmail: action.payload.user_email,
         userName: action.payload.user_nick,
+        userAvatarUrl: action.payload.user_avatar_url,
         loginUser: userInfo,
       };
     },

@@ -20,7 +20,7 @@ function MemberInfo(props) {
         src={record.event_joinlist_userAvatarUrl}
         size="large"
       >
-        {record.event_joinlist_usernick}
+        {record.event_joinlist_usernick.substr(0, 1).toUpperCase()}
       </Avatar>
       ),
   }, {

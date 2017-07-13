@@ -18,7 +18,7 @@ function ForumItem(props) {
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Avatar src={avatarUrl} size="large">{userName}</Avatar>
+        <Avatar src={avatarUrl} size="large">{userName.substr(0, 1).toUpperCase()}</Avatar>
       </div>
       <div className={styles.forumItemWrapper}>
         <p className={styles.forumItemWrapperUser}>

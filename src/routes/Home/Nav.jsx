@@ -41,7 +41,7 @@ class Header extends Component {
   render() {
     const { app } = this.props;
     // const isLogin = app.login;
-    const { isLogin, userId, userEmail, userName } = app;
+    const { isLogin, userId, userAvatarUrl, userName } = app;
 
     const navData = {
       home: '首页',
@@ -57,8 +57,8 @@ class Header extends Component {
       </Item>
     ));
     const userTitle = (<div>
-      <span>
-        <Avatar className={`${this.props.className}-user-avatar`}>{userName}</Avatar>
+      <span className="nav-user-icon">
+        <Avatar src={userAvatarUrl}>{userName ? userName.substr(0, 1).toUpperCase() : '' }</Avatar>
       </span>
       <span>{userName}</span>
     </div>);
