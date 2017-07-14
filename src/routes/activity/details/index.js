@@ -41,6 +41,7 @@ function Details(props) {
     isAdmin,
     isMember: isMember(),
     isExpired,
+    dispatch,
   };
 
   const addReForumHandle = (params) => {

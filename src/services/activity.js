@@ -65,6 +65,17 @@ export async function addActivity(params) {
   });
 }
 
+/**
+ * 退出活动
+ */
+export async function quitActivity(params) {
+  console.log('params: ', params);
+  return request('/api/?service=Event.Quit', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 export async function uploadImage(params) {
   console.log(params);
   return request('/api/?service=Upload.Upload', {

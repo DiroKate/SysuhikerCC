@@ -1,17 +1,17 @@
 import React from 'react';
-import { Tabs, Row, Col,Table, Form, Input,Radio } from 'antd';
+import { Row, Col, Breadcrumb, Form, Button, Input, Radio } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styles from './create.less';
 
-const { TabPane } = Tabs;
+const BreadcrumbItem = Breadcrumb.Item;
 
 class createForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       editorContent: null,
-    }
+    };
   }
   onEditorStateChange = (editorContent) => {
     this.setState({
@@ -25,7 +25,7 @@ class createForm extends React.Component {
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
     const formItems = [];
-    const typeOptions = ['作业','攻略','技术讨论', '活动讨论', '户外安全', '其他'];
+    const typeOptions = ['作业', '攻略', '技术讨论', '活动讨论', '户外安全', '其他'];
 
     const formItemLayout = {
       labelCol: {
@@ -45,11 +45,11 @@ class createForm extends React.Component {
         hasFeedback
       >
         {getFieldDecorator('title', {
-          rules: [{ required: true, message:'请输入标题', whitespace: true }],
+          rules: [{ required: true, message: '请输入标题', whitespace: true }],
         })(
           <Input />,
       )}
-      </Form.Item>
+      </Form.Item>,
     );
 
     formItems.push(
@@ -69,7 +69,7 @@ class createForm extends React.Component {
           ))}
           </Radio.Group>,
     )}
-      </Form.Item>
+      </Form.Item>,
     );
 
     formItems.push(
@@ -93,28 +93,52 @@ class createForm extends React.Component {
           editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
-      </Form.Item>
+      </Form.Item>,
       );
 
+    formItems.push(
+      <Form.Item
+        wrapperCol={{
+          span: 12,
+          offset: 6,
+        }}
+      >
+        <Button
+          className={styles.submitBtn}
+          type="primary"
+          htmlType="submit"
+          size="large"
+        >
+          发布话题
+        </Button>
+
+      </Form.Item>,
+    );
+
     return (
-    <Form>
-      {formItems}
-    </Form>
+      <Form>
+        {formItems}
+      </Form>
     );
   }
 }
 
 const CreateForm = Form.create()(createForm);
 
-function CreatePage ({teahouseList, isLogin}) {
-	
-	return (
+function CreatePage({ teahouseList, isLogin }) {
+  return (
     <div className="sysuhiker-top-wrapper">
-      <Row>
+      <h1>畅所欲言</h1>
+      <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+        <BreadcrumbItem>
+          <a href="/bbs">逸仙茶馆</a>
+        </BreadcrumbItem>
+        <BreadcrumbItem>创建话题</BreadcrumbItem>
+      </Breadcrumb>
+      <Row style={{ marginTop: '16px' }}>
         <Col>
-          <p>afadfasdfasdfas</p>
           <CreateForm />
-          </Col>
+        </Col>
       </Row>
     </div>
   );

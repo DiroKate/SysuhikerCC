@@ -60,7 +60,8 @@ function MemberInfo(props) {
 }
 
 function MemberList(props) {
-  const { event_id, isLogin, activityJoinList, isAdmin, isMember, isExpired } = props.data;
+  const { event_id, isLogin, activityJoinList,
+    isAdmin, isMember, isExpired, dispatch } = props.data;
   let maleNum = 0;
   let femaleNum = 0;
   for (const memberInfo of activityJoinList) {
@@ -89,13 +90,17 @@ function MemberList(props) {
         console.log('更新活动信息');
         break;
       case 'quitActivity':
-        Modal.warning({
+
+        Modal.confirm({
           title: '退出活动',
-          content: '确认退出活动？',
+          content: '确认退出活动？\n(如需重新报名请联系活动发起人修改报名状态)',
           okText: '确认退出',
           onOk() {
-            browserHistory.push('/login');
+            dispatch({
+              type: 'activity/quitActivity',
+            });
           },
+          maskClosable: true,
         });
         break;
       case 'updateApply':
@@ -168,7 +173,7 @@ function MemberList(props) {
         </Dropdown>
       );
     } else {
-      return (<Button type="primary" className={styles.joinBtn} >立即参加</Button>);
+      return (<Button type="primary" className={styles.joinBtn} onClick={onClick} >立即参加</Button>);
     }
   };
 

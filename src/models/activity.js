@@ -218,6 +218,20 @@ export default {
       console.log(xxxx);
     },
 
+    *quitActivity(_, { call, put, select }) {
+      const event_joinlist_userid = yield select(state => state.app.userId);
+      const event_joinlist_eventid = yield select(state => state.activity.activityId);
+      const { data } = yield call(ActivityService.quitActivity, {
+        event_joinlist_userid,
+        event_joinlist_eventid,
+        event_joinlist_comments: '(如需重新报名请联系活动发起人修改报名状态)' });
+      if (data.data.code === 0) {
+        notificaionUtils('success', '退出活动成功');
+        yield put({ type: 'getEventJoinList', payload: { id: event_joinlist_eventid } });
+      }
+      console.log(data);
+    },
+
   },
 
   subscriptions: {

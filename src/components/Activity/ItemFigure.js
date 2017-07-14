@@ -23,7 +23,7 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        <Avatar src={avatarUrl} className={styles.gravatar}>
+        <Avatar src={avatarUrl} size="large">
           {userName.substr(0, 1).toUpperCase()}
         </Avatar>
       </div>

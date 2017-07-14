@@ -3,15 +3,14 @@ import { connect } from 'dva';
 import { browserHistory } from 'dva/router';
 import { Tabs, Row, Col, Table, Modal } from 'antd';
 import { CreateButton } from '../../components';
+
 const { TabPane } = Tabs;
 
-function Teahouse ({teahouseList, isLogin}) {
-	
-
-	const createHandler = () => {
-		console.log('create a topic')
+function Teahouse({ teahouseList, isLogin }) {
+  const createHandler = () => {
+    console.log('create a topic');
     // if (isLogin) {
-      browserHistory.push('/bbs/create');
+    browserHistory.push('/bbs/create');
     // } else {
     //   Modal.warning({
     //     title: '尚未登录',
@@ -22,7 +21,7 @@ function Teahouse ({teahouseList, isLogin}) {
     //     },
     //   });
     // }
-	};
+  };
 
   const dataSource = [];
 
@@ -54,14 +53,14 @@ function Teahouse ({teahouseList, isLogin}) {
 
   const callback = (topic) => {
     dataSource.push({
-      type:topic,
-    title:'thisistitle',
-    author:'diro',
-    keyword:'a,b,c',
-    reply:'12',
-    update:'last update at 2017-5-5'
+      type: topic,
+      title: 'thisistitle',
+      author: 'diro',
+      keyword: 'a,b,c',
+      reply: '12',
+      update: 'last update at 2017-5-5',
     });
-     console.log(dataSource)
+    console.log(dataSource);
   };
 
   const TabData = {
@@ -69,15 +68,14 @@ function Teahouse ({teahouseList, isLogin}) {
     homework: '作业攻略',
     technology: '技术讨论',
     activity: '活动讨论',
-    activity: '户外安全',
-    security: '活动讨论',
+    security: '户外安全',
     other: '其他',
   };
   const tabChildren = Object.keys(TabData).map(key => (
     <TabPane tab={TabData[key]} key={key} />
   ));
 
-	return (
+  return (
     <div className="sysuhiker-top-wrapper">
       <Row gutter={24}>
         <Col xs={24} sm={18}>
@@ -90,11 +88,11 @@ function Teahouse ({teahouseList, isLogin}) {
         <Col xs={24} sm={6}>
           <CreateButton
             btnLabel="创建话题"
-            createHandler={createHandler} 
+            createHandler={createHandler}
             alertLabel={{
-              message: "畅所欲言",
-              description: "想灌水想发布攻略想寻求其他帮助？发个贴吧！",
-              type: "success",
+              message: '畅所欲言',
+              description: '想灌水想发布攻略想寻求其他帮助？发个贴吧！',
+              type: 'success',
             }}
           />
         </Col>
