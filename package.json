@@ -49,7 +49,9 @@
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {
+    "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
     "babel-plugin-dva-hmr": "^0.3.2",
     "babel-plugin-import": "^1.2.1",
     "babel-plugin-transform-runtime": "^6.23.0",

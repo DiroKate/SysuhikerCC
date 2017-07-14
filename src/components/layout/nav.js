@@ -11,7 +11,6 @@ const Item = Menu.Item;
 function Nav({ data, phoneMode }) {
   const {
       isLogin, userId, userEmail, userAvatarUrl, userName } = data;
-  console.log(phoneMode, isLogin, userId);
   const navData = {
     home: '首页',
     activity: '活动',

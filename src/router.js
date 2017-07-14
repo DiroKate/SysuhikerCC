@@ -91,6 +91,22 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/about'));
             }, 'about');
           },
+        }, {
+          path: 'bbs',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/teahouse'));
+              cb(null, require('./routes/teahouse/'));
+            }, 'teahouse-list');
+          },
+        }, {
+          path: 'bbs/create',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              // registerModel(app, require('./models/users'));
+              cb(null, require('./routes/teahouse/create/'));
+            }, 'bbs-create');
+          },
         },
       ],
     },
