@@ -10,7 +10,7 @@ const { ItemFigure } = Activity;
 
 const { TabPane } = Tabs;
 
-function ActivityRoute({ activityList, isLogin }) {
+function ActivityRoute({ activityList, total, isLogin, dispatch }) {
   const createHandler = () => {
     if (isLogin) {
       browserHistory.push('/activity/create');
@@ -48,7 +48,23 @@ function ActivityRoute({ activityList, isLogin }) {
     },
   ];
 
-  const allActivity = (<Table dataSource={allActivityData} columns={columns} showHeader={false} />);
+  const onPageChange = (pagination) => {
+    dispatch({
+      type: 'activity/getAllActivities',
+      payload: { page: pagination.current, pagesize: pagination.pageSize },
+    });
+  };
+
+  const allActivity = (
+    <Table
+      dataSource={allActivityData}
+      columns={columns}
+      showHeader={false}
+      onChange={onPageChange}
+      pagination={{
+        total,
+      }}
+    />);
 
   const hotActivity = (<Table dataSource={hotActivityData} columns={columns} showHeader={false} />);
 
@@ -68,13 +84,13 @@ function ActivityRoute({ activityList, isLogin }) {
           </Tabs>
         </Col>
         <Col xs={24} sm={6}>
-          <CreateButton 
+          <CreateButton
             btnLabel="创建活动"
-            createHandler={createHandler} 
+            createHandler={createHandler}
             alertLabel={{
-              message: "人人都是领队",
-              description: "AA户外概念下，人人都是领队，如果有好玩的路线或者点子，不妨创建一个活动，找到小伙伴们一起协助组织玩耍，认识更多靠谱的朋友们。",
-              type: "success",
+              message: '人人都是领队',
+              description: 'AA户外概念下，人人都是领队，如果有好玩的路线或者点子，不妨创建一个活动，找到小伙伴们一起协助组织玩耍，认识更多靠谱的朋友们。',
+              type: 'success',
             }}
           />
         </Col>
@@ -84,8 +100,10 @@ function ActivityRoute({ activityList, isLogin }) {
 }
 
 function mapStateToProps(state) {
+  const { list, total } = state.activity;
   return {
-    activityList: state.activity.list,
+    activityList: list,
+    total,
     isLogin: state.app.isLogin,
   };
 }

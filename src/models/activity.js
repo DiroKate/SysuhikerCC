@@ -8,6 +8,7 @@ export default {
   namespace: 'activity',
   state: {
     list: [],
+    total: 0, // 条目总数
     activityDetails: {}, // 活动详情
     activityName: '',
     activityId: '',
@@ -18,10 +19,9 @@ export default {
 
   reducers: {
     getActivitiesReducer(state, action) {
+      const { list, totalCount } = action.payload;
       return {
-        ...state,
-        list: action.payload.list,
-      };
+        ...state, list, total: totalCount };
     },
 
     activityDetailReducer(state, action) {
@@ -69,13 +69,15 @@ export default {
 
   effects: {
     *getAllActivities({ payload: params }, { call, put }) {
+      console.log('22222222222222');
       const { data } = yield call(ActivityService.getActivities, params);
-      const { code, list } = data.data;
+      const { code, list, totalCount } = data.data;
       if (code === 0) {
         yield put({
           type: 'getActivitiesReducer',
           payload: {
             list,
+            totalCount,
           },
         });
       }
@@ -152,7 +154,7 @@ export default {
         yield put(routerRedux.push('/activity'));
         yield put({
           type: 'getAllActivities',
-          payload: { pagesize: 100, page: 1 },
+          payload: { pagesize: 10, page: 1 },
         });
         notificaionUtils('success', '已经发布活动啦');
       }
@@ -240,7 +242,7 @@ export default {
         if (pathname === '/activity') {
           dispatch({
             type: 'getAllActivities',
-            payload: { pagesize: 100, page: 1 },
+            payload: { pagesize: 10, page: 1 },
           });
         }
 

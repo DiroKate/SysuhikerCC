@@ -6,7 +6,7 @@ import { CreateButton } from '../../components';
 
 const { TabPane } = Tabs;
 
-function Teahouse({ isLogin, list, total, pagesize, page: current, dispatch }) {
+function Teahouse({ isLogin, list, total, dispatch }) {
   const createHandler = () => {
     console.log('create a topic');
     // if (isLogin) {
