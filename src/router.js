@@ -107,6 +107,14 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/teahouse/create/'));
             }, 'bbs-create');
           },
+        }, {
+          path: 'bbs/details/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/teahouse'));
+              cb(null, require('./routes/teahouse/detail'));
+            }, 'bbs-show');
+          },
         },
       ],
     },

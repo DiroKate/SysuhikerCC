@@ -6,3 +6,11 @@ export async function getTopicList(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function getTopicInfo(params) {
+  console.log('getTopicInfo', params);
+  return request('/api/?service=BBS.GetBBSInfo', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

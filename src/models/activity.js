@@ -69,7 +69,6 @@ export default {
 
   effects: {
     *getAllActivities({ payload: params }, { call, put }) {
-      console.log('22222222222222');
       const { data } = yield call(ActivityService.getActivities, params);
       const { code, list, totalCount } = data.data;
       if (code === 0) {
@@ -126,8 +125,6 @@ export default {
      */
     *joinActivity({ payload }, { call, put, select }) {
       const userId = yield select(state => state.app.userId);
-      console.log('join the activity', { ...payload, userId });
-      console.log(joinActivityUtils({ ...payload, userId }));
       const { data } = yield call(
         ActivityService.joinActivity,
         joinActivityUtils({ ...payload, userId }),
@@ -215,23 +212,20 @@ export default {
     },
 
     *uploadImage({ payload }, { call }) {
-      console.log('xxxxxxxxxxxx');
       const xxxx = yield call(ActivityService.uploadImage, payload);
-      console.log(xxxx);
     },
 
     *quitActivity(_, { call, put, select }) {
-      const event_joinlist_userid = yield select(state => state.app.userId);
-      const event_joinlist_eventid = yield select(state => state.activity.activityId);
+      const userId = yield select(state => state.app.userId);
+      const eventid = yield select(state => state.activity.activityId);
       const { data } = yield call(ActivityService.quitActivity, {
-        event_joinlist_userid,
-        event_joinlist_eventid,
+        event_joinlist_userid: userId,
+        event_joinlist_eventid: eventid,
         event_joinlist_comments: '(如需重新报名请联系活动发起人修改报名状态)' });
       if (data.data.code === 0) {
         notificaionUtils('success', '退出活动成功');
-        yield put({ type: 'getEventJoinList', payload: { id: event_joinlist_eventid } });
+        yield put({ type: 'getEventJoinList', payload: { id: eventid } });
       }
-      console.log(data);
     },
 
   },

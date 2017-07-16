@@ -8,19 +8,18 @@ const { TabPane } = Tabs;
 
 function Teahouse({ isLogin, list, total, dispatch }) {
   const createHandler = () => {
-    console.log('create a topic');
-    // if (isLogin) {
-    browserHistory.push('/bbs/create');
-    // } else {
-    //   Modal.warning({
-    //     title: '尚未登录',
-    //     content: '报名活动需要先注册登录，跳转到登录页面？',
-    //     iconType: 'meh-o',
-    //     onOk() {
-          // browserHistory.push('/login');
-    //     },
-    //   });
-    // }
+    if (isLogin) {
+      browserHistory.push('/bbs/create');
+    } else {
+      Modal.warning({
+        title: '尚未登录',
+        content: '报名活动需要先注册登录，跳转到登录页面？',
+        iconType: 'meh-o',
+        onOk() {
+          browserHistory.push('/login');
+        },
+      });
+    }
   };
   const dataSource = [];
 
@@ -31,8 +30,9 @@ function Teahouse({ isLogin, list, total, dispatch }) {
     });
   };
   const rowClickHandler = (record) => {
-    const { post_id } = record;
-    console.log('rowClickHandler', post_id);
+    const { post_id: topicId } = record;
+    browserHistory.push(`/bbs/details/${topicId}`);
+
     // TODO: 增加跳转到详细到帖子详情
   };
 
