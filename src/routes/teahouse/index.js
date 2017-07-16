@@ -6,7 +6,7 @@ import { CreateButton } from '../../components';
 
 const { TabPane } = Tabs;
 
-function Teahouse({ teahouseList, isLogin }) {
+function Teahouse({ isLogin, list, total, pagesize, page: current, dispatch }) {
   const createHandler = () => {
     console.log('create a topic');
     // if (isLogin) {
@@ -22,34 +22,50 @@ function Teahouse({ teahouseList, isLogin }) {
     //   });
     // }
   };
-
   const dataSource = [];
 
-  const columns = [{
-    title: '类型',
-    dataIndex: 'type',
-    key: 'type',
-  }, {
-    title: '标题',
-    dataIndex: 'title',
-    key: 'title',
-  }, {
-    title: '作者',
-    dataIndex: 'author',
-    key: 'author',
-  }, {
-    title: '关键字',
-    dataIndex: 'keyword',
-    key: 'keyword',
-  }, {
-    title: '回复',
-    dataIndex: 'reply',
-    key: 'reply',
-  }, {
-    title: '最后更新',
-    dataIndex: 'update',
-    key: 'update',
-  }];
+  const onPageChange = (pagination) => {
+    dispatch({
+      type: 'teahouse/getTopicList',
+      payload: { page: pagination.current, pagesize: pagination.pageSize },
+    });
+  };
+  const rowClickHandler = (record) => {
+    const { post_id } = record;
+    console.log('rowClickHandler', post_id);
+    // TODO: 增加跳转到详细到帖子详情
+  };
+
+  const columns = [
+    {
+      title: '类型',
+      dataIndex: 'post_type',
+      key: 'post_type',
+    }, {
+      title: '标题',
+      dataIndex: 'post_title',
+      key: 'post_title',
+    }, {
+      title: '作者',
+      dataIndex: 'post_createUserNick',
+      key: 'post_createUserNick',
+    }, {
+      title: '关键字',
+      dataIndex: 'post_keywords',
+      key: 'post_keywords',
+    }, {
+      title: '回复',
+      dataIndex: 'post_modifyUserId',
+      key: 'post_modifyUserId',
+    }, {
+      title: '最后更新',
+      render: (text, record) => {
+        const { post_modifyTime: updateTime, post_modifyUserNick: userNick } = record;
+        return (
+          <p>{`${userNick || ''} 于 ${updateTime}`}</p>
+        );
+      },
+    }];
 
   const callback = (topic) => {
     dataSource.push({
@@ -82,7 +98,15 @@ function Teahouse({ teahouseList, isLogin }) {
           <Tabs defaultActiveKey="all" onChange={callback} animated={false}>
             {tabChildren}
           </Tabs>
-          <Table dataSource={dataSource} columns={columns} />
+          <Table
+            dataSource={list}
+            columns={columns}
+            onChange={onPageChange}
+            onRowClick={rowClickHandler}
+            pagination={{
+              total,
+            }}
+          />
 
         </Col>
         <Col xs={24} sm={6}>
@@ -102,8 +126,9 @@ function Teahouse({ teahouseList, isLogin }) {
 }
 
 function mapStateToProps(state) {
-  return {
-  };
+  const { list, total } = state.teahouse;
+  const { isLogin } = state.app;
+  return { list, total, isLogin };
 }
 
 export default connect(mapStateToProps)(Teahouse);

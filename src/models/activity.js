@@ -236,16 +236,14 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      dispatch({
-        type: 'getAllActivities',
-        payload: {
-          pagesize: 100,
-          page: 1,
-        },
-      });
+      history.listen(({ pathname }) => {
+        if (pathname === '/activity') {
+          dispatch({
+            type: 'getAllActivities',
+            payload: { pagesize: 100, page: 1 },
+          });
+        }
 
-      history.listen(() => {
-        const pathname = location.pathname;
         const match = pathToRegexp('/activity/details/:id').exec(pathname);
         if (match) {
           dispatch({ type: 'getActivityDetails', payload: { id: match[1] } });
