@@ -5,7 +5,7 @@ import { Tabs, Table, Row, Col, Modal } from 'antd';
 import styles from './detail.less';
 
 
-function DetailPage({ details }) {
+function DetailPage({ mode, details }) {
 /**
 "post_id": "66",
 "post_title": "2016年8月21日清远-花尖-玄真溯溪视频",
@@ -33,63 +33,62 @@ function DetailPage({ details }) {
 //   post_detail: content,
 // } = details;
 
-  const title = "2016年8月21日清远-花尖-玄真溯溪视频";
-  const type = "作业攻略";
-  const content = "<p>这是文本主题</p>";
+  const title = '2016年8月21日清远-花尖-玄真溯溪视频';
+  const type = '作业攻略';
+  const content = '<p>这是文本主题</p>';
 
   const dataSource = [
     {
-      title:"2016年8月21日清远-花尖-玄真溯溪视频",
-      type: "作业攻略",
-      content: "<p>这是文本主题</p>",
-      author:"作者名字",
-      createTime: "2016-10-10 21:42:22",
-    },{
-      title:"2016年8月21日清远-花尖-玄真溯溪视频",
-      type: "作业攻略",
-      content: "<p>这是文本主题</p>",
-      author:"作者名字",
-      createTime: "2016-10-10 21:42:22",
-    }
-  ];
-  const columns = [
-    {
-      title: '话题',
-      key: 'topic',
-      render: (text, record,index) => (
-        <div>
-          <Row className={styles.rowHeader} >
-            <Col xs={{span:6}} sm={{span:6}}>
-              <p>{record.createTime}</p>
-            </Col>
-            <Col xs={{span:17}} sm={{span:17}}>
-              <p>{record.title}</p>
-            </Col>          
-            <Col xs={{span:1}} sm={{span:1}}>
-              <p>{`# ${index+1}`}</p>
-            </Col>
-          </Row>
-          <Row className={styles.rowBody} >
-            <Col xs={{span:6}} sm={{span:6}} className={styles.author}>
-              <p>{record.author}</p>
-            </Col>
-            <Col xs={{span:17}} sm={{span:17}} className={styles.content}>
-              <div dangerouslySetInnerHTML={{ __html: record.content }} />
-            </Col>          
-          </Row>
-        </div>
-      ),
+      title: '2016年8月21日清远-花尖-玄真溯溪视频',
+      type: '作业攻略',
+      content: '<p>这是文本主题</p>',
+      author: '作者名字',
+      createTime: '2016-10-10 21:42:22',
+    }, {
+      title: '2016年8月21日清远-花尖-玄真溯溪视频',
+      type: '作业攻略',
+      content: '<p>这是文本主题</p>',
+      author: '作者名字',
+      createTime: '2016-10-10 21:42:22',
     },
   ];
+
+  const tableRow = (record, index) => (
+    <div>
+      <Row className={styles.rowHeader} >
+        <Col xs={{ span: 6 }} sm={{ span: 6 }}>
+          <p>{record.createTime}</p>
+        </Col>
+        <Col xs={{ span: 17 }} sm={{ span: 17 }}>
+          <p>{record.title}</p>
+        </Col>
+        <Col xs={{ span: 1 }} sm={{ span: 1 }}>
+          <p>{`# ${index + 1}`}</p>
+        </Col>
+      </Row>
+      <Row className={styles.rowBody} >
+        <Col xs={{ span: 6 }} sm={{ span: 6 }} className={styles.author}>
+          <p>{record.author}</p>
+        </Col>
+        <Col xs={{ span: 17 }} sm={{ span: 17 }} className={styles.content}>
+          <div dangerouslySetInnerHTML={{ __html: record.content }} />
+        </Col>
+      </Row>
+    </div>
+  );
+
   const mainTable = (
-    <Table dataSource={dataSource} columns={columns} showHeader={false} />
+    <table className={styles.table}>
+      {dataSource.map((item, index) => (
+        <tr><td>
+          {tableRow(item, index)}
+        </td></tr>
+    ))}
+    </table>
   );
 
   return (
-    <div>
-      <p>{title}</p>
-      <p>{type}</p>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+    <div className={mode ? styles.detailsWrapperMobile : styles.detailsWrapperWeb}>
       {mainTable}
     </div>
   );
@@ -97,8 +96,9 @@ function DetailPage({ details }) {
 
 function mapStateToProps(state) {
   const { details } = state.teahouse;
+  const { mode } = state.app;
   return {
-    details,
+    details, mode,
   };
 }
 

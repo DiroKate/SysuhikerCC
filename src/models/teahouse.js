@@ -63,6 +63,15 @@ export default {
       }
     },
 
+    /**
+     * 获取活动评论列表
+     */
+    *getTopicReList({ payload }, { put, call, select }) {
+      const { data } = yield call(TeahouseService.getTopicReList,
+        { post_id: payload.topicId, pagesize: 10, page: payload.page });
+      console.log(data);
+    },
+
   },
 
   subscriptions: {
@@ -78,6 +87,7 @@ export default {
         const match = pathToRegexp('/bbs/details/:id').exec(pathname);
         if (match) {
           dispatch({ type: 'getTopicInfo', payload: { topicId: match[1] } });
+          dispatch({ type: 'getTopicReList', payload: { topicId: match[1], page: 1 } });
         }
       });
     },

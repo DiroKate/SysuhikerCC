@@ -6,6 +6,7 @@ import { registerPostUitls, notificaionUtils } from '../utils';
 export default {
   namespace: 'app',
   state: {
+    mode: false, // 是否为mobile模式，T手机模式，F电脑模式
     isLogin: false, // 是否已经登录
     userId: null, // 已登录用户的ID
     userEmail: null, // 已登录用户的邮箱
@@ -15,6 +16,12 @@ export default {
   },
 
   reducers: {
+    setMode(state, action) {
+      return {
+        ...state,
+        mode: action.payload || false,
+      };
+    },
     loginSuccessReducer(state, action) {
       return {
         ...state,

@@ -1,16 +1,37 @@
-.rowHeader {
-	background-color: #F0F8FF;
-	font-size: 1rem;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+.detailsWrapper {
+  &Web {
+    margin: 1rem 2%;
+    padding: 1rem;
+  }
+
+  &Mobile {
+    margin: 1rem 0;
+    padding: 1rem 0;
+  }
 }
+
+.rowHeader {
+  background-color: #F0F8FF;
+  font-size: 1rem;
+  // padding-top: 1rem;
+  // padding-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1rem;
+}
+
 .rowBody {
-	margin-top: 1rem;
-	& .author{
-		padding-left: 1rem;
-		border-right: 1px;
-	}
-	& .content{
-		padding-left: 1rem;
-	}
+  margin-top: 1rem;
+
+  & .author {
+    padding-left: 1rem;
+    border-right: 1px;
+  }
+
+  & .content {
+    padding-left: 1rem;
+  }
 }

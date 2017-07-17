@@ -22,6 +22,10 @@ class App extends React.Component {
     // 适配手机屏幕;
     this.enquireScreen((isMode) => {
       this.setState({ isMode });
+      this.props.dispatch({
+        type: 'app/setMode',
+        payload: isMode,
+      });
     });
   }
 
