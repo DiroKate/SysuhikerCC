@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'dva/router';
-import { Table, Form, Button, Modal, Avatar } from 'antd';
+import { Table, Form, Button, Modal } from 'antd';
+import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
@@ -18,7 +19,12 @@ function ForumItem(props) {
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Avatar src={avatarUrl} size="large">{userName.substr(0, 1).toUpperCase()}</Avatar>
+        <Avatar
+          round
+          size={32}
+          src={avatarUrl}
+          name={userName.substr(0, 1).toUpperCase()}
+        />
       </div>
       <div className={styles.forumItemWrapper}>
         <p className={styles.forumItemWrapperUser}>

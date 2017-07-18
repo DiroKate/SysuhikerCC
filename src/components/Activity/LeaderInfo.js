@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { Row, Col, Avatar } from 'antd';
+import { Row, Col } from 'antd';
+import Avatar from 'react-avatar';
 import { days } from '../../utils';
 import styles from './LeaderInfo.less';
 
@@ -12,9 +13,11 @@ function LeaderInfo(props) {
     <Row className={styles.content_leader} type="flex" justify="left" align="middle">
       <Col span={8}>
         <Avatar
+          round
+          size={48}
           src={data.avatar}
-          size="large"
-        >{data.nick ? data.nick.substr(0, 1).toUpperCase() : ''}</Avatar>
+          name={data.nick ? data.nick.substr(0, 1).toUpperCase() : ''}
+        />
 
       </Col>
       <Col>

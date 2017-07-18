@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col, Tag, Icon, Avatar } from 'antd';
+import { Row, Col, Tag, Icon } from 'antd';
+import Avatar from 'react-avatar';
 import { days, compareDays } from '../../utils';
 import styles from './ItemFigure.less';
 
@@ -23,9 +24,12 @@ function ItemFigure(props) {
   return (
     <div className={styles.wrapper} onClick={detailHandler}>
       <div className={styles.iconWrapper}>
-        <Avatar src={avatarUrl} size="large">
-          {userName.substr(0, 1).toUpperCase()}
-        </Avatar>
+        <Avatar
+          round
+          size="64"
+          src={avatarUrl}
+          name={userName.substr(0, 1).toUpperCase()}
+        />
       </div>
       <div className={styles.contentWrapper}>
         <h1>{props.event_name}</h1>

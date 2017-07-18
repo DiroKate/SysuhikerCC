@@ -43,6 +43,7 @@
     "rc-scroll-anim": "^1.0.5",
     "rc-tween-one": "^1.2.5",
     "react": "^15.5.4",
+    "react-avatar": "^2.3.0",
     "react-dom": "^15.5.4",
     "react-draft-wysiwyg": "^1.10.0",
     "react-router": "^4.1.1",

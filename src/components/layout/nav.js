@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col, Menu, Avatar, Icon, Dropdown } from 'antd';
+import { Row, Col, Menu, Icon, Dropdown } from 'antd';
+import Avatar from 'react-avatar';
 import { Link } from 'dva/router';
 
 import LocalIcon from '../LocalIcon';
@@ -28,8 +29,11 @@ function Nav({ data, phoneMode }) {
     <div className={styles.userTitle}>
       <span>
         <Avatar
+          round
+          size="48"
           src={userAvatarUrl}
-        >{userName ? userName.substr(0, 1).toUpperCase() : ''}</Avatar>
+          name={userName ? userName.substr(0, 1).toUpperCase() : ''}
+        />
       </span>
     </div>);
   const loginMenu = isLogin ? (<SubMenu title={userTitle} key="user">

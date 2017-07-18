@@ -10,6 +10,7 @@
 5. 打包工具是 **[roadhog](https://github.com/sorrycc/roadhog)**, 详见[配置](https://github.com/sorrycc/roadhog/blob/master/README.md)
 5. 使用 **[Ant Motion](https://motion.ant.design/)**
 6. 使用了 **[Wysiwyg editor](https://github.com/jpuri/react-draft-wysiwyg)** 富文本编辑器.
+7. 使用了 **[react-avatar](https://www.npmjs.com/package/react-avatar)** 头像方案
 
 ## 对应后端项目
 from @[later2015/sysuhiker](https://github.com/later2015/sysuhiker)

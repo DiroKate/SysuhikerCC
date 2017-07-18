@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TweenOne from 'rc-tween-one';
-import { Menu, Avatar } from 'antd';
+import { Menu } from 'antd';
+import Avatar from 'react-avatar';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
 import { LocalIcon } from '../../components';
@@ -61,8 +62,8 @@ class Header extends Component {
         <Avatar
           className={`${this.props.className}-user-avatar`}
           src={userAvatarUrl}
-          size="large"
-        >{userName ? userName.substr(0, 1).toUpperCase() : ''}</Avatar>
+          name={userName ? userName.substr(0, 1).toUpperCase() : ''}
+        />
       </span>
       <span>{userName}</span>
     </div>);

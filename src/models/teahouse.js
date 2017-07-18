@@ -84,7 +84,7 @@ export default {
           });
         }
 
-        const match = pathToRegexp('/bbs/details/:id').exec(pathname);
+        const match = pathToRegexp('/bbs/:id').exec(pathname);
         if (match) {
           dispatch({ type: 'getTopicInfo', payload: { topicId: match[1] } });
           dispatch({ type: 'getTopicReList', payload: { topicId: match[1], page: 1 } });

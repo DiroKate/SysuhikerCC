@@ -31,7 +31,7 @@ function Teahouse({ isLogin, list, total, dispatch }) {
   };
   const rowClickHandler = (record) => {
     const { post_id: topicId } = record;
-    browserHistory.push(`/bbs/details/${topicId}`);
+    browserHistory.push(`/bbs/${topicId}`);
 
     // TODO: 增加跳转到详细到帖子详情
   };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Card, Table, Modal, Menu, Dropdown, Avatar } from 'antd';
+import { Button, Card, Table, Modal, Menu, Dropdown } from 'antd';
+import Avatar from 'react-avatar';
 import { browserHistory } from 'dva/router';
 import { LocalIcon } from './..';
 
@@ -17,11 +18,11 @@ function MemberInfo(props) {
     key: 'icon',
     render: (text, record) => (
       <Avatar
+        round
+        size={32}
         src={record.event_joinlist_userAvatarUrl}
-        size="large"
-      >
-        {record.event_joinlist_usernick.substr(0, 1).toUpperCase()}
-      </Avatar>
+        name={record.event_joinlist_usernick.substr(0, 1).toUpperCase()}
+      />
       ),
   }, {
     title: '昵称性别',
