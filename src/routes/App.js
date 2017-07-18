@@ -53,7 +53,8 @@ class App extends React.Component {
           {children}
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-        Copyright © 2017 The Project by <a href="/">SYSUHIKER</a>. All Rights Reserved
+        <p>Copyright © 2017 The Project by <a href="/">SYSUHIKER</a>.</p>
+        <p><a href="http://www.miitbeian.gov.cn/">粤ICP备16111719号</a></p>
       </Footer>
       </Layout>
     );

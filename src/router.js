@@ -115,6 +115,13 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/teahouse/detail'));
             }, 'bbs-show');
           },
+        }, {
+          path: 'sysuhiker/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              cb(null, require('./routes/user/sysuhiker'));
+            }, 'user-show');
+          },
         },
       ],
     },

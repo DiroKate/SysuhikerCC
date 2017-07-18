@@ -33,9 +33,8 @@ function Nav({ data, phoneMode }) {
       </span>
     </div>);
   const loginMenu = isLogin ? (<SubMenu title={userTitle} key="user">
-    <Item key="a">用户中心</Item>
-    <Item key="b">修改密码</Item>
-    <Item key="c">登出</Item>
+    <Item key="sysuhiker">用户中心</Item>
+    <Item key="logout">登出</Item>
   </SubMenu>) : (<Item key="login">
     <Link to="/login">登录</Link>
   </Item>);
@@ -52,9 +51,8 @@ function Nav({ data, phoneMode }) {
     >
       {navChildren}
       {isLogin ? (<SubMenu title={(<span>{userName}</span>)} key="user">
-        <Item key="a">用户中心</Item>
-        <Item key="b">修改密码</Item>
-        <Item key="c">登出</Item>
+        <Item key="sysuhiker">用户中心</Item>
+        <Item key="logout">登出</Item>
       </SubMenu>) : (<Item key="login">
         <Link to="/login">登录</Link>
       </Item>)}
