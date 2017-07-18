@@ -76,7 +76,6 @@ function Teahouse({ isLogin, list, total, dispatch }) {
       reply: '12',
       update: 'last update at 2017-5-5',
     });
-    console.log(dataSource);
   };
 
   const TabData = {
