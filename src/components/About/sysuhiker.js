@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Timeline } from 'antd';
+import { Card, Timeline,Row,Col } from 'antd';
 import styles from './sysuhiker.less';
 
 function SysuhikerDescription() {
@@ -22,7 +22,7 @@ function SysuhikerDescription() {
   ];
 
   return (
-    <div className={styles.wrapper}>
+    <Row><Col className={styles.wrapper} xs={{span:22}} sm={{span:20}} >
       <p>逸仙徒步是一个以中大及周边高校的在校学生和校友为主力的一个业余的户外爱好者小群体。不定期举行各种AA户外活动。</p>
       <p>逸仙徒步第一次走进人们的视野，可以追溯到海狮同学在2010年12月5日在BBS发的一个徒步召集贴。</p>
       <Card className={styles.card}>
@@ -49,7 +49,8 @@ function SysuhikerDescription() {
         ))}
       </Timeline>
       <h3>今天，我们因为户外而在一起。明天，我们因为在一起而户外！</h3>
-    </div>
+    </Col></Row>
+
   );
 }
 export default SysuhikerDescription;

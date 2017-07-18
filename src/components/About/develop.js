@@ -16,7 +16,7 @@ function DevelopTabPane() {
       <h3>有意者请联系</h3>
 
       <Row type="flex" gutter={24}>
-        <Col span={8}>
+        <Col xs={{span:20,offset:2}} sm={{span:10,offset:0}}>
           <Card className={styles.card}>
             <h3><LocalIcon type="php" className={styles.icon} />后端</h3>
             <p><Icon type="user" className={styles.fontSize} /> later</p>
@@ -31,7 +31,7 @@ function DevelopTabPane() {
             </p>
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={{span:20,offset:2}} sm={{span:10,offset:0}}>
           <Card className={styles.card}>
             <h3><LocalIcon type="react" className={styles.icon} />前端</h3>
             <p><Icon type="user" className={styles.fontSize} /> diroguan</p>

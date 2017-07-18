@@ -8,6 +8,11 @@
     margin: 1rem 0;
     padding: 1rem 0;
   }
+
+  .editorWrapper {
+  	width: 80%;
+  	padding: 0 10%;
+  }
 }
 
 .rowHeader {
@@ -21,6 +26,8 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 1rem;
+
+  
 }
 
 .rowBody {
@@ -33,5 +40,54 @@
 
   & .content {
     padding-left: 1rem;
+
+    & .keywords {
+		margin-top: 1rem;
+    }
   }
+
+}
+
+.replyTitle{
+  background-color: #F0F8FF;
+  margin: 2rem 2rem 1rem 2rem;
+  padding: 1rem 1rem 1rem 1rem;
+}
+.submitBtn {
+  height: 3rem;
+  width: 100%;
+  margin: 1rem 0 ;
+  font-size: 1.5rem;
+}
+
+.editorToolbar {
+  font-size: 12px;
+  &Mobile {
+  	width: 96%;
+  	margin: 0 2%;
+  }
+  &Web {
+	width: 90%;
+	margin: 0 5%;
+  }
+}
+
+.editorWrapper {
+  display: block;
+  min-height: 300px;
+  &Mobile {
+  	width: 96%;
+  	margin: 0 2%;
+  }
+  &Web {
+	width: 90%;
+	margin: 0 5%;
+  }
+}
+
+.editorEditor {
+  min-height: 300px;
+  border: 1px solid @link-color;
+  padding: 5px;
+  border-radius: 2px;
 }
