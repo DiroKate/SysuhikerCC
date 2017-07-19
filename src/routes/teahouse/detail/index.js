@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'dva';
+import { browserHistory } from 'dva/router';
 import cx from 'classnames';
-import { Pagination, Button, Row, Col, Breadcrumb } from 'antd';
+import { Pagination, Button, Row, Col, Breadcrumb,Modal } from 'antd';
 import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 import styles from './detail.less';
 
@@ -15,59 +18,56 @@ class DetailPage extends React.Component {
       editorContent: null,
     };
   }
+
+  onEditorStateChange = (editorContent) => {
+    this.setState({
+      editorContent,
+    });
+  }
+  uploadImageCallBack = async (file) => {
+    console.log('callback: ', file);
+    console.log('上传图片', this.props);
+
+    const result = await request('/api/?service=Upload.Upload', {
+      method: 'POST',
+      body: JSON.stringify({ file }),
+    });
+    console.log('result', result);
+
+    return new Promise((resolve, reject) => {
+      resolve({ data: { link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg' } });
+    });
+  }
+
   render() {
-    const { mode, details } = this.props;
-    const title = '2016年8月21日清远-花尖-玄真溯溪视频';
-    const type = '作业攻略';
-    const content = '<p>这是文本主题</p>';
+    const { isLogin,userId,mode, details,currentReList,showRelist,dispatch } = this.props;
 
-    const dataSource = [
-      {
-        title: '2016年8月21日清远-花尖-玄真溯溪视频',
-        type: '作业攻略',
-        content: '<p>这是文本主题</p>',
-        author: '作者名字作者名字作者名字作者名字作者名字',
-        createTime: '2016-10-10 21:42:22',
-        keywords: '这是关键字',
-      }, {
-        title: '2016年8月21日清远-花尖-玄真溯溪视频',
-        type: '作业攻略',
-        content: '<p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p><p>这是文本主题</p>',
-        author: '作者名字',
-        createTime: '2016-10-10 21:42:22',
-      },
-    ];
-
-    const tableRow = (record, index) => (
+    const tableRow = (record) => (
       <div>
         <Row className={styles.rowHeader} >
-          <Col xs={{ span: 7 }} sm={{ span: 5 }}>
+          <Col xs={{ span: 5 }} sm={{ span: 4 }}>
             <p style={{ paddingLeft: '1rem' }}>{record.createTime}</p>
           </Col>
-          <Col xs={{ span: 15 }} sm={{ span: 18 }}>
-            <p>{index > 0 ? `Re: ${record.title}` : record.title}</p>
+          <Col xs={{ span: 17 }} sm={{ offset:1, span: 18 }}>
+            <p>{record.title}</p>
           </Col>
           <Col xs={{ span: 2 }} sm={{ span: 1 }}>
-            <p>{`# ${index + 1}`}</p>
+            <p>{`# ${record.index}`}</p>
           </Col>
         </Row>
         <Row className={styles.rowBody} >
-          <Col xs={{ span: 7 }} sm={{ span: 5 }} className={styles.author}>
-            <Row type="felx" align="align" justify="center">
-              <Col span={12} offset={4}>
-                <Avatar
-                  round
-                  size={64}
-                  src={record.avatarUrl}
-                  name={record.author.substr(0, 1).toUpperCase()}
-                />
-                <p>{record.author}</p>
-              </Col>
-            </Row>
-
-
+          <Col xs={{ span: 5 }} sm={{ span: 4 }} className={styles.author}>
+            <Avatar
+              className={styles.authorAvatar}
+              round
+              size={64}
+              src={record.avatarUrl}
+              name={record.author?record.author.substr(0, 1).toUpperCase():"SysuHiker"}
+            />
+            <p className={styles.authorName}>{record.author}</p>
           </Col>
-          <Col xs={{ span: 16 }} sm={{ span: 18 }} className={styles.content}>
+
+          <Col xs={{ span: 18 }} sm={{ offset:1, span: 18 }} className={styles.content}>
             <div dangerouslySetInnerHTML={{ __html: record.content }} />
             <p className={styles.keywords} >{record.keywords}</p>
           </Col>
@@ -75,21 +75,38 @@ class DetailPage extends React.Component {
       </div>
     );
 
-    const mainTable = (
-      <table className={styles.table}>
-        {dataSource.map((item, index) => (
-          <tr><td>
-            {tableRow(item, index)}
-          </td></tr>
-      ))}
-      </table>
-    );
+    
+    const onBtnClick = ()=>{
+      if (isLogin) {
+      const {editorContent} = this.state;
+      const contentValue = editorContent ? draftToHtml(convertToRaw(editorContent.getCurrentContent())) : '';
+      if (contentValue.length<1) {
+        return;
+      }
+      dispatch({
+        type: 'teahouse/postTopicRe',
+        payload: contentValue,
+      });
+    }else {
+      Modal.warning({
+        title: '尚未登录',
+        content: '评论需要先注册登录，跳转到登录页面？',
+        iconType: 'meh-o',
+        onOk() {
+          browserHistory.push('/login');
+        },
+      });
+    }
+    };
 
-    const onPageHandler = (page, pageSize, params) => {
-      console.log(page, pageSize, params);
+    const onPageHandler = (page, pageSize) => {
+      dispatch({
+        type:'teahouse/showRelistReducer',
+        payload:{pageSize,page}
+      })
     };
     const pagination = (
-      <Pagination style={{ marginLeft: '1rem' }} onChange={onPageHandler} total={100} />
+      <Pagination style={{ marginLeft: '1rem' }} onChange={onPageHandler} total={currentReList.length} />
     );
 
     const toolbarClassName = cx({
@@ -113,9 +130,21 @@ class DetailPage extends React.Component {
           textAlign: { inDropdown: true },
           link: { inDropdown: true },
           history: { inDropdown: true },
+          image: { uploadCallback: this.uploadImageCallBack },
         }}
         editorState={this.state.editorContent}
+        onEditorStateChange={this.onEditorStateChange}
       />
+    );
+
+    const mainTable = (
+      <table className={styles.table}>
+        {showRelist.map((item, index) => (
+          <tr><td>
+            {tableRow(item, index)}
+          </td></tr>
+      ))}
+      </table>
     );
 
     return (
@@ -124,7 +153,7 @@ class DetailPage extends React.Component {
           <Breadcrumb.Item>
             <a href="/bbs">逸仙茶馆</a>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>{title}</Breadcrumb.Item>
+          <Breadcrumb.Item>{details.post_title}</Breadcrumb.Item>
         </Breadcrumb>
         {pagination}
         {mainTable}
@@ -133,7 +162,13 @@ class DetailPage extends React.Component {
         {editor}
         <Row>
           <Col xs={{ span: 20, offset: 2 }} sm={{ span: 12, offset: 6 }}>
-            <Button className={styles.submitBtn} type="primary">发表评论</Button>
+            <Button 
+              className={styles.submitBtn} 
+              type="primary"
+              onClick={onBtnClick}
+            >
+              发表评论
+            </Button>
           </Col>
         </Row>
       </div>
@@ -142,10 +177,10 @@ class DetailPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { details } = state.teahouse;
-  const { mode } = state.app;
+  const { details, currentReList,showRelist } = state.teahouse;
+  const { mode,isLogin,userId } = state.app;
   return {
-    details, mode,
+    details, mode, currentReList,showRelist,isLogin,userId
   };
 }
 

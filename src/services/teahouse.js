@@ -20,3 +20,10 @@ export async function getTopicReList(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function sendTopicRe(params) {
+  return request('/api/?service=BBS.AddPostRe', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

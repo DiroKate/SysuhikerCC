@@ -71,6 +71,31 @@ const joinActivityUtils = params => ({
   event_joinlist_userpot: arrayFormatUtils(params.taoguo),
 });
 
+const getBBSReList = (details,currentReList)=>{
+  const allDataSource=[];
+    allDataSource.push({
+        index: 1,
+        title: details.post_title,
+        content: details.post_detail,
+        author: details.post_createUserNick,
+        createTime: details.post_createTime,
+        keywords: details.post_keywords,
+        avatarUrl:details.post_createUserAvatarUrl,
+    });
+    currentReList.map((item, index)=>{
+      allDataSource.push({
+        index: index+2,
+        title: `Re: ${details.post_title}`,
+        content: item.re_detail,
+        author: item.re_createUserNick,
+        avatarUrl: item.re_createUserAvatarUrl,
+        createTime: item.re_createTime,
+        keywords: null,
+      });
+    });
+  return allDataSource;
+}
+
 module.exports = {
   config,
   days,
@@ -79,4 +104,5 @@ module.exports = {
   registerPostUitls,
   notificaionUtils,
   joinActivityUtils,
+  getBBSReList,
 };
