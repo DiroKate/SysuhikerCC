@@ -7,5 +7,11 @@ import LeaderInfo from './LeaderInfo.js';
 import MemberList from './MemberList.js';
 
 export {
-  ApplyPage, CreatePage, EventCard, ForumBoard, ItemFigure, LeaderInfo, MemberList,
+  ApplyPage,
+  CreatePage,
+  EventCard,
+  ForumBoard,
+  ItemFigure,
+  LeaderInfo,
+  MemberList,
 };

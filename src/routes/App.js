@@ -22,10 +22,7 @@ class App extends React.Component {
     // 适配手机屏幕;
     this.enquireScreen((isMode) => {
       this.setState({ isMode });
-      this.props.dispatch({
-        type: 'app/setMode',
-        payload: isMode,
-      });
+      this.props.dispatch({ type: 'app/setMode', payload: isMode });
     });
   }
 
@@ -44,18 +41,29 @@ class App extends React.Component {
   render() {
     const { children, app } = this.props;
     return (
-      <Layout className="templates-wrapper" >
+      <Layout className="templates-wrapper">
         <BackTop />
         <Header>
-          <Nav data={{ ...app }} phoneMode={this.state.isMode} />
+          <Nav
+            data={{
+              ...app,
+            }}
+            phoneMode={this.state.isMode}
+          />
         </Header>
         <Content className="user-templates-wrapper">
           {children}
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-        <p>Copyright © 2017 The Project by <a href="/">SYSUHIKER</a>.</p>
-        <p><a href="http://www.miitbeian.gov.cn/">粤ICP备16111719号</a></p>
-      </Footer>
+        <Footer style={{
+          textAlign: 'center',
+        }}
+        >
+          <p>Copyright © 2017 The Project by
+            <a href="/">SYSUHIKER</a>.</p>
+          <p>
+            <a href="http://www.miitbeian.gov.cn/">粤ICP备16111719号</a>
+          </p>
+        </Footer>
       </Layout>
     );
   }

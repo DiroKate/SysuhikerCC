@@ -14,9 +14,7 @@ function Apply(props) {
     ...activityLeader,
     loginUser,
   };
-  return (
-    <ApplyPage data={applyProps} dispatch={dispatch} />
-  );
+  return (<ApplyPage data={applyProps} dispatch={dispatch} />);
 }
 Apply.propTypes = {
   activityDetails: PropTypes.object.isRequired,
@@ -24,11 +22,7 @@ Apply.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {
-    activityDetails: state.activity.activityDetails,
-    activityLeader: state.activity.activityLeader,
-    loginUser: state.app.loginUser,
-  };
+  return { activityDetails: state.activity.activityDetails, activityLeader: state.activity.activityLeader, loginUser: state.app.loginUser };
 }
 
 export default connect(mapStateToProps)(Apply);

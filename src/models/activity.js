@@ -21,7 +21,10 @@ export default {
     getActivitiesReducer(state, action) {
       const { list, totalCount } = action.payload;
       return {
-        ...state, list, total: totalCount };
+        ...state,
+        list,
+        total: totalCount,
+      };
     },
 
     activityDetailReducer(state, action) {
@@ -63,12 +66,12 @@ export default {
         activityReList: action.payload.list,
       };
     },
-
-
   },
 
   effects: {
-    *getAllActivities({ payload: params }, { call, put }) {
+    *getAllActivities({
+      payload: params,
+    }, { call, put }) {
       const { data } = yield call(ActivityService.getActivities, params);
       const { code, list, totalCount } = data.data;
       if (code === 0) {
@@ -85,13 +88,14 @@ export default {
     /**
      * 获取活动详细信息
      */
-    *getActivityDetails({ payload }, { call, put, select }) {
+    *getActivityDetails({
+      payload,
+    }, { call, put, select }) {
       // 判断是不是已经获取了活动信息了
       const eventId = yield select(state => state.activity.activityDetails.event_id);
       if (eventId === payload.id) {
         return;
       }
-
 
       const { data } = yield call(ActivityService.getActivityDetails, { event_id: payload.id });
       const { code } = data.data;
@@ -123,16 +127,23 @@ export default {
     /**
      * 报名活动
      */
-    *joinActivity({ payload }, { call, put, select }) {
+    *joinActivity({
+      payload,
+    }, { call, put, select }) {
       const userId = yield select(state => state.app.userId);
-      const { data } = yield call(
-        ActivityService.joinActivity,
-        joinActivityUtils({ ...payload, userId }),
-       );
+      const { data } = yield call(ActivityService.joinActivity, joinActivityUtils({
+        ...payload,
+        userId,
+      }));
       const { code } = data.data;
       if (code === 0) {
         yield put(routerRedux.push(`/activity/details/${payload.eventId}`));
-        yield put({ type: 'getEventJoinList', payload: { id: payload.eventId } });
+        yield put({
+          type: 'getEventJoinList',
+          payload: {
+            id: payload.eventId,
+          },
+        });
         notificaionUtils('success', '报名成功');
       } else {
         notificaionUtils('error', '报名失败');
@@ -142,7 +153,9 @@ export default {
     /**
      * 发布活动
      * */
-    *postActivity({ payload: params }, { select, call, put }) {
+    *postActivity({
+      payload: params,
+    }, { select, call, put }) {
       const userId = yield select(state => state.app.userId);
       const retValues = activityPostUitls(params, userId);
       const { data } = yield call(ActivityService.addActivity, retValues);
@@ -151,7 +164,10 @@ export default {
         yield put(routerRedux.push('/activity'));
         yield put({
           type: 'getAllActivities',
-          payload: { pagesize: 10, page: 1 },
+          payload: {
+            pagesize: 10,
+            page: 1,
+          },
         });
         notificaionUtils('success', '已经发布活动啦');
       }
@@ -160,18 +176,22 @@ export default {
     /**
      * 获取活动报名列表
      */
-    *getEventJoinList({ payload }, { call, put }) {
+    *getEventJoinList({
+      payload,
+    }, { call, put }) {
       const { data } = yield call(ActivityService.getEventJoinList, { event_id: payload.id });
       const { code, list } = data.data;
       if (code === 0) {
-        yield put({
-          type: 'updateJoinListReducer',
-          payload: { list },
-        });
+        yield put({ type: 'updateJoinListReducer',
+          payload: {
+            list,
+          } });
       } else {
         yield put({
           type: 'updateJoinListReducer',
-          payload: { list: [] },
+          payload: {
+            list: [],
+          },
         });
       }
     },
@@ -179,18 +199,22 @@ export default {
     /**
      * 获取活动评论列表
      */
-    *getEventReList({ payload }, { call, put }) {
+    *getEventReList({
+      payload,
+    }, { call, put }) {
       const { data } = yield call(ActivityService.getEventReList, { event_id: payload.id });
       const { code, list } = data.data;
       if (code === 0) {
-        yield put({
-          type: 'updateReListReducer',
-          payload: { list },
-        });
+        yield put({ type: 'updateReListReducer',
+          payload: {
+            list,
+          } });
       } else {
         yield put({
           type: 'updateReListReducer',
-          payload: { list: [] },
+          payload: {
+            list: [],
+          },
         });
       }
     },
@@ -198,20 +222,30 @@ export default {
     /**
      * 增加活动评论
      */
-    *addReForum({ payload }, { call, select, put }) {
+    *addReForum({
+      payload,
+    }, { call, select, put }) {
       const userId = yield select(state => state.app.userId);
       const activityId = yield select(state => state.activity.activityId);
-      const { data } = yield call(
-        ActivityService.addReForum,
-        { eventId: activityId, userId, userComments: payload },
-      );
+      const { data } = yield call(ActivityService.addReForum, {
+        eventId: activityId,
+        userId,
+        userComments: payload,
+      });
       if (data.data.code === 0) {
         notificaionUtils('success', '评论成功');
-        yield put({ type: 'getEventReList', payload: { id: activityId } });
+        yield put({
+          type: 'getEventReList',
+          payload: {
+            id: activityId,
+          },
+        });
       }
     },
 
-    *uploadImage({ payload }, { call }) {
+    *uploadImage({
+      payload,
+    }, { call }) {
       const xxxx = yield call(ActivityService.uploadImage, payload);
     },
 
@@ -221,13 +255,18 @@ export default {
       const { data } = yield call(ActivityService.quitActivity, {
         event_joinlist_userid: userId,
         event_joinlist_eventid: eventid,
-        event_joinlist_comments: '(如需重新报名请联系活动发起人修改报名状态)' });
+        event_joinlist_comments: '(如需重新报名请联系活动发起人修改报名状态)',
+      });
       if (data.data.code === 0) {
         notificaionUtils('success', '退出活动成功');
-        yield put({ type: 'getEventJoinList', payload: { id: eventid } });
+        yield put({
+          type: 'getEventJoinList',
+          payload: {
+            id: eventid,
+          },
+        });
       }
     },
-
   },
 
   subscriptions: {
@@ -236,19 +275,42 @@ export default {
         if (pathname === '/activity') {
           dispatch({
             type: 'getAllActivities',
-            payload: { pagesize: 10, page: 1 },
+            payload: {
+              pagesize: 10,
+              page: 1,
+            },
           });
         }
 
         const match = pathToRegexp('/activity/details/:id').exec(pathname);
         if (match) {
-          dispatch({ type: 'getActivityDetails', payload: { id: match[1] } });
-          dispatch({ type: 'getEventJoinList', payload: { id: match[1] } });
-          dispatch({ type: 'getEventReList', payload: { id: match[1] } });
+          dispatch({
+            type: 'getActivityDetails',
+            payload: {
+              id: match[1],
+            },
+          });
+          dispatch({
+            type: 'getEventJoinList',
+            payload: {
+              id: match[1],
+            },
+          });
+          dispatch({
+            type: 'getEventReList',
+            payload: {
+              id: match[1],
+            },
+          });
         }
         const match2 = pathToRegexp('/activity/apply/:id').exec(pathname);
         if (match2) {
-          dispatch({ type: 'getActivityDetails', payload: { id: match2[1] } });
+          dispatch({
+            type: 'getActivityDetails',
+            payload: {
+              id: match2[1],
+            },
+          });
         }
       });
     },

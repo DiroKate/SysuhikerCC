@@ -10,8 +10,7 @@ const SubMenu = Menu.SubMenu;
 const Item = Menu.Item;
 
 function Nav({ data, phoneMode }) {
-  const {
-      isLogin, userId, userEmail, userAvatarUrl, userName } = data;
+  const { isLogin, userId, userEmail, userAvatarUrl, userName } = data;
   const navData = {
     home: '首页',
     activity: '活动',
@@ -24,7 +23,7 @@ function Nav({ data, phoneMode }) {
         {navData[key]}
       </Link>
     </Item>
-    ));
+  ));
   const userTitle = (
     <div className={styles.userTitle}>
       <span>
@@ -32,16 +31,29 @@ function Nav({ data, phoneMode }) {
           round
           size="48"
           src={userAvatarUrl}
-          name={userName ? userName.substr(0, 1).toUpperCase() : ''}
+          name={userName
+          ? userName.substr(0, 1).toUpperCase()
+          : ''}
         />
       </span>
-    </div>);
-  const loginMenu = isLogin ? (<SubMenu title={userTitle} key="user">
-    <Item key="sysuhiker"><Link to={`/sysuhiker/${userId}`}>用户中心</Link></Item>
-    <Item key="logout"><Link to="/logout">登出</Link></Item>
-  </SubMenu>) : (<Item key="login">
-    <Link to="/login">登录</Link>
-  </Item>);
+    </div>
+  );
+  const loginMenu = isLogin
+    ? (
+      <SubMenu title={userTitle} key="user">
+        <Item key="sysuhiker">
+          <Link to={`/sysuhiker/${userId}`}>用户中心</Link>
+        </Item>
+        <Item key="logout">
+          <Link to="/logout">登出</Link>
+        </Item>
+      </SubMenu>
+    )
+    : (
+      <Item key="login">
+        <Link to="/login">登录</Link>
+      </Item>
+    );
 
   // navChildren.push(loginMenu);
 
@@ -50,36 +62,46 @@ function Nav({ data, phoneMode }) {
       defaultSelectedKeys={['home']}
       theme="dark"
       className={styles.phoneMenu}
-      style={{ width: 240 }}
+      style={{
+        width: 240,
+      }}
       mode="inline"
     >
       {navChildren}
-      {isLogin ? (<SubMenu title={(<span>{userName}</span>)} key="user">
-        <Item key="sysuhiker"><Link to={`/sysuhiker/${userId}`}>用户中心</Link></Item>
-        <Item key="logout"><Link to="/logout">登出</Link></Item>
-      </SubMenu>) : (<Item key="login">
-        <Link to="/login">登录</Link>
-      </Item>)}
+      {isLogin
+        ? (
+          <SubMenu
+            title={(
+              <span>{userName}</span>
+          )}
+            key="user"
+          >
+            <Item key="sysuhiker">
+              <Link to={`/sysuhiker/${userId}`}>用户中心</Link>
+            </Item>
+            <Item key="logout">
+              <Link to="/logout">登出</Link>
+            </Item>
+          </SubMenu>
+        )
+        : (
+          <Item key="login">
+            <Link to="/login">登录</Link>
+          </Item>
+        )}
     </Menu>
   );
 
-  const userMenu = phoneMode ? (
-    <Dropdown overlay={phoneMenu}>
-      <Icon type="menu-fold" className={styles.phoneMenuLogo} />
-    </Dropdown>
-    ) : (
-      <Row
-        type="flex"
-        align="center"
-        justify="end"
-      >
+  const userMenu = phoneMode
+    ? (
+      <Dropdown overlay={phoneMenu}>
+        <Icon type="menu-fold" className={styles.phoneMenuLogo} />
+      </Dropdown>
+    )
+    : (
+      <Row type="flex" align="center" justify="end">
         <Col>
-          <Menu
-            mode="horizontal"
-            defaultSelectedKeys={['home']}
-            theme="dark"
-            className={styles.menu}
-          >
+          <Menu mode="horizontal" defaultSelectedKeys={['home']} theme="dark" className={styles.menu}>
             {navChildren}
             {loginMenu}
           </Menu>
@@ -87,17 +109,9 @@ function Nav({ data, phoneMode }) {
       </Row>
     );
   return (
-    <Row
-      type="flex"
-      align="center"
-      justify="space-between"
-    >
+    <Row type="flex" align="center" justify="space-between">
       <Col>
-        <LocalIcon
-          key="logo"
-          type="LOGO-"
-          className={styles.logo}
-        />
+        <LocalIcon key="logo" type="LOGO-" className={styles.logo} />
       </Col>
       <Col>{userMenu}</Col>
     </Row>

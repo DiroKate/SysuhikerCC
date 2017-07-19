@@ -7,8 +7,10 @@ import { About } from '../../components';
 const TabPane = Tabs.TabPane;
 const { SysuhikerDescription, DevelopTabPane, ContactUs } = About;
 
-function aboutPage({mode}) {
-  const tabPosition = mode?"top":"left";
+function aboutPage({ mode }) {
+  const tabPosition = mode
+    ? 'top'
+    : 'left';
   return (
     <div className="sysuhiker-top-wrapper">
       <Tabs tabPosition={tabPosition}>
@@ -21,9 +23,7 @@ function aboutPage({mode}) {
 }
 function mapStateToProps(state) {
   const { mode } = state.app;
-  return {
-    mode,
-  };
+  return { mode };
 }
 
 export default connect(mapStateToProps)(aboutPage);

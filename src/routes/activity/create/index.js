@@ -8,9 +8,7 @@ function CreateActivity(props) {
   const createPagesProps = {
     dispatch: props.dispatch,
   };
-  return (
-    <CreatePage {...createPagesProps} />
-  );
+  return (<CreatePage {...createPagesProps} />);
 }
 
 export default connect()(CreateActivity);

@@ -12,17 +12,12 @@ function Login({ dispatch, loading }) {
   // console.log(loading);
   const loginProps = {
     onOk(data) {
-      dispatch({
-        type: 'app/login',
-        payload: data,
-      });
+      dispatch({ type: 'app/login', payload: data });
     },
   };
 
   const LoginPage = (
-    <Card
-      className={styles.card}
-    >
+    <Card className={styles.card}>
       <QueueAnim delay={300} className="queue-simple">
         <LocalIcon key="logo" type="LOGO-" className={styles.icon} />
         <h2 key="solgan" className={styles.slogan}>逸起Hike，仙至High</h2>
@@ -34,21 +29,31 @@ function Login({ dispatch, loading }) {
   );
 
   const cNs = classNames(
-    // { 'sysuhiker-top-wrapper': true },
-    { [`${styles.wrapper}`]: true },
-  );
+  // { 'sysuhiker-top-wrapper': true },
+    {
+      [`${styles.wrapper}`]: true,
+    });
 
   const cardLayout = {
-    xs: { span: 20, offset: 2 },
-    sm: { span: 11, offset: 12 },
-    md: { span: 8, offset: 15 },
+    xs: {
+      span: 20,
+      offset: 2,
+    },
+    sm: {
+      span: 11,
+      offset: 12,
+    },
+    md: {
+      span: 8,
+      offset: 15,
+    },
   };
 
   return (
     <div className={cNs}>
       <Row type="flex">
-        <Col {...cardLayout} >
-          { LoginPage }
+        <Col {...cardLayout}>
+          {LoginPage}
         </Col>
       </Row>
     </div>
@@ -56,9 +61,7 @@ function Login({ dispatch, loading }) {
 }
 
 function mapStateToProps(state) {
-  return {
-    loading: state.loading.models.app,
-  };
+  return { loading: state.loading.models.app };
 }
 
 export default connect(mapStateToProps)(Login);

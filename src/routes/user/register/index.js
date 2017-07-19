@@ -24,9 +24,7 @@ function Register(props) {
 }
 
 function mapStateToProps(state) {
-  return {
-    loading: state.loading.models.app,
-  };
+  return { loading: state.loading.models.app };
 }
 
 export default connect(mapStateToProps)(Register);

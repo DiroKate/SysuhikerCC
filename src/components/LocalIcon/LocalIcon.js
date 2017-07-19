@@ -5,10 +5,11 @@ import './LocalIcon.less';
 
 const LocalIcon = ({ type, colorful, className }) => {
   const propsClassName = className;
-  const csSvg = ClassNames(
-    { 'colorful-icon': true },
-    { [`${propsClassName}`]: className !== undefined },
-  );
+  const csSvg = ClassNames({
+    'colorful-icon': true,
+  }, {
+    [`${propsClassName}`]: className !== undefined,
+  });
 
   if (colorful) {
     return (
@@ -18,11 +19,13 @@ const LocalIcon = ({ type, colorful, className }) => {
     );
   }
 
-  const csFont = ClassNames(
-    { sysuhiker: true },
-    { [`sysuhikericon-${type}`]: true },
-    { [`${propsClassName}`]: className !== undefined },
-  );
+  const csFont = ClassNames({
+    sysuhiker: true,
+  }, {
+    [`sysuhikericon-${type}`]: true,
+  }, {
+    [`${propsClassName}`]: className !== undefined,
+  });
   return <i className={csFont} />;
 };
 

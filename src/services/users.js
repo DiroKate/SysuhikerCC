@@ -6,7 +6,7 @@ import request from '../utils/request';
  */
 export async function login(params) {
   return request('/api/?service=User.Login', {
-  // return request('/api/serviceUser.Login', {
+    // return request('/api/serviceUser.Login', {
     method: 'POST',
     body: JSON.stringify(params),
   });
@@ -18,7 +18,7 @@ export async function login(params) {
  */
 export async function register(params) {
   return request('/api/?service=User.Register', {
-  // return request('/api/serviceUser.Register', {
+    // return request('/api/serviceUser.Register', {
     method: 'POST',
     body: JSON.stringify(params),
   });
@@ -39,7 +39,7 @@ export async function logout(params) {
  */
 export async function userInfo(params) {
   return request('/api/?service=User.GetBaseInfo', {
-  // return request('/api/serviceUser.GetBaseInfo', {
+    // return request('/api/serviceUser.GetBaseInfo', {
     method: 'POST',
     body: JSON.stringify(params),
   });
@@ -49,7 +49,7 @@ export async function userInfo(params) {
  * 更新用户信息
  */
 export async function updateUserInfo(params) {
-  console.log("send(data)", params);
+  console.log('send(data)', params);
   return request('/api/?service=User.Update', {
     method: 'POST',
     body: JSON.stringify(params),

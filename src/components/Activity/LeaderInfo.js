@@ -16,7 +16,9 @@ function LeaderInfo(props) {
           round
           size={48}
           src={data.avatar}
-          name={data.nick ? data.nick.substr(0, 1).toUpperCase() : ''}
+          name={data.nick
+          ? data.nick.substr(0, 1).toUpperCase()
+          : ''}
         />
 
       </Col>

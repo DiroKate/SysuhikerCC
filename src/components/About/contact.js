@@ -8,7 +8,14 @@ function ContectUs() {
     <div>
       <h1>联系我们</h1>
       <Row type="flex" gutter={16} className={styles.wrapper}>
-        <Col xs={{ span: 24 }} sm={{ span: 16 }}>
+        <Col
+          xs={{
+            span: 24,
+          }}
+          sm={{
+            span: 16,
+          }}
+        >
           <h2>逸仙徒步社区基金</h2>
           <br />
           <p>逸仙徒步社区基金，属非营利及自愿性质，采用公开及透明的运作方式，来源于大家，服务于大家。</p>
@@ -33,14 +40,14 @@ function ContectUs() {
             <br />
 
             <li>
-            <b>基金筹款途径：</b>
+              <b>基金筹款途径：</b>
               <ol>
                 <li>1. 众人捐款。</li>
                 <li>2. 活动结余（比如说活动/腐败结束后，还剩几块钱，一个个退回去麻烦，可以直接捐给我们社区基金）。</li>
                 <li>3. 实物义卖。</li>
                 <li>4. 广告赞助（liS：据新浪云官方统计，咱平台过去30天有17万PV的访问量，欢迎各位老板来投放广告，广告费从优！）。</li>
               </ol>
-            <img src="http://sysuhiker.cc/upload/maps/201604/wps3FC7.tmp.jpg14601800898351.jpg" alt="" />
+              <img src="http://sysuhiker.cc/upload/maps/201604/wps3FC7.tmp.jpg14601800898351.jpg" alt="" />
             </li>
             <br />
 
@@ -65,13 +72,13 @@ function ContectUs() {
                 <li>3.对已上交款项，有义务在基金管理帖中发帖申明款项来源及金额。</li>
               </ol>
             </li>
-          <br />
+            <br />
 
             <li>
               <b>社区基金管委会成员</b>
               <p>由逸仙徒步管委会管理。</p>
             </li>
-          <br />
+            <br />
           </ul>
 
           <p>管理组：later，北水，蛋神，柚子，小强，光子</p>
@@ -82,15 +89,23 @@ function ContectUs() {
 
         </Col>
 
-        <Col xs={{ span: 24 }} sm={{ span: 8 }}>
+        <Col
+          xs={{
+            span: 24,
+          }}
+          sm={{
+            span: 8,
+          }}
+        >
           <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="QQqun" />26940421</p>
-          <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="guanwang" /><a href="http://sysuhiker.cc">http://sysuhiker.cc</a></p>
-          <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="weibo" /><a href="http://weibo.com/yixiantubu">@逸仙徒步</a></p>
+          <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="guanwang" />
+            <a href="http://sysuhiker.cc">http://sysuhiker.cc</a>
+          </p>
+          <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="weibo" />
+            <a href="http://weibo.com/yixiantubu">@逸仙徒步</a>
+          </p>
           <p className={styles.contact}><LocalIcon className={styles.contactIcon} type="zhifubao" />sysu_hiker@126.com</p>
-          <img
-            src="http://sysuhiker.cc/upload/maps/201604/wps3FE7.tmp.png14601800911141.png"
-            alt=""
-          />
+          <img src="http://sysuhiker.cc/upload/maps/201604/wps3FE7.tmp.png14601800911141.png" alt="" />
         </Col>
       </Row>
     </div>

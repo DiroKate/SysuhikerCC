@@ -12,8 +12,15 @@ const { EventCard, LeaderInfo, MemberList, ForumBoard } = Activity;
 const BreadcrumbItem = Breadcrumb.Item;
 
 function Details(props) {
-  const { dispatch, activityDetails, activityLeader,
-     isLogin, activityJoinList, activityReList, userId } = props;
+  const {
+    dispatch,
+    activityDetails,
+    activityLeader,
+    isLogin,
+    activityJoinList,
+    activityReList,
+    userId,
+  } = props;
 
   const isExpired = compareDays(Date(), activityDetails.event_endtime);
   const isAdmin = (userId === activityLeader.id);
@@ -45,22 +52,30 @@ function Details(props) {
   };
 
   const addReForumHandle = (params) => {
-    dispatch({
-      type: 'activity/addReForum',
-      payload: params,
-    });
+    dispatch({ type: 'activity/addReForum', payload: params });
   };
 
   return (
     <div className={styles.details_page}>
-      <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+      <Breadcrumb style={{
+        margin: '12px 0',
+        fontSize: '1.2em',
+      }}
+      >
         <BreadcrumbItem>
           <a href="/activity">活动列表</a>
         </BreadcrumbItem>
         <BreadcrumbItem>活动详情</BreadcrumbItem>
       </Breadcrumb>
       <Row>
-        <Col xs={{ span: 24 }} sm={{ span: 15 }}>
+        <Col
+          xs={{
+            span: 24,
+          }}
+          sm={{
+            span: 15,
+          }}
+        >
           <QueueAnim delay={200}>
             <div key="title">
               <h1>{activityDetails.event_name}</h1>
@@ -71,19 +86,32 @@ function Details(props) {
             <div key="EventCard">
               <EventCard data={activityDetails} />
             </div>
-            <div
-              key="content"
-              dangerouslySetInnerHTML={createMarkup()}
-            />
+            <div key="content" dangerouslySetInnerHTML={createMarkup()} />
           </QueueAnim>
         </Col>
-        <Col xs={{ span: 24 }} sm={{ span: 9 }}>
+        <Col
+          xs={{
+            span: 24,
+          }}
+          sm={{
+            span: 9,
+          }}
+        >
           <MemberList data={memberListProps} />
         </Col>
       </Row>
-      <Row><Col xs={{ span: 24 }} sm={{ span: 15 }}>
-        <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
-      </Col></Row>
+      <Row>
+        <Col
+          xs={{
+            span: 24,
+          }}
+          sm={{
+            span: 15,
+          }}
+        >
+          <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
+        </Col>
+      </Row>
     </div>
   );
 }

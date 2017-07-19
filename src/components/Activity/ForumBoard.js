@@ -11,20 +11,11 @@ import styles from './ForumBoard.less';
 const FormItem = Form.Item;
 
 function ForumItem(props) {
-  const { re_createUserEmail: userEmail,
-    re_createUserNick: userName,
-    re_detail: content,
-    re_createTime: createAt,
-    re_createUserAvatarUrl: avatarUrl } = props;
+  const { re_createUserEmail: userEmail, re_createUserNick: userName, re_detail: content, re_createTime: createAt, re_createUserAvatarUrl: avatarUrl } = props;
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
-        <Avatar
-          round
-          size={32}
-          src={avatarUrl}
-          name={userName.substr(0, 1).toUpperCase()}
-        />
+        <Avatar round size={32} src={avatarUrl} name={userName.substr(0, 1).toUpperCase()} />
       </div>
       <div className={styles.forumItemWrapper}>
         <p className={styles.forumItemWrapperUser}>
@@ -33,7 +24,9 @@ function ForumItem(props) {
         <div
           className={styles.forumItemWrapperContent}
           key="content"
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{
+            __html: content,
+          }}
         />
         <p>{createAt}</p>
       </div>
@@ -50,19 +43,17 @@ class ForumBoard extends React.Component {
   }
 
   onEditorStateChange = (editorContent) => {
-    this.setState({
-      editorContent,
-    });
+    this.setState({ editorContent });
   };
 
-  handleSubmit =() => {
+  handleSubmit = () => {
     if (this.props.isLogin) {
       const { editorContent } = this.state;
-      const contentValue = editorContent ? draftToHtml(convertToRaw(editorContent.getCurrentContent())) : '';
+      const contentValue = editorContent
+        ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
+        : '';
       this.props.handle(contentValue);
-      this.setState({
-        editorContent: null,
-      });
+      this.setState({ editorContent: null });
     } else {
       Modal.warning({
         title: '尚未登录',
@@ -75,7 +66,6 @@ class ForumBoard extends React.Component {
     }
   }
 
-
   render() {
     const { dataSource } = this.props;
 
@@ -84,7 +74,8 @@ class ForumBoard extends React.Component {
     const header = (
       <div className={styles.header}>
         <span>
-          <h1>讨论</h1><p>({totalNums})</p>
+          <h1>讨论</h1>
+          <p>({totalNums})</p>
         </span>
       </div>
     );
@@ -93,9 +84,7 @@ class ForumBoard extends React.Component {
       {
         title: '讨论区',
         key: 'ForumBoard',
-        render: (text, record) => (
-          <ForumItem {...record} />
-        ),
+        render: (text, record) => (<ForumItem {...record} />),
       },
     ];
     return (
@@ -105,7 +94,9 @@ class ForumBoard extends React.Component {
           dataSource={dataSource}
           columns={columns}
           showHeader={false}
-          locale={{ emptyText: '居然没有人讨论' }}
+          locale={{
+            emptyText: '居然没有人讨论',
+          }}
         />
 
         <Form>
@@ -115,7 +106,9 @@ class ForumBoard extends React.Component {
               wrapperClassName={styles.editorWrapper}
               editorClassName={styles.editorEditor}
               toolbar={{
-                options: ['inline', 'colorPicker', 'link', 'emoji', 'history'],
+                options: [
+                  'inline', 'colorPicker', 'link', 'emoji', 'history',
+                ],
                 inline: {
                   options: ['bold', 'italic', 'underline'],
                 },
@@ -124,7 +117,11 @@ class ForumBoard extends React.Component {
               onEditorStateChange={this.onEditorStateChange}
             />
           </FormItem>
-          <FormItem wrapperCol={{ span: 3, offset: 20 }}>
+          <FormItem wrapperCol={{
+            span: 3,
+            offset: 20,
+          }}
+          >
             <Button size="large" type="primary" onClick={this.handleSubmit}>发表评论</Button>
           </FormItem>
         </Form>

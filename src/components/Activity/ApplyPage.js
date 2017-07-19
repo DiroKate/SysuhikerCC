@@ -1,6 +1,17 @@
 /* 报名页面 */
 import React from 'react';
-import { Breadcrumb, Alert, Form, Icon, Checkbox, Button, Radio, Input, Tooltip, Modal } from 'antd';
+import {
+  Breadcrumb,
+  Alert,
+  Form,
+  Icon,
+  Checkbox,
+  Button,
+  Radio,
+  Input,
+  Tooltip,
+  Modal,
+} from 'antd';
 import { browserHistory } from 'dva/router';
 
 import { LocalIcon } from '..';
@@ -35,34 +46,70 @@ function applyForm(props) {
     }
   };
 
+  const userRoles = userdata.user_interest
+    ? userdata.user_interest.split('+')
+    : [];
 
-  const userRoles = userdata.user_interest ? userdata.user_interest.split('+') : [];
-
-  const roleOptions = ['领队', '协作', '头驴', '尾驴', '财务', '后勤', '环保', '作业', '摄影', '医护', '厨师'];
+  const roleOptions = [
+    '领队',
+    '协作',
+    '头驴',
+    '尾驴',
+    '财务',
+    '后勤',
+    '环保',
+    '作业',
+    '摄影',
+    '医护',
+    '厨师',
+  ];
   const campOptions = ['暂无', '单人帐篷', '双人帐篷', '三人帐篷', '其他请在备注说明'];
   const fangchaodianOptions = ['暂无', '单人防潮垫', '双人防潮垫', '三人防潮垫', '其他请在备注说明'];
-  const duijiangjiOptions = ['暂无', 'V频段136-174MHz', 'U频段400-470MHz', 'U频段400-430MHz', 'U频段450-470MHz', '其他情况请在备注说明'];
+  const duijiangjiOptions = [
+    '暂无',
+    'V频段136-174MHz',
+    'U频段400-470MHz',
+    'U频段400-430MHz',
+    'U频段450-470MHz',
+    '其他情况请在备注说明',
+  ];
   const lutouOptions = ['暂无', '扁气罐接口炉头', '长气罐接口炉头', '酒精炉头', '其他请在备注说明'];
   const taoguoOptions = ['暂无', '3人及以下小锅', '4-6人中锅', '7人以上大锅', '其他请在备注说明'];
 
   const formItemLayout = {
     labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 6,
+      },
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 10 },
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 10,
+      },
     },
   };
   const formItemLayoutWide = {
     labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 6,
+      },
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 14 },
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 14,
+      },
     },
   };
   /**
@@ -130,36 +177,34 @@ function applyForm(props) {
         <h3>基本信息</h3>
       </FormItem>
 
-      {
-        formData1.map(item => (
-          <FormItem
-            {...formItemLayout}
-            label={item.label}
-            id={item.id}
-            hasFeedback
-          >
-            {getFieldDecorator(item.id, {
-              rules: [
-                { required: item.required, message: item.message, whitespace: item.whitespace },
-              ],
-              initialValue: item.initialValue,
-            })(
-              <Input />,
-            )}
-          </FormItem>
-        ))
-      }
+      {formData1.map(item => (
+        <FormItem {...formItemLayout} label={item.label} id={item.id} hasFeedback>
+          {getFieldDecorator(item.id, {
+            rules: [
+              {
+                required: item.required,
+                message: item.message,
+                whitespace: item.whitespace,
+              },
+            ],
+            initialValue: item.initialValue,
+          })(
+            <Input />)}
+        </FormItem>
+      ))
+}
 
-      <FormItem
-        {...formItemLayout}
-        label="性别"
-        id="gender"
-      >
+      <FormItem {...formItemLayout} label="性别" id="gender">
         {getFieldDecorator('gender', {
-          rules: [{
-            required: true, message: '请输入邮箱',
-          }],
-          initialValue: userdata.user_gender === 'gg' ? 'male' : 'fefemale',
+          rules: [
+            {
+              required: true,
+              message: '请输入邮箱',
+            },
+          ],
+          initialValue: userdata.user_gender === 'gg'
+            ? 'male'
+            : 'fefemale',
         })(
           <Radio.Group>
             <Radio value="male">
@@ -168,84 +213,56 @@ function applyForm(props) {
             <Radio value="female">
               <LocalIcon type="female" colorful />MM
           </Radio>
-          </Radio.Group>,
-      )}
+          </Radio.Group>)}
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="Email"
-        id="email"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="Email" id="email" hasFeedback>
         {getFieldDecorator('email', {
-          rules: [{
-            type: 'email', message: '非法邮箱地址',
-          }, {
-            required: true, message: '请输入邮箱',
-          }],
+          rules: [
+            {
+              type: 'email',
+              message: '非法邮箱地址',
+            }, {
+              required: true,
+              message: '请输入邮箱',
+            },
+          ],
           initialValue: userdata.user_email,
         })(
-          <Input />,
-      )}
+          <Input />)}
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="电话"
-        id="phoneNum"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="电话" id="phoneNum" hasFeedback>
         {getFieldDecorator('phoneNum', {
           rules: [
-            { type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' },
-            { required: true, message: 'Please input your phone number!' }],
+            {
+              type: 'string',
+              pattern: /^[0-9]+$/,
+              message: '请输入正确的电话号码',
+            }, {
+              required: true,
+              message: 'Please input your phone number!',
+            },
+          ],
           initialValue: userdata.user_phone,
         })(
-          <Input />,
-        )}
+          <Input />)}
       </FormItem>
 
-      <FormItem
-        {...formItemLayout}
-        label="住址"
-        id="address"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="住址" id="address" hasFeedback>
         {getFieldDecorator('address')(<Input value={userdata.user_address} />)}
       </FormItem>
-      <FormItem
-        {...formItemLayoutWide}
-        label="团队角色"
-        id="role"
-      >
-        {getFieldDecorator('role', {
-          initialValue: userRoles,
-        })(
-          <Checkbox.Group
-            options={roleOptions}
-          />,
-        )}
+      <FormItem {...formItemLayoutWide} label="团队角色" id="role">
+        {getFieldDecorator('role', { initialValue: userRoles })(
+          <Checkbox.Group options={roleOptions} />)}
 
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="QQ"
-        id="qq"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="QQ" id="qq" hasFeedback>
         {getFieldDecorator('qq')(
-          <Input value={userdata.user_qq} />,
-        )}
+          <Input value={userdata.user_qq} />)}
 
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="微博"
-        id="weibo"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="微博" id="weibo" hasFeedback>
         {getFieldDecorator('weibo')(
-          <Input value={userdata.user_weiboLink} />,
-        )}
+          <Input value={userdata.user_weiboLink} />)}
       </FormItem>
 
       {/* ========== 基本信息 ========== */}
@@ -254,50 +271,50 @@ function applyForm(props) {
       <FormItem>
         <h3>保险信息</h3>
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="紧急联系人"
-        id="emergencyMan"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="紧急联系人" id="emergencyMan" hasFeedback>
         {getFieldDecorator('emergencyMan', {
-          rules: [{ required: true, message: '请输入紧急联系人', whitespace: true }],
+          rules: [
+            {
+              required: true,
+              message: '请输入紧急联系人',
+              whitespace: true,
+            },
+          ],
           initialValue: userdata.user_urgentName,
         })(
-          <Input />,
-        )}
+          <Input />)}
       </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="紧急联系人电话"
-        id="emergencyNum"
-        hasFeedback
-      >
+      <FormItem {...formItemLayout} label="紧急联系人电话" id="emergencyNum" hasFeedback>
         {getFieldDecorator('emergencyNum', {
           rules: [
-            { type: 'string', pattern: /^[0-9]+$/, message: '请输入正确的电话号码' },
-            { required: true, message: '请输入紧急联系人电话号码' }],
+            {
+              type: 'string',
+              pattern: /^[0-9]+$/,
+              message: '请输入正确的电话号码',
+            }, {
+              required: true,
+              message: '请输入紧急联系人电话号码',
+            },
+          ],
           initialValue: userdata.user_urgentPhone,
         })(
-          <Input />,
-        )}
+          <Input />)}
       </FormItem>
       <FormItem
         {...formItemLayout}
         label={(
           <span>
-              保险信息&nbsp;
-              <Tooltip title="可活动出发前补上。没有意外保险信息，长线活动不予参与">
-                <Icon type="question-circle-o" />
-              </Tooltip>
+          保险信息&nbsp;
+          <Tooltip title="可活动出发前补上。没有意外保险信息，长线活动不予参与">
+            <Icon type="question-circle-o" />
+          </Tooltip>
           </span>
-          )}
+      )}
         id="insurance"
         hasFeedback
       >
         {getFieldDecorator('insurance')(
-          <Input type="textarea" />,
-      )}
+          <Input type="textarea" />)}
       </FormItem>
       {/* ========== 保险信息 ========== */}
 
@@ -307,54 +324,60 @@ function applyForm(props) {
       </FormItem>
       <FormItem
         labelCol={{
-          xs: { span: 24 },
-          sm: { span: 6 },
+          xs: {
+            span: 24,
+          },
+          sm: {
+            span: 6,
+          },
         }}
         wrapperCol={{
-          xs: { span: 12 },
-          sm: { span: 4 },
+          xs: {
+            span: 12,
+          },
+          sm: {
+            span: 4,
+          },
         }}
         label="登山包容量"
         id="backpack"
         hasFeedback
       >
         {getFieldDecorator('backpack')(
-          <Input addonAfter="L" />,
-        )}
+          <Input addonAfter="L" />)}
       </FormItem>
       <FormItem
         labelCol={{
-          xs: { span: 24 },
-          sm: { span: 6 },
+          xs: {
+            span: 24,
+          },
+          sm: {
+            span: 6,
+          },
         }}
         wrapperCol={{
-          xs: { span: 12 },
-          sm: { span: 4 },
+          xs: {
+            span: 12,
+          },
+          sm: {
+            span: 4,
+          },
         }}
         label="睡袋温标"
         id="sleepBag"
         hasFeedback
       >
         {getFieldDecorator('sleepBag')(
-          <Input addonAfter="℃" />,
-        )}
+          <Input addonAfter="℃" />)}
       </FormItem>
 
-      {
-        formData2.map(item => (
-          <FormItem
-            {...formItemLayoutWide}
-            label={item.label}
-            id={item.id}
-          >
-            {getFieldDecorator(item.id)(
-              <Checkbox.Group
-                options={item.datasource}
-              />,
-          )}
-          </FormItem>
-        ))
-      }
+      {formData2.map(item => (
+        <FormItem {...formItemLayoutWide} label={item.label} id={item.id}>
+          {getFieldDecorator(item.id)(
+            <Checkbox.Group options={item.datasource} />)}
+        </FormItem>
+      ))
+}
 
       {/* ========== 装备信息 ========== */}
 
@@ -366,18 +389,17 @@ function applyForm(props) {
         {...formItemLayout}
         label={(
           <span>
-              备注信息&nbsp;
-              <Tooltip title="特殊说明的情况，或者想对大家说的话">
-                <Icon type="question-circle-o" />
-              </Tooltip>
+          备注信息&nbsp;
+          <Tooltip title="特殊说明的情况，或者想对大家说的话">
+            <Icon type="question-circle-o" />
+          </Tooltip>
           </span>
-          )}
+      )}
         id="notes"
         hasFeedback
       >
         {getFieldDecorator('notes')(
-          <Input type="textarea" />,
-      )}
+          <Input type="textarea" />)}
       </FormItem>
       {/* ========== 备注信息 ========== */}
 
@@ -387,31 +409,28 @@ function applyForm(props) {
       <FormItem>
         {getFieldDecorator('agreement', {
           valuePropName: 'checked',
-          rules: [{
-            required: true,
-            transform: value => (value ? 'true' : null),
-            message: '请先同意声明条款',
-          }],
+          rules: [
+            {
+              required: true,
+              transform: value => (value
+                ? 'true'
+                : null),
+              message: '请先同意声明条款',
+            },
+          ],
         })(
-          <Checkbox>本人已经仔细阅读以上声明内容，认为完全符合本人意愿并同意签署.</Checkbox>,
-      )}
+          <Checkbox>本人已经仔细阅读以上声明内容，认为完全符合本人意愿并同意签署.</Checkbox>)}
       </FormItem>
       <FormItem>
-        <Button
-          className={styles.submitBtn}
-          type="primary"
-          htmlType="submit"
-          size="large"
-        >
-            确定报名
-          </Button>
+        <Button className={styles.submitBtn} type="primary" htmlType="submit" size="large">
+          确定报名
+        </Button>
       </FormItem>
     </Form>
   );
 }
 
 const ApplyForm = Form.create()(applyForm);
-
 
 function ApplyPage(props) {
   const { data, dispatch } = props;
@@ -438,7 +457,11 @@ function ApplyPage(props) {
 
   /* 面包屑模块 */
   const breadcrumbDiv = (
-    <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+    <Breadcrumb style={{
+      margin: '12px 0',
+      fontSize: '1.2em',
+    }}
+    >
       <BreadcrumbItem>
         <a href="/activity">活动列表</a>
       </BreadcrumbItem>
@@ -456,26 +479,20 @@ function ApplyPage(props) {
    */
   const activityTitle = (
     <div className={styles.activityTitle}>
-      <p>你正在报名的是 <a href={activityLeader.id}>{activityLeader.name}</a> 发起的活动：</p>
+      <p>你正在报名的是
+        <a href={activityLeader.id}>{activityLeader.name}</a>
+        发起的活动：</p>
       <h1>{activity.name}</h1>
     </div>
   );
-
 
   return (
     <div className={styles.wrapper}>
       {breadcrumbDiv}
       {activityTitle}
       <div className={styles.infoWrapper}>
-        <Alert
-          className={styles.warnMessage}
-          message="请认真填写个人信息及装备情况，除了备注，任何一项都不可留空。"
-          type="warning"
-        />
-        <ApplyForm
-          userdata={loginUser}
-          joinBtnHandle={joinBtnHandle}
-        />
+        <Alert className={styles.warnMessage} message="请认真填写个人信息及装备情况，除了备注，任何一项都不可留空。" type="warning" />
+        <ApplyForm userdata={loginUser} joinBtnHandle={joinBtnHandle} />
 
       </div>
     </div>

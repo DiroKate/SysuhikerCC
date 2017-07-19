@@ -9,7 +9,7 @@ function EventCard(props) {
   const eventCardCallback = ({ iconType, title, content }) => {
     return (
       <Row className={styles.event_card_row}>
-        <Col span={6} >
+        <Col span={6}>
           <LocalIcon type={iconType} />
           <div className={styles.event_card_title}>
             {title}
@@ -28,42 +28,42 @@ function EventCard(props) {
         {eventCardCallback({
           iconType: 'rocket',
           title: '出发地:',
-          content: data.event_place_of_departure ? data.event_place_of_departure : '未知',
+          content: data.event_place_of_departure
+            ? data.event_place_of_departure
+            : '未知',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="green">
         {eventCardCallback({
           iconType: 'mudedi',
           title: '目的地:',
-          content: data.event_destination ? data.event_destination : '未知',
+          content: data.event_destination
+            ? data.event_destination
+            : '未知',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="red">
-        {eventCardCallback({
-          iconType: 'calendar',
-          title: '行程日期:',
-          content: `${data.event_starttime}  至   ${data.event_endtime}`,
-        })}
+        {eventCardCallback({ iconType: 'calendar', title: '行程日期:', content: `${data.event_starttime}  至   ${data.event_endtime}` })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="red">
-        {eventCardCallback({
-          iconType: 'clock1',
-          title: '报名截止:',
-          content: data.event_join_endtime,
-        })}
+        {eventCardCallback({ iconType: 'clock1', title: '报名截止:', content: data.event_join_endtime })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'clock',
           title: '集合时间:',
-          content: data.event_gather_time ? data.event_gather_time : '未指定',
+          content: data.event_gather_time
+            ? data.event_gather_time
+            : '未指定',
         })}
       </Timeline.Item>
       <Timeline.Item className={styles.timeLine} color="blue">
         {eventCardCallback({
           iconType: 'jihedidian',
           title: '集合地点:',
-          content: data.event_gather_location ? data.event_gather_location : '未指定',
+          content: data.event_gather_location
+            ? data.event_gather_location
+            : '未指定',
         })}
       </Timeline.Item>
     </Timeline>

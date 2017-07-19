@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, Card, Table, Modal, Menu, Dropdown } from 'antd';
+import {
+  Button,
+  Card,
+  Table,
+  Modal,
+  Menu,
+  Dropdown,
+} from 'antd';
 import Avatar from 'react-avatar';
 import { browserHistory } from 'dva/router';
 import { LocalIcon } from './..';
@@ -13,63 +20,65 @@ function MemberInfo(props) {
     gg: 'male',
   };
 
-  const columns = [{
-    title: '头像',
-    key: 'icon',
-    render: (text, record) => (
-      <Avatar
-        round
-        size={32}
-        src={record.event_joinlist_userAvatarUrl}
-        name={record.event_joinlist_usernick.substr(0, 1).toUpperCase()}
-      />
-      ),
-  }, {
-    title: '昵称性别',
-    key: 'name_gender',
-    render: (text, record) => {
-      const gender = genderMap[record.event_joinlist_usergender];
-      return (
-        <p>
-          {record.event_joinlist_usernick}
-          <LocalIcon
-            type={gender}
-            className={styles[`${gender}`]}
-            colorful
-          />
-        </p>
-      );
+  const columns = [
+    {
+      title: '头像',
+      key: 'icon',
+      render: (text, record) => (<Avatar round size={32} src={record.event_joinlist_userAvatarUrl} name={record.event_joinlist_usernick.substr(0, 1).toUpperCase()} />),
+    }, {
+      title: '昵称性别',
+      key: 'name_gender',
+      render: (text, record) => {
+        const gender = genderMap[record.event_joinlist_usergender];
+        return (
+          <p>
+            {record.event_joinlist_usernick}
+            <LocalIcon type={gender} className={styles[`${gender}`]} colorful />
+          </p>
+        );
+      },
+    }, {
+      title: '备注',
+      width: '40%',
+      dataIndex: 'event_joinlist_comments',
+      key: 'event_joinlist_comments',
+    }, {
+      title: '状态',
+      dataIndex: 'event_joinlist_status',
+      key: 'event_joinlist_status',
     },
-  }, {
-    title: '备注',
-    width: '40%',
-    dataIndex: 'event_joinlist_comments',
-    key: 'event_joinlist_comments',
-  }, {
-    title: '状态',
-    dataIndex: 'event_joinlist_status',
-    key: 'event_joinlist_status',
-  }];
+  ];
 
-  return (
-    <Table
-      dataSource={dataSource}
-      columns={columns}
-      showHeader={false}
-      pagination={{ pageSize: 20 }}
-    />);
+  return (<Table
+    dataSource={dataSource}
+    columns={columns}
+    showHeader={false}
+    pagination={{
+      pageSize: 20,
+    }}
+  />);
 }
 
 function MemberList(props) {
-  const { event_id, isLogin, activityJoinList,
-    isAdmin, isMember, isExpired, dispatch } = props.data;
+  const {
+    event_id,
+    isLogin,
+    activityJoinList,
+    isAdmin,
+    isMember,
+    isExpired,
+    dispatch,
+  } = props.data;
   let maleNum = 0;
   let femaleNum = 0;
   for (const memberInfo of activityJoinList) {
-    if (memberInfo.event_joinlist_usergender === 'mm') { femaleNum += 1; }
-    if (memberInfo.event_joinlist_usergender === 'gg') { maleNum += 1; }
+    if (memberInfo.event_joinlist_usergender === 'mm') {
+      femaleNum += 1;
+    }
+    if (memberInfo.event_joinlist_usergender === 'gg') {
+      maleNum += 1;
+    }
   }
-
 
   const onClick = () => {
     if (isLogin) {
@@ -97,9 +106,7 @@ function MemberList(props) {
           content: '确认退出活动？\n(如需重新报名请联系活动发起人修改报名状态)',
           okText: '确认退出',
           onOk() {
-            dispatch({
-              type: 'activity/quitActivity',
-            });
+            dispatch({ type: 'activity/quitActivity' });
           },
           maskClosable: true,
         });
@@ -120,7 +127,6 @@ function MemberList(props) {
     </div>
   );
 
-
   /**
    * 显示规则：
    * 活动没过期：
@@ -133,9 +139,13 @@ function MemberList(props) {
    */
   const mainBtn = () => {
     if (isExpired && isAdmin) {
-      return (<Button type="dashed" className={styles.joinBtn} onClick={onClick} >活动已过期，修改活动</Button>);
+      return (
+        <Button type="dashed" className={styles.joinBtn} onClick={onClick}>活动已过期，修改活动</Button>
+      );
     } else if (isExpired) {
-      return (<Button disabled type="primary" className={styles.joinBtn} >活动已过期</Button>);
+      return (
+        <Button disabled type="primary" className={styles.joinBtn}>活动已过期</Button>
+      );
     } else if (!isExpired && isAdmin) {
       const adminMenu = (
         <Menu>
@@ -152,7 +162,7 @@ function MemberList(props) {
       );
       return (
         <Dropdown overlay={adminMenu} placement="bottomLeft">
-          <Button type="primary" className={styles.joinBtn} >管理活动</Button>
+          <Button type="primary" className={styles.joinBtn}>管理活动</Button>
         </Dropdown>
       );
     } else if (!isExpired && !isAdmin && isMember) {
@@ -170,11 +180,13 @@ function MemberList(props) {
       );
       return (
         <Dropdown overlay={memberMenu} placement="bottomLeft">
-          <Button type="primary" className={styles.joinBtn} >管理报名</Button>
+          <Button type="primary" className={styles.joinBtn}>管理报名</Button>
         </Dropdown>
       );
     } else {
-      return (<Button type="primary" className={styles.joinBtn} onClick={onClick} >立即参加</Button>);
+      return (
+        <Button type="primary" className={styles.joinBtn} onClick={onClick}>立即参加</Button>
+      );
     }
   };
 

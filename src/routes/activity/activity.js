@@ -7,7 +7,6 @@ import { compareDays } from '../../utils';
 
 const { ItemFigure } = Activity;
 
-
 const { TabPane } = Tabs;
 
 function ActivityRoute({ activityList, total, isLogin, dispatch }) {
@@ -26,7 +25,6 @@ function ActivityRoute({ activityList, total, isLogin, dispatch }) {
     }
   };
 
-
   const allActivityData = activityList.map(item => ({
     key: item.event_id,
     ...item,
@@ -35,9 +33,7 @@ function ActivityRoute({ activityList, total, isLogin, dispatch }) {
     },
   }));
 
-  const getHotActivityData = () => (
-    allActivityData.filter(element => (compareDays(element.event_join_endtime, Date())))
-  );
+  const getHotActivityData = () => (allActivityData.filter(element => (compareDays(element.event_join_endtime, Date()))));
 
   const hotActivityData = getHotActivityData();
   const columns = [
@@ -51,23 +47,24 @@ function ActivityRoute({ activityList, total, isLogin, dispatch }) {
   const onPageChange = (pagination) => {
     dispatch({
       type: 'activity/getAllActivities',
-      payload: { page: pagination.current, pagesize: pagination.pageSize },
+      payload: {
+        page: pagination.current,
+        pagesize: pagination.pageSize,
+      },
     });
   };
 
-  const allActivity = (
-    <Table
-      dataSource={allActivityData}
-      columns={columns}
-      showHeader={false}
-      onChange={onPageChange}
-      pagination={{
-        total,
-      }}
-    />);
+  const allActivity = (<Table
+    dataSource={allActivityData}
+    columns={columns}
+    showHeader={false}
+    onChange={onPageChange}
+    pagination={{
+      total,
+    }}
+  />);
 
   const hotActivity = (<Table dataSource={hotActivityData} columns={columns} showHeader={false} />);
-
 
   return (
     <div className="sysuhiker-top-wrapper">
@@ -101,11 +98,7 @@ function ActivityRoute({ activityList, total, isLogin, dispatch }) {
 
 function mapStateToProps(state) {
   const { list, total } = state.activity;
-  return {
-    activityList: list,
-    total,
-    isLogin: state.app.isLogin,
-  };
+  return { activityList: list, total, isLogin: state.app.isLogin };
 }
 
 export default connect(mapStateToProps)(ActivityRoute);

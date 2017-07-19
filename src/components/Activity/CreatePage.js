@@ -1,5 +1,17 @@
 import React from 'react';
-import { Breadcrumb, DatePicker, Radio, Row, Col, Alert, Form, Input, Button, Icon, Tooltip } from 'antd';
+import {
+  Breadcrumb,
+  DatePicker,
+  Radio,
+  Row,
+  Col,
+  Alert,
+  Form,
+  Input,
+  Button,
+  Icon,
+  Tooltip,
+} from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
@@ -18,9 +30,7 @@ class createForm extends React.Component {
     };
   }
   onEditorStateChange = (editorContent) => {
-    this.setState({
-      editorContent,
-    });
+    this.setState({ editorContent });
   }
   uploadImageCallBack = async (file) => {
     console.log('callback: ', file);
@@ -33,7 +43,11 @@ class createForm extends React.Component {
     console.log('result', result);
 
     return new Promise((resolve, reject) => {
-      resolve({ data: { link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg' } });
+      resolve({
+        data: {
+          link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg',
+        },
+      });
     });
   }
 
@@ -43,35 +57,41 @@ class createForm extends React.Component {
     const { getFieldDecorator, validateFieldsAndScroll } = form;
     const formItems = [];
 
-
     const handleSubmit = (e) => {
       e.preventDefault();
       validateFieldsAndScroll((err, values) => {
         if (!err) {
           const retValues = values;
-          const contentValue = editorContent ? draftToHtml(convertToRaw(editorContent.getCurrentContent())) : '';
+          const contentValue = editorContent
+            ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
+            : '';
           retValues.activityDetail = contentValue;
           console.log('Received values of form: ', retValues);
-          dispatch({
-            type: 'activity/postActivity',
-            payload: retValues,
-          });
+          dispatch({ type: 'activity/postActivity', payload: retValues });
         }
       });
     };
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 3 },
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 3,
+        },
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 20,
+        },
       },
     };
 
-  /**
+    /**
    * 表单项：字符串Input组件的表单项
    * @param  {[String]} label   [表单名称]
    * @param  {[ID]} id      [表单ID]
@@ -79,152 +99,145 @@ class createForm extends React.Component {
    * @return {[type]}         [description]
    */
     const stringInputValidate = ({ label, id, message }) => (
-      <Form.Item
-        {...formItemLayout}
-        label={label}
-        id={id}
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label={label} id={id} hasFeedback>
         {getFieldDecorator(id, {
-          rules: [{ required: true, message, whitespace: true }],
+          rules: [
+            {
+              required: true,
+              message,
+              whitespace: true,
+            },
+          ],
         })(
-          <Input />,
-      )}
+          <Input />)}
       </Form.Item>
-  );
+    );
 
     const datePickProps = {
       format: 'YYYY-MM-DD HH:mm',
-      showTime: { format: 'HH:mm' },
+      showTime: {
+        format: 'HH:mm',
+      },
     };
     const rangeConfig = {
-      rules: [{ type: 'array', required: true, message: '请选择时间段。' }],
+      rules: [
+        {
+          type: 'array',
+          required: true,
+          message: '请选择时间段。',
+        },
+      ],
     };
     const rangePickerValidate = ({ label, id }) => (
-      <Form.Item
-        {...formItemLayout}
-        label={label}
-        id={id}
-      >
+      <Form.Item {...formItemLayout} label={label} id={id}>
         {getFieldDecorator(id, rangeConfig)(
-          <RangePicker {...datePickProps} />,
-          )}
+          <RangePicker {...datePickProps} />)}
       </Form.Item>
-  );
+    );
 
-    const title = (
-    stringInputValidate({
-      label: '活动名称',
-      id: 'activityTitle',
-      message: '请输入活动名称',
-    })
-  );
+    const title = (stringInputValidate({ label: '活动名称', id: 'activityTitle', message: '请输入活动名称' }));
 
-    const activityTypesData = ['休闲拉练', '正常拉练', '极限拉练', '休闲露营', '长线露营', '休闲户外', '非户外活动AA约伴'];
+    const activityTypesData = [
+      '休闲拉练',
+      '正常拉练',
+      '极限拉练',
+      '休闲露营',
+      '长线露营',
+      '休闲户外',
+      '非户外活动AA约伴',
+    ];
     const activityType = (
-      <Form.Item
-        {...formItemLayout}
-        label="活动类型"
-        id="activityType"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="活动类型" id="activityType" hasFeedback>
         {getFieldDecorator('activityType', {
           rules: [
-          { required: true, message: '请选择活动类型' },
+            {
+              required: true,
+              message: '请选择活动类型',
+            },
           ],
         })(
           <Radio.Group>
-            { Object.keys(activityTypesData).map(key => (
+            {Object.keys(activityTypesData).map(key => (
               <Radio value={activityTypesData[key]}>{activityTypesData[key]}</Radio>
           ))}
-          </Radio.Group>,
-    )}
+          </Radio.Group>)}
       </Form.Item>
-  );
+    );
 
-    const departure = (
-    stringInputValidate({
-      label: '出发地',
-      id: 'departure',
-      message: '请输入出发地',
-    })
-  );
+    const departure = (stringInputValidate({ label: '出发地', id: 'departure', message: '请输入出发地' }));
 
-    const arrivals = (
-    stringInputValidate({
-      label: '目的地',
-      id: 'arrivals',
-      message: '请输入目的地',
-    })
-  );
+    const arrivals = (stringInputValidate({ label: '目的地', id: 'arrivals', message: '请输入目的地' }));
 
-
-    const activityTime = (
-    rangePickerValidate({
-      label: '活动时间',
-      id: 'activityTime',
-    })
-  );
-
+    const activityTime = (rangePickerValidate({ label: '活动时间', id: 'activityTime' }));
 
     const maxPeople = (
       <Form.Item
-        labelCol={{ xs: { span: 24 }, sm: { span: 3 } }}
-        wrapperCol={{ xs: { span: 24 }, sm: { span: 3 } }}
+        labelCol={{
+          xs: {
+            span: 24,
+          },
+          sm: {
+            span: 3,
+          },
+        }}
+        wrapperCol={{
+          xs: {
+            span: 24,
+          },
+          sm: {
+            span: 3,
+          },
+        }}
         label="人数上限"
         id="maxPeople"
         hasFeedback
       >
         {getFieldDecorator('maxPeople', {
-          rules: [{ required: true, messge: '请输入活动最大人数' }, { type: 'string', pattern: /^[0-9]+$/, message: '请输入数字' }],
+          rules: [
+            {
+              required: true,
+              messge: '请输入活动最大人数',
+            }, {
+              type: 'string',
+              pattern: /^[0-9]+$/,
+              message: '请输入数字',
+            },
+          ],
         })(
-          <Input />,
-      )}
+          <Input />)}
       </Form.Item>
-  );
+    );
 
-    const collectionLocation = (
-    stringInputValidate({
-      label: '集合地点',
-      id: 'collectionLocation',
-      message: '请输入集合地点',
-    })
-  );
+    const collectionLocation = (stringInputValidate({ label: '集合地点', id: 'collectionLocation', message: '请输入集合地点' }));
 
     const collectionTime = (
-      <Form.Item
-        {...formItemLayout}
-        label="集合时间"
-        id="collectionTime"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="集合时间" id="collectionTime" hasFeedback>
         {getFieldDecorator('collectionTime', {
-          rules: [{ type: 'object', required: true, messge: '请输入集合时间' }],
+          rules: [
+            {
+              type: 'object',
+              required: true,
+              messge: '请输入集合时间',
+            },
+          ],
         })(
-          <DatePicker {...datePickProps} />,
-      )}
+          <DatePicker {...datePickProps} />)}
       </Form.Item>
-  );
+    );
 
-    const applyTime = (
-    rangePickerValidate({
-      label: '报名时间',
-      id: 'applyTime',
-    })
-  );
+    const applyTime = (rangePickerValidate({ label: '报名时间', id: 'applyTime' }));
 
     const activityContent = (
       <Form.Item
         {...formItemLayout}
         label={(
           <span>
-            活动内容&nbsp;
-            <Tooltip title="写明活动的细节">
-              <Icon type="question-circle-o" />
-            </Tooltip>
+          活动内容&nbsp;
+          <Tooltip title="写明活动的细节">
+            <Icon type="question-circle-o" />
+          </Tooltip>
           </span>
-        )}
-
+      )}
         id="activityContent"
         hasFeedback
       >
@@ -233,59 +246,52 @@ class createForm extends React.Component {
           wrapperClassName={styles.editorWrapper}
           editorClassName={styles.editorEditor}
           toolbar={{
-            inline: { inDropdown: true },
-            list: { inDropdown: true },
-            textAlign: { inDropdown: true },
-            link: { inDropdown: true },
-            history: { inDropdown: true },
-            image: { uploadCallback: this.uploadImageCallBack },
+            inline: {
+              inDropdown: true,
+            },
+            list: {
+              inDropdown: true,
+            },
+            textAlign: {
+              inDropdown: true,
+            },
+            link: {
+              inDropdown: true,
+            },
+            history: {
+              inDropdown: true,
+            },
+            image: {
+              uploadCallback: this.uploadImageCallBack,
+            },
           }}
           editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
       </Form.Item>
-  );
+    );
 
     const notes = (
-      <Form.Item
-        {...formItemLayout}
-        label="备注"
-        id="notes"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="备注" id="notes" hasFeedback>
         {getFieldDecorator('notes')(
-          <Input type="textarea" />,
-      )}
+          <Input type="textarea" />)}
       </Form.Item>
-  );
+    );
 
-    const warnMessage = (
-      <Alert
-        className={styles.warnMessage}
-        message="请再次确认无误后发布。"
-        type="warning"
-      />
-  );
+    const warnMessage = (<Alert className={styles.warnMessage} message="请再次确认无误后发布。" type="warning" />);
 
     const submitBtn = (
-      <Form.Item
-        wrapperCol={{
-          span: 12,
-          offset: 6,
-        }}
+      <Form.Item wrapperCol={{
+        span: 12,
+        offset: 6,
+      }}
       >
-        <Button
-          className={styles.submitBtn}
-          type="primary"
-          htmlType="submit"
-          size="large"
-          onClick={handleSubmit}
-        >
+        <Button className={styles.submitBtn} type="primary" htmlType="submit" size="large" onClick={handleSubmit}>
           发布活动
         </Button>
 
       </Form.Item>
-  );
+    );
 
     formItems.push(title);
     formItems.push(activityType);
@@ -310,10 +316,13 @@ class createForm extends React.Component {
 }
 const CreateForm = Form.create()(createForm);
 
-
 function CreatePage(props) {
   const breadcrumbDiv = (
-    <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+    <Breadcrumb style={{
+      margin: '12px 0',
+      fontSize: '1.2em',
+    }}
+    >
       <Breadcrumb.Item>
         <a href="/activity">活动列表</a>
       </Breadcrumb.Item>
@@ -321,25 +330,28 @@ function CreatePage(props) {
         发布活动
       </Breadcrumb.Item>
     </Breadcrumb>
-);
+  );
 
   const gridProps = {
-    xs: { offset: 1, span: 22 },
-    sm: { offset: 2, span: 20 },
+    xs: {
+      offset: 1,
+      span: 22,
+    },
+    sm: {
+      offset: 2,
+      span: 20,
+    },
   };
-
 
   return (
     <div className={styles.wrapper}>
       {breadcrumbDiv}
-      <Row><Col {...gridProps} >
-        <Alert
-          className={styles.warnMessage}
-          message="请认真填写活动详情。"
-          type="warning"
-        />
-        <CreateForm {...props} />
-      </Col></Row>
+      <Row>
+        <Col {...gridProps}>
+          <Alert className={styles.warnMessage} message="请认真填写活动详情。" type="warning" />
+          <CreateForm {...props} />
+        </Col>
+      </Row>
     </div>
   );
 }
