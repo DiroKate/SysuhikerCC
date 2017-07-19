@@ -7,6 +7,7 @@ import createG2 from 'g2-react';
 import { Stat } from 'g2';
 import { LocalIcon } from '../../../components';
 import ShowForm from './showForm.js';
+import UpdateForm from './updateForm.js';
 
 import styles from './sysuhiker.less';
 
@@ -145,6 +146,9 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
       urgentPhone={loginUser.user_urgentPhone}
     />
   );
+  const updateForm = (
+    <UpdateForm />
+  );
 
   const webWrapper = (
     <div className={styles.wrapperWeb} >
@@ -158,8 +162,8 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
               {fanChart}
               {showForm}
             </Tabs.TabPane>
-            <Tabs.TabPane tab="设置" key="Setting">Setting</Tabs.TabPane>
-            {}
+            <Tabs.TabPane tab="设置" key="Setting">{updateForm}</Tabs.TabPane>
+            
           </Tabs>
         </Col>
       </Row>
@@ -177,8 +181,8 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
               {fanChart}
               {showForm}
             </Tabs.TabPane>
-            <Tabs.TabPane tab="设置" key="Setting">Setting</Tabs.TabPane>
-            {}
+            <Tabs.TabPane tab="设置" key="Setting">{updateForm}</Tabs.TabPane>
+            
           </Tabs>
         </Col>
       </Row>

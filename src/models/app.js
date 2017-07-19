@@ -126,6 +126,28 @@ export default {
         notificaionUtils('success', '注册成功！');
       }
     },
+
+    *updateUser({payload},{call,put,select}){
+      console.log('updateUser', payload);
+      const user = yield select(state => state.app.loginUser);
+      const {user_id,user_email}=user;
+      const {user_interest}=payload;
+
+      const { data } = yield call(UsersService.updateUserInfo, {
+        ...payload,user_id,user_email,
+        user_interest: user_interest.join('+')
+      });
+      console.log(data);
+      const {code} =data.data;
+      if (code === 0) {
+
+        yield put({
+          type: 'queryUser',
+          payload: { user_id },
+        });
+      }
+
+    }
   },
 
   subscriptions: {

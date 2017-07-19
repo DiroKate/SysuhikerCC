@@ -44,3 +44,14 @@ export async function userInfo(params) {
     body: JSON.stringify(params),
   });
 }
+
+/**
+ * 更新用户信息
+ */
+export async function updateUserInfo(params) {
+  console.log("send(data)", params);
+  return request('/api/?service=User.Update', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

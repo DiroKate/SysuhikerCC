@@ -11,45 +11,6 @@ function ShowForm ({
 	qq,weibo,weiboLink,interest,
 	urgentName,urgentPhone
 }) {
-
-
-
-  // const formItemLayout = {
-	 //  labelCol: {
-	 //    xs: { span: 4 },
-	 //  },
-	 //  wrapperCol: {
-	 //    xs: { span: 16 },
-	 //  },
-  // };
-/*
-  	<Form>
-      <FormItem>
-      	<h1>关于我</h1>
-      </FormItem>
-      <FormItem
-		{...formItemLayout}
-		label="昵称"
-	  >{nick}<LocalIcon type={gender === 'gg' ? 'male' : 'female'} colorful /></FormItem>
-      <FormItem
-		{...formItemLayout}
-		label="Email"
-	  >{email}</FormItem>
-	  <FormItem
-		{...formItemLayout}
-		label="姓名"
-	  >{name}</FormItem>
-	  <FormItem
-		{...formItemLayout}
-		label="电话"
-	  >{phone}</FormItem>
-	  <FormItem
-		{...formItemLayout}
-		label="地址"
-	  >{address}</FormItem>
-
-  	</Form>
-  */
   const colProps = {
   	xs:{span:24},
   	sm:{span:12}
@@ -57,7 +18,7 @@ function ShowForm ({
   const rowItem = (key, value,colSpan=4)=>(
 	<Row className={styles.showFormItem}>
 		<Col span={colSpan}><p style={{position:'absolute',right:'0px'}}>{key}:</p></Col>
-		<Col span={16} offset={1} >{value}</Col>
+		<Col span={16} offset={1} >{value || 'Empty'}</Col>
 	</Row>
   );
   return(
@@ -71,6 +32,7 @@ function ShowForm ({
 	  	{rowItem('地址', address)}
 	  	{rowItem('QQ', qq)}
 	  	{rowItem('新浪微博', (<a href={weiboLink}>@{weibo}</a>) )}
+	  	{rowItem('兴趣领域', interest)}
 		</Col>
 		<Col {...colProps} >
 	  	<h2>紧急联系人</h2>
