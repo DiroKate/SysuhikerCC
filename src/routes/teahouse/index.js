@@ -21,7 +21,6 @@ function Teahouse({ isLogin, list, total, dispatch }) {
       });
     }
   };
-  const dataSource = [];
 
   const onPageChange = (pagination) => {
     dispatch({
@@ -55,8 +54,8 @@ function Teahouse({ isLogin, list, total, dispatch }) {
       key: 'post_keywords',
     }, {
       title: '回复',
-      dataIndex: 'post_modifyUserId',
-      key: 'post_modifyUserId',
+      dataIndex: 'post_countRe',
+      key: 'post_countRe',
     }, {
       title: '最后更新',
       render: (text, record) => {
@@ -68,23 +67,23 @@ function Teahouse({ isLogin, list, total, dispatch }) {
     }];
 
   const callback = (topic) => {
-    dataSource.push({
-      type: topic,
-      title: 'thisistitle',
-      author: 'diro',
-      keyword: 'a,b,c',
-      reply: '12',
-      update: 'last update at 2017-5-5',
+    dispatch({
+      type: 'teahouse/getTopicList',
+      payload: {
+        pagesize: 10,
+        page: 1,
+        post_type: topic,
+      },
     });
   };
 
   const TabData = {
     all: '全部',
-    homework: '作业攻略',
-    technology: '技术讨论',
-    activity: '活动讨论',
-    security: '户外安全',
-    other: '其他',
+    作业攻略: '作业攻略',
+    技术讨论: '技术讨论',
+    活动讨论: '活动讨论',
+    户外安全: '户外安全',
+    其他: '其他',
   };
   const tabChildren = Object.keys(TabData).map(key => (
     <TabPane tab={TabData[key]} key={key} />

@@ -2,7 +2,6 @@ import { routerRedux } from 'dva/router';
 import * as UsersService from '../services/users';
 import { registerPostUitls, notificaionUtils } from '../utils';
 
-
 export default {
   namespace: 'app',
   state: {
@@ -10,7 +9,7 @@ export default {
     isLogin: false, // 是否已经登录
     userId: null, // 已登录用户的ID
     userEmail: null, // 已登录用户的邮箱
-    userName: null,  // 已登陆用户的昵称
+    userName: null, // 已登陆用户的昵称
     userAvatarUrl: null, // 已登陆用户头像
     loginUser: {}, // 已登陆用户的所有信息
   },
@@ -50,11 +49,15 @@ export default {
      * 查询用户信息
      * @param  {dict} payload 带有user_id字段的
      */
-    *queryUser({ payload }, { call, put, select }) {
+    *queryUser({
+      payload,
+    }, { call, put, select }) {
       const userId = yield select(state => state.app.userId);
       let params;
       if (userId) {
-        params = payload || { user_id: userId };
+        params = payload || {
+          user_id: userId,
+        };
       } else {
         return;
       }
@@ -73,26 +76,27 @@ export default {
       }
     },
 
-
     /**
      * 用户登录
      * @param  {dict} payload 用户的账户和密码
      */
-    *login({ payload: params }, { call, put }) {
+    *login({
+      payload: params,
+    }, { call, put }) {
       const { data } = yield call(UsersService.login, params);
       const { code } = data.data;
       if (code === 0) {
         const userId = data.data.userid;
-        yield put({
-          type: 'loginSuccessReducer',
+        yield put({ type: 'loginSuccessReducer',
           payload: {
             userId,
-          },
-        });
+          } });
 
         yield put({
           type: 'queryUser',
-          payload: { user_id: userId },
+          payload: {
+            user_id: userId,
+          },
         });
 
         // 回到上页
@@ -105,49 +109,54 @@ export default {
      * 新用户注册
      * @param  {dict} payload 新用户参数
      */
-    *register({ payload }, { call, put }) {
+    *register({
+      payload,
+    }, { call, put }) {
       const params = registerPostUitls(payload);
       const { data } = yield call(UsersService.register, params);
       const { code } = data.data;
       if (code === 0) {
         const userId = data.data.userid;
-        yield put({
-          type: 'loginSuccessReducer',
+        yield put({ type: 'loginSuccessReducer',
           payload: {
             userId,
-          },
-        });
+          } });
 
         yield put({
           type: 'queryUser',
-          payload: { user_id: userId },
+          payload: {
+            user_id: userId,
+          },
         });
         yield put(routerRedux.goBack());
         notificaionUtils('success', '注册成功！');
       }
     },
 
-    *updateUser({payload},{call,put,select}){
-      console.log('updateUser', payload);
+    /**
+     * 用户资料更新
+     */
+    *updateUser({
+      payload,
+    }, { call, put, select }) {
       const user = yield select(state => state.app.loginUser);
-      const {user_id,user_email}=user;
-      const {user_interest}=payload;
+      const { user_id, user_email } = user;
+      const { user_interest } = payload;
 
       const { data } = yield call(UsersService.updateUserInfo, {
-        ...payload,user_id,user_email,
-        user_interest: user_interest.join('+')
+        ...payload,
+        user_id,
+        user_email,
+        user_interest: user_interest.join('+'),
       });
-      console.log(data);
-      const {code} =data.data;
+      const { code } = data.data;
       if (code === 0) {
-
-        yield put({
-          type: 'queryUser',
-          payload: { user_id },
-        });
+        yield put({ type: 'queryUser',
+          payload: {
+            user_id,
+          } });
       }
-
-    }
+    },
   },
 
   subscriptions: {

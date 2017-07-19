@@ -1,5 +1,13 @@
 import React from 'react';
-import { Row, Col, Breadcrumb, Form, Button, Input, Radio } from 'antd';
+import {
+  Row,
+  Col,
+  Breadcrumb,
+  Form,
+  Button,
+  Input,
+  Radio,
+} from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styles from './create.less';
@@ -14,9 +22,7 @@ class createForm extends React.Component {
     };
   }
   onEditorStateChange = (editorContent) => {
-    this.setState({
-      editorContent,
-    });
+    this.setState({ editorContent });
   }
 
   render() {
@@ -25,95 +31,107 @@ class createForm extends React.Component {
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
     const formItems = [];
-    const typeOptions = ['作业', '攻略', '技术讨论', '活动讨论', '户外安全', '其他'];
+    const typeOptions = [
+      '作业',
+      '攻略',
+      '技术讨论',
+      '活动讨论',
+      '户外安全',
+      '其他',
+    ];
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 3 },
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 3,
+        },
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 20,
+        },
       },
     };
 
     formItems.push(
-      <Form.Item
-        {...formItemLayout}
-        label="标题"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="标题" hasFeedback>
         {getFieldDecorator('title', {
-          rules: [{ required: true, message: '请输入标题', whitespace: true }],
+          rules: [
+            {
+              required: true,
+              message: '请输入标题',
+              whitespace: true,
+            },
+          ],
         })(
-          <Input />,
-      )}
-      </Form.Item>,
-    );
+          <Input />)}
+      </Form.Item>);
 
     formItems.push(
-      <Form.Item
-        {...formItemLayout}
-        label="分类"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="分类" hasFeedback>
         {getFieldDecorator('type', {
           rules: [
-          { required: true, message: '请选择活动类型' },
+            {
+              required: true,
+              message: '请选择活动类型',
+            },
           ],
         })(
           <Radio.Group>
-            { Object.keys(typeOptions).map(key => (
+            {Object.keys(typeOptions).map(key => (
               <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
-          ))}
-          </Radio.Group>,
-    )}
-      </Form.Item>,
-    );
+        ))}
+          </Radio.Group>)}
+      </Form.Item>);
 
     formItems.push(
-      <Form.Item
-        {...formItemLayout}
-        label="文章内容"
-        hasFeedback
-      >
+      <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
         <Editor
           toolbarClassName={styles.editorToolbar}
           wrapperClassName={styles.editorWrapper}
           editorClassName={styles.editorEditor}
           toolbar={{
-            inline: { inDropdown: true },
-            list: { inDropdown: true },
-            textAlign: { inDropdown: true },
-            link: { inDropdown: true },
-            history: { inDropdown: true },
-            image: { uploadCallback: this.uploadImageCallBack },
+            inline: {
+              inDropdown: true,
+            },
+            list: {
+              inDropdown: true,
+            },
+            textAlign: {
+              inDropdown: true,
+            },
+            link: {
+              inDropdown: true,
+            },
+            history: {
+              inDropdown: true,
+            },
+            image: {
+              uploadCallback: this.uploadImageCallBack,
+            },
           }}
           editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
-      </Form.Item>,
-      );
+      </Form.Item>);
 
     formItems.push(
-      <Form.Item
-        wrapperCol={{
-          span: 12,
-          offset: 6,
-        }}
+      <Form.Item wrapperCol={{
+        span: 12,
+        offset: 6,
+      }}
       >
-        <Button
-          className={styles.submitBtn}
-          type="primary"
-          htmlType="submit"
-          size="large"
-        >
-          发布话题
-        </Button>
+        <Button className={styles.submitBtn} type="primary" htmlType="submit" size="large">
+        发布话题
+      </Button>
 
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     return (
       <Form>
@@ -129,13 +147,20 @@ function CreatePage({ teahouseList, isLogin }) {
   return (
     <div className="sysuhiker-top-wrapper">
       <h1>畅所欲言</h1>
-      <Breadcrumb style={{ margin: '12px 0', fontSize: '1.2em' }}>
+      <Breadcrumb style={{
+        margin: '12px 0',
+        fontSize: '1.2em',
+      }}
+      >
         <BreadcrumbItem>
           <a href="/bbs">逸仙茶馆</a>
         </BreadcrumbItem>
         <BreadcrumbItem>创建话题</BreadcrumbItem>
       </Breadcrumb>
-      <Row style={{ marginTop: '16px' }}>
+      <Row style={{
+        marginTop: '16px',
+      }}
+      >
         <Col>
           <CreateForm />
         </Col>
@@ -143,6 +168,5 @@ function CreatePage({ teahouseList, isLogin }) {
     </div>
   );
 }
-
 
 export default CreatePage;

@@ -12,10 +12,6 @@ import UpdateForm from './updateForm.js';
 import styles from './sysuhiker.less';
 
 
-
-
-
-
 function Sysuhiker({ mode, loginUser, isLogin }) {
   if (!isLogin) {
     browserHistory.push('/login');
@@ -38,13 +34,13 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
   const defaultAvatar = loginUser.user_nick ? loginUser.user_nick.substr(0, 1).toUpperCase() : '逸仙徒步';
 
   const userAvatar = (
-    <Card style={{width: "200px"}} bodyStyle={{ padding: '1rem' }}>
+    <Card style={{ width: '200px' }} bodyStyle={{ padding: '1rem' }}>
       <Avatar
         size={160}
         src={loginUser.user_avatar_url}
         name={defaultAvatar}
       />
-      <div style={{marginTop: "1rem"}}>
+      <div style={{ marginTop: '1rem' }}>
         <h2>{loginUser.user_nick}<LocalIcon type={loginUser.user_gender === 'gg' ? 'male' : 'female'} colorful className={styles.genderIcon} />
         </h2>
         <p><Icon type="mail" style={{ marginTop: '0.5rem', marginRight: '0.5rem' }} />{loginUser.user_email}</p>
@@ -52,17 +48,17 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
       </div>
     </Card>
   );
-  const userAvatarMobile =(
+  const userAvatarMobile = (
     <Card bodyStyle={{ padding: '1rem' }}>
       <Row>
-        <Col xs={{span:12}}>
+        <Col xs={{ span: 12 }}>
           <Avatar
             size={144}
             src={loginUser.user_avatar_url}
             name={defaultAvatar}
           />
         </Col>
-        <Col xs={{span:12}} style={{padding:"1rem 0"}}>
+        <Col xs={{ span: 12 }} style={{ padding: '1rem 0' }}>
           <h2>{loginUser.user_nick}<LocalIcon type={loginUser.user_gender === 'gg' ? 'male' : 'female'} colorful className={styles.genderIcon} />
           </h2>
           <p><Icon type="mail" style={{ marginTop: '0.5rem', marginRight: '0.5rem' }} />{loginUser.user_email}</p>
@@ -72,7 +68,7 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
     </Card>
   );
 
-  const {user_start_event_count,user_join_event_count,user_fly_event_count}=loginUser
+  const { user_start_event_count, user_join_event_count, user_fly_event_count } = loginUser;
   const data = [
     { name: '参加活动数', value: 1 },
     { name: '飞机数', value: 1 },
@@ -81,42 +77,42 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
     // { name: '飞机数', value: user_fly_event_count },
     // { name: '组织活动数', value: user_start_event_count },
   ];
-  //统计扇形图
+  // 统计扇形图
   const Chart = createG2((chart) => {
-  chart.coord('theta', {
-    radius: 1.0, // 设置饼图的大小
-  });
-  chart.legend('name', {
-    position: 'bottom',
-    itemWrap: true,
-    formatter(val) {
-      for (let i = 0, len = data.length; i < len; i += 1) {
-        const obj = data[i];
-        if (obj.name === val) {
-          return `${val}: ${obj.value}次`;
+    chart.coord('theta', {
+      radius: 1.0, // 设置饼图的大小
+    });
+    chart.legend('name', {
+      position: 'bottom',
+      itemWrap: true,
+      formatter(val) {
+        for (let i = 0, len = data.length; i < len; i += 1) {
+          const obj = data[i];
+          if (obj.name === val) {
+            return `${val}: ${obj.value}次`;
+          }
         }
-      }
-    },
-  });
-  chart.tooltip({
-    title: null,
-    map: {
-      value: 'value',
-    },
-  });
-  chart.intervalStack()
+      },
+    });
+    chart.tooltip({
+      title: null,
+      map: {
+        value: 'value',
+      },
+    });
+    chart.intervalStack()
     .position(Stat.summary.percent('value'))
     .color('name')
     .label('name*value', (name, value) => {
       return `${name} ${value}次`;
     });
-  chart.render();
+    chart.render();
 
   // 设置默认选中
-  const geom = chart.getGeoms()[0]; // 获取所有的图形
-  const items = geom.getData(); // 获取图形对应的数据
-  geom.setSelected(items[0]); // 设置选中
-});
+    const geom = chart.getGeoms()[0]; // 获取所有的图形
+    const items = geom.getData(); // 获取图形对应的数据
+    geom.setSelected(items[0]); // 设置选中
+  });
 
   const fanChart = (
     <div>
@@ -130,8 +126,8 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
   );
 
   const showForm = (
-    <ShowForm 
-      styles={{margin:"2rem 0"}}
+    <ShowForm
+      styles={{ margin: '2rem 0' }}
       nick={loginUser.user_nick}
       gender={loginUser.user_gender}
       email={loginUser.user_email}
@@ -163,7 +159,7 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
               {showForm}
             </Tabs.TabPane>
             <Tabs.TabPane tab="设置" key="Setting">{updateForm}</Tabs.TabPane>
-            
+
           </Tabs>
         </Col>
       </Row>
@@ -182,14 +178,14 @@ function Sysuhiker({ mode, loginUser, isLogin }) {
               {showForm}
             </Tabs.TabPane>
             <Tabs.TabPane tab="设置" key="Setting">{updateForm}</Tabs.TabPane>
-            
+
           </Tabs>
         </Col>
       </Row>
     </div>
   );
 
-  return (mode? mobileWrapper:webWrapper);
+  return (mode ? mobileWrapper : webWrapper);
 }
 
 function mapStateToProps(state) {
