@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'dva';
+import { browserHistory } from 'dva/router';
 import {
   Row,
   Col,
@@ -7,9 +9,13 @@ import {
   Button,
   Input,
   Radio,
+  Modal,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import { notificaionUtils } from '../../../utils';
 import styles from './create.less';
 
 const BreadcrumbItem = Breadcrumb.Item;
@@ -27,18 +33,50 @@ class createForm extends React.Component {
 
   render() {
     const { editorContent } = this.state;
-    const { form, dispatch } = this.props;
+    const { form, dispatch, isLogin } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
+    const onSubmitHandle = (e) => {
+      e.preventDefault();
+
+      if (isLogin) {
+        validateFieldsAndScroll((err, values) => {
+          if (!err) {
+            const { title, type, keywords } = values;
+            const contentValue = editorContent
+              ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
+              : '';
+            if (contentValue.length < 1) {
+              notificaionUtils('warning', '正文不能为空');
+              return;
+            }
+            dispatch({
+              type: 'teahouse/postNewTopic',
+              payload: {
+                post_title: title,
+                post_type: type,
+                post_detail: contentValue,
+                post_keywords: keywords,
+              },
+            });
+
+            this.setState({ editorContent: null });
+          }
+        });
+      } else {
+        Modal.warning({
+          title: '尚未登录',
+          content: '评论需要先注册登录，跳转到登录页面？',
+          iconType: 'meh-o',
+          onOk() {
+            browserHistory.push('/login');
+          },
+        });
+      }
+    };
+
     const formItems = [];
-    const typeOptions = [
-      '作业',
-      '攻略',
-      '技术讨论',
-      '活动讨论',
-      '户外安全',
-      '其他',
-    ];
+    const typeOptions = ['作业攻略', '技术讨论', '活动讨论', '户外安全', '其他'];
 
     const formItemLayout = {
       labelCol: {
@@ -69,9 +107,9 @@ class createForm extends React.Component {
               whitespace: true,
             },
           ],
-        })(
-          <Input />)}
-      </Form.Item>);
+        })(<Input />)}
+      </Form.Item>,
+    );
 
     formItems.push(
       <Form.Item {...formItemLayout} label="分类" hasFeedback>
@@ -86,9 +124,11 @@ class createForm extends React.Component {
           <Radio.Group>
             {Object.keys(typeOptions).map(key => (
               <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
-        ))}
-          </Radio.Group>)}
-      </Form.Item>);
+            ))}
+          </Radio.Group>,
+        )}
+      </Form.Item>,
+    );
 
     formItems.push(
       <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
@@ -119,7 +159,13 @@ class createForm extends React.Component {
           editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
-      </Form.Item>);
+      </Form.Item>,
+    );
+    formItems.push(
+      <Form.Item {...formItemLayout} label="关键字" hasFeedback>
+        {getFieldDecorator('keywords')(<Input />)}
+      </Form.Item>,
+    );
 
     formItems.push(
       <Form.Item wrapperCol={{
@@ -127,11 +173,12 @@ class createForm extends React.Component {
         offset: 6,
       }}
       >
-        <Button className={styles.submitBtn} type="primary" htmlType="submit" size="large">
-        发布话题
-      </Button>
+        <Button className={styles.submitBtn} type="primary" onClick={onSubmitHandle}>
+          发布话题
+        </Button>
 
-      </Form.Item>);
+      </Form.Item>,
+    );
 
     return (
       <Form>
@@ -143,7 +190,7 @@ class createForm extends React.Component {
 
 const CreateForm = Form.create()(createForm);
 
-function CreatePage({ teahouseList, isLogin }) {
+function CreatePage({ isLogin, dispatch }) {
   return (
     <div className="sysuhiker-top-wrapper">
       <h1>畅所欲言</h1>
@@ -162,11 +209,15 @@ function CreatePage({ teahouseList, isLogin }) {
       }}
       >
         <Col>
-          <CreateForm />
+          <CreateForm isLogin={isLogin} dispatch={dispatch} />
         </Col>
       </Row>
     </div>
   );
 }
+function mapStateToProps(state) {
+  const { mode, isLogin, userId } = state.app;
+  return { mode, isLogin, userId };
+}
 
-export default CreatePage;
+export default connect(mapStateToProps)(CreatePage);

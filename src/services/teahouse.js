@@ -27,3 +27,10 @@ export async function sendTopicRe(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function sendNewTopic(params) {
+  return request('/api/?service=BBS.AddPost', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

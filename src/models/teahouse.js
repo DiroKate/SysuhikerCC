@@ -1,4 +1,5 @@
 import pathToRegexp from 'path-to-regexp';
+import { browserHistory } from 'dva/router';
 import * as TeahouseService from '../services/teahouse';
 import { getBBSReList, notificaionUtils } from '../utils';
 
@@ -39,7 +40,6 @@ export default {
     currentReListReducer(state, action) {
       const { list } = action.payload;
       const currentReList = getBBSReList(state.details, list);
-      console.log({ currentReList });
       return {
         ...state,
         currentReList,
@@ -150,7 +150,33 @@ export default {
     },
 
     /**
-     * 发表话题
+     * 发表新话题
+     */
+    *postNewTopic({
+      payload,
+    }, { select, put, call }) {
+      const userId = yield select(state => state.app.userId);
+      const { data } = yield call(TeahouseService.sendNewTopic, {
+        ...payload,
+        user_id: userId,
+      });
+      const { code } = data.data;
+      if (code === 0) {
+        yield put({
+          type: 'getTopicList',
+          payload: {
+            pagesize: 10,
+            page: 1,
+            post_type: 'all',
+          },
+        });
+        browserHistory.push('/bbs');
+        notificaionUtils('success', '发布成功！');
+      }
+    },
+
+    /**
+     * 发表话题评论
      */
     *postTopicRe({
       payload: userComments,
