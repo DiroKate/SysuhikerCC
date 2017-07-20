@@ -59,54 +59,29 @@ class DetailPage extends React.Component {
       dispatch,
     } = this.props;
 
-    const tableRow = record => (
+    const tableEditorPane=(
+      <span className={styles.tableEditorPane}>
+        <a>编辑</a><a>删除</a>
+      </span>);
+
+    const tableRowWeb = record => (
       <div>
         <Row className={styles.rowHeader}>
-          <Col
-            xs={{
-              span: 5,
-            }}
-            sm={{
-              span: 4,
-            }}
-          >
+          <Col span={4} >
             <p style={{
               paddingLeft: '1rem',
             }}
             >{record.createTime}</p>
           </Col>
-          <Col
-            xs={{
-              span: 17,
-            }}
-            sm={{
-              offset: 1,
-              span: 18,
-            }}
-          >
+          <Col offset= {1} span={18}>
             <p>{record.title}</p>
           </Col>
-          <Col
-            xs={{
-              span: 2,
-            }}
-            sm={{
-              span: 1,
-            }}
-          >
+          <Col span={1}>
             <p>{`# ${record.index}`}</p>
           </Col>
         </Row>
         <Row className={styles.rowBody}>
-          <Col
-            xs={{
-              span: 5,
-            }}
-            sm={{
-              span: 4,
-            }}
-            className={styles.author}
-          >
+          <Col span={4} className={styles.author}>
             <Avatar
               className={styles.authorAvatar}
               round
@@ -119,21 +94,49 @@ class DetailPage extends React.Component {
             <p className={styles.authorName}>{record.author}</p>
           </Col>
 
-          <Col
-            xs={{
-              span: 18,
-            }}
-            sm={{
-              offset: 1,
-              span: 18,
-            }}
-            className={styles.content}
-          >
+          <Col offset={1} span={18} className={styles.content}>
             <div dangerouslySetInnerHTML={{
               __html: record.content,
             }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
+            {tableEditorPane}
+          </Col>
+        </Row>
+      </div>
+    );
+
+    const tableRowMobile = record => (
+      <div>
+        <Row style={{backgroundColor: '#F0F8FF'}}>
+          <Col span={5} className={styles.author}>
+            <Avatar
+              className={styles.authorAvatarMobile}
+              round
+              size={32}
+              src={record.avatarUrl}
+              name={record.author
+              ? record.author.substr(0, 1).toUpperCase()
+              : 'SysuHiker'}
+            />
+            <p style={{textAlign:'center',margin:'0.5rem 0',fontSize:'12px'}}>{record.author}</p>
+          </Col>
+          <Col span={17}>
+            <p>{record.title}</p>
+            <p style={{marginTop:'0.5rem'}}>{record.createTime}</p>
+          </Col>
+          <Col span={2}>
+            <p>{`# ${record.index}`}</p>
+          </Col>
+        </Row>
+        <Row className={styles.rowBody}>
+          <Col span={24} className={styles.content}>
+            <div className={styles.mobileContent} dangerouslySetInnerHTML={{
+              __html: record.content,
+            }}
+            />
+            <p className={styles.keywords}>{record.keywords}</p>
+            {tableEditorPane}
           </Col>
         </Row>
       </div>
@@ -217,12 +220,14 @@ class DetailPage extends React.Component {
       onEditorStateChange={this.onEditorStateChange}
     />);
 
+
+
     const mainTable = (
       <table className={styles.table}>
-        {showRelist.map((item, index) => (
+        {showRelist.map((item) => (
           <tr>
             <td>
-              {tableRow(item, index)}
+              {mode? tableRowMobile(item):tableRowWeb(item)}
             </td>
           </tr>
         ))}

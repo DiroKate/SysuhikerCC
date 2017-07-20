@@ -31,7 +31,7 @@
 .rowBody {
   margin-top: 1rem;
 
-  & .author {
+  .author {
     padding-left: 1rem;
     border-right: 1px;
     text-align: center;
@@ -91,6 +91,9 @@
 .authorAvatar {
   display: inline-block;
 }
+.authorAvatarMobile{
+  margin: 0 1.5rem;
+}
 
 .authorName {
   text-align: center;
@@ -103,4 +106,21 @@
   border: 1px solid @link-color;
   padding: 5px;
   border-radius: 2px;
+}
+
+.tableEditorPane {
+  float: right;
+  margin-top: 2rem;
+  & a {
+    margin: 0 0.5rem;
+  }
+}
+
+.mobileContent{
+  & img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    // max-height: 200px;
+  }
 }
