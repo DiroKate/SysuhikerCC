@@ -152,8 +152,8 @@ function updateForm({ form, loginUser, dispatch }) {
           },
         ],
         initialValue: user_gender === 'gg'
-          ? 'male'
-          : 'fefemale',
+          ? 'gg'
+          : 'mm',
       })(
         <Radio.Group>
           <Radio value="gg">

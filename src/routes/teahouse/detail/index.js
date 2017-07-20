@@ -12,8 +12,10 @@ import {
 } from 'antd';
 import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { notificaionUtils } from '../../../utils';
+
 
 import styles from './detail.less';
 
@@ -21,12 +23,12 @@ class DetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorContent: null,
+      editorState: EditorState.createEmpty(),
     };
   }
 
-  onEditorStateChange = (editorContent) => {
-    this.setState({ editorContent });
+  onEditorStateChange = (editorState) => {
+    this.setState({ editorState });
   }
   uploadImageCallBack = async (file) => {
     console.log('callback: ', file);
@@ -151,7 +153,7 @@ class DetailPage extends React.Component {
       </div>
     );
 
-    const tableRowMobile = record => (
+    const tableRowMobile = (record, index) => (
       <div>
         <Row style={{
           backgroundColor: '#F0F8FF',
@@ -202,15 +204,14 @@ class DetailPage extends React.Component {
 
     const onBtnClick = () => {
       if (isLogin) {
-        const { editorContent } = this.state;
-        const contentValue = editorContent
-          ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
-          : '';
-        if (contentValue.length < 1) {
+        const { editorState } = this.state;
+        const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        if (editorState.getCurrentContent().getPlainText().length < 1) {
+          notificaionUtils('warning', '正文不能为空');
           return;
         }
         dispatch({ type: 'teahouse/postTopicRe', payload: contentValue });
-        this.setState({ editorContent: null });
+        this.setState({ editorState: EditorState.createEmpty() });
       } else {
         Modal.warning({
           title: '尚未登录',
@@ -274,7 +275,7 @@ class DetailPage extends React.Component {
           uploadCallback: this.uploadImageCallBack,
         },
       }}
-      editorState={this.state.editorContent}
+      editorState={this.state.editorState}
       onEditorStateChange={this.onEditorStateChange}
     />);
 

@@ -29,11 +29,15 @@ function ActivityRoute({ activityList, total, isLogin, dispatch }) {
     key: item.event_id,
     ...item,
     detailHandler: () => {
-      browserHistory.push(`/activity/details/${item.event_id}`);
+      browserHistory.push(`/activity/${item.event_id}`);
     },
   }));
 
-  const getHotActivityData = () => (allActivityData.filter(element => (compareDays(element.event_join_endtime, Date()))));
+  const getHotActivityData = () => (
+    allActivityData.filter(
+      element => (compareDays(element.event_join_endtime, Date())),
+    )
+  );
 
   const hotActivityData = getHotActivityData();
   const columns = [

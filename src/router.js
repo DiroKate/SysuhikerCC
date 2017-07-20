@@ -60,20 +60,20 @@ const Routers = ({ history, app }) => {
             }, 'activityPage');
           },
         }, {
-          path: 'activity/:id',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/activity'));
-              cb(null, require('./routes/activity/details/'));
-            }, 'user-detail');
-          },
-        }, {
           path: 'activity/create',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               // registerModel(app, require('./models/users'));
               cb(null, require('./routes/activity/create/'));
             }, 'user-create');
+          },
+        }, {
+          path: 'activity/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/activity'));
+              cb(null, require('./routes/activity/details/'));
+            }, 'user-detail');
           },
         }, {
           path: 'activity/apply/:id',
@@ -115,7 +115,7 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/teahouse/detail'));
             }, 'bbs-show');
           },
-        },{
+        }, {
           path: 'bbs/edit/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
@@ -131,7 +131,7 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/teahouse/create'));
             }, 'bbs-editre');
           },
-        },  {
+        }, {
           path: 'sysuhiker/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {

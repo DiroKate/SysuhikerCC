@@ -12,7 +12,7 @@ import {
   Modal,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { notificaionUtils } from '../../../utils';
 import styles from './create.less';
@@ -23,15 +23,15 @@ class createForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorContent: null,
+      editorState: EditorState.createEmpty(),
     };
   }
-  onEditorStateChange = (editorContent) => {
-    this.setState({ editorContent });
+  onEditorStateChange = (editorState) => {
+    this.setState({ editorState });
   }
 
   render() {
-    const { editorContent } = this.state;
+    const { editorState } = this.state;
     const { form, dispatch, isLogin } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
@@ -42,11 +42,10 @@ class createForm extends React.Component {
         validateFieldsAndScroll((err, values) => {
           if (!err) {
             const { title, type, keywords } = values;
-            const contentValue = editorContent
-              ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
-              : '';
-            if (contentValue.length < 1) {
+            const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+            if (editorState.getCurrentContent().getPlainText().length < 1) {
               notificaionUtils('warning', '正文不能为空');
+              notificaionUtils('warning', '请点击一下正文');
               return;
             }
             dispatch({
@@ -58,8 +57,6 @@ class createForm extends React.Component {
                 post_keywords: keywords,
               },
             });
-
-            this.setState({ editorContent: null });
           }
         });
       } else {
@@ -107,8 +104,7 @@ class createForm extends React.Component {
             },
           ],
         })(<Input />)}
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     formItems.push(
       <Form.Item {...formItemLayout} label="分类" hasFeedback>
@@ -123,11 +119,9 @@ class createForm extends React.Component {
           <Radio.Group>
             {Object.keys(typeOptions).map(key => (
               <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
-            ))}
-          </Radio.Group>,
-        )}
-      </Form.Item>,
-    );
+        ))}
+          </Radio.Group>)}
+      </Form.Item>);
 
     formItems.push(
       <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
@@ -155,16 +149,13 @@ class createForm extends React.Component {
               uploadCallback: this.uploadImageCallBack,
             },
           }}
-          editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
-      </Form.Item>,
-    );
+      </Form.Item>);
     formItems.push(
       <Form.Item {...formItemLayout} label="关键字" hasFeedback>
         {getFieldDecorator('keywords')(<Input />)}
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     formItems.push(
       <Form.Item wrapperCol={{
@@ -172,15 +163,14 @@ class createForm extends React.Component {
         offset: 6,
       }}
       >
-        <Button className={styles.submitBtn} type="primary" onClick={onSubmitHandle}>
-          发布话题
-        </Button>
+        <Button className={styles.submitBtn} type="primary" htmlType="submit">
+        发布话题
+      </Button>
 
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     return (
-      <Form>
+      <Form onSubmit={onSubmitHandle}>
         {formItems}
       </Form>
     );

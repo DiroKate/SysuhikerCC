@@ -233,13 +233,15 @@ export default {
         userComments: payload,
       });
       if (data.data.code === 0) {
-        notificaionUtils('success', '评论成功');
         yield put({
           type: 'getEventReList',
           payload: {
             id: activityId,
           },
         });
+        notificaionUtils('success', '评论成功！');
+      } else {
+        notificaionUtils('error', data.data.msg);
       }
     },
 
@@ -283,7 +285,7 @@ export default {
         }
 
         const match = pathToRegexp('/activity/:id').exec(pathname);
-        if (match) {
+        if (match && match[1] !== 'create') {
           dispatch({
             type: 'getActivityDetails',
             payload: {

@@ -102,6 +102,8 @@ export default {
         // 回到上页
         yield put(routerRedux.goBack());
         notificaionUtils('success', '登录成功！');
+      } else {
+        notificaionUtils('error', data.data.msg);
       }
     },
 

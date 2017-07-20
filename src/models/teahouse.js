@@ -152,6 +152,7 @@ export default {
     *postNewTopic({
       payload,
     }, { select, put, call }) {
+      console.log('postNewTopicpostNewTopicpostNewTopicpostNewTopic', payload);
       const userId = yield select(state => state.app.userId);
       const { data } = yield call(TeahouseService.sendNewTopic, {
         ...payload,
@@ -198,7 +199,7 @@ export default {
         });
         notificaionUtils('success', '评论成功！');
       } else {
-        notificaionUtils('error', data.msg);
+        notificaionUtils('error', data.data.msg);
       }
     },
 
@@ -207,7 +208,7 @@ export default {
      */
     *deleteTopic({
       payload,
-    }, { put, call, select }) {
+    }, { put, call }) {
       const { data } = yield call(TeahouseService.deleteTopic, payload);
       const { code } = data.data;
       if (code === 0) {
@@ -291,7 +292,7 @@ export default {
         }
 
         const match = pathToRegexp('/bbs/:id').exec(pathname);
-        if (match) {
+        if (match && match[1] !== 'create') {
           dispatch({
             type: 'getTopicInfo',
             payload: {

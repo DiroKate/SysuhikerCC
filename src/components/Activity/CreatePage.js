@@ -13,8 +13,10 @@ import {
   Tooltip,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { notificaionUtils } from '../../utils';
+
 import request from '../../utils/request';
 
 import styles from './CreatePage.less';
@@ -25,11 +27,11 @@ class createForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorContent: null,
+      editorState: EditorState.createEmpty(),
     };
   }
-  onEditorStateChange = (editorContent) => {
-    this.setState({ editorContent });
+  onEditorStateChange = (editorState) => {
+    this.setState({ editorState });
   }
   uploadImageCallBack = async (file) => {
     console.log('callback: ', file);
@@ -51,7 +53,7 @@ class createForm extends React.Component {
   }
 
   render() {
-    const { editorContent } = this.state;
+    const { editorState } = this.state;
     const { form, dispatch } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
     const formItems = [];
@@ -61,11 +63,13 @@ class createForm extends React.Component {
       validateFieldsAndScroll((err, values) => {
         if (!err) {
           const retValues = values;
-          const contentValue = editorContent
-            ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
-            : '';
+          const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+          if (editorState.getCurrentContent().getPlainText().length < 1) {
+            notificaionUtils('warning', '正文不能为空');
+            notificaionUtils('warning', '请点击一下正文');
+            return;
+          }
           retValues.activityDetail = contentValue;
-          console.log('Received values of form: ', retValues);
           dispatch({ type: 'activity/postActivity', payload: retValues });
         }
       });
@@ -264,7 +268,7 @@ class createForm extends React.Component {
               uploadCallback: this.uploadImageCallBack,
             },
           }}
-          editorState={editorContent}
+          editorState={editorState}
           onEditorStateChange={this.onEditorStateChange}
         />
       </Form.Item>

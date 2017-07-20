@@ -22,9 +22,8 @@ class editForm extends React.Component {
     this.state = {
       editorState: EditorState.createEmpty(),
     };
-    this.onEditorStateChange = this.onEditorStateChange.bind(this);
   }
-  onEditorStateChange(editorState) {
+  onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
 
@@ -42,16 +41,15 @@ class editForm extends React.Component {
 
     const onSubmitHandle = (e) => {
       e.preventDefault();
-      console.log(convertToRaw(editorState.getCurrentContent()));
+
       if (isLogin) {
         validateFieldsAndScroll((err, values) => {
           if (!err) {
             const { title, type, keywords } = values;
-            const contentValue = editorState
-              ? draftToHtml(convertToRaw(editorState.getCurrentContent()))
-              : '';
-            if (contentValue.length < 1) {
+            const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+            if (editorState.getCurrentContent().getPlainText().length < 1) {
               notificaionUtils('warning', '正文不能为空');
+              notificaionUtils('warning', '请点击一下正文');
               return;
             }
             dispatch({
