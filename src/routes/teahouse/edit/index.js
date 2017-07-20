@@ -4,7 +4,6 @@ import { browserHistory } from 'dva/router';
 import {
   Row,
   Col,
-  Breadcrumb,
   Form,
   Button,
   Input,
@@ -12,63 +11,44 @@ import {
   Modal,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { convertToRaw ,EditorState, ContentState, convertFromHTML } from 'draft-js';
+import { convertToRaw, EditorState, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 import { notificaionUtils } from '../../../utils';
 import styles from './edit.less';
 
-const BreadcrumbItem = Breadcrumb.Item;
-
 class editForm extends React.Component {
   constructor(props) {
-    console.log('editForm',props)
     super(props);
     this.state = {
-      editorContent: null,
-      initFlag: false,
+      editorState: EditorState.createEmpty(),
     };
-    if (props.data.post_detail) {
-      this.initEditor(props)
-    }
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
   }
-  onEditorStateChange = (editorContent)=>{
-    this.setState({ editorContent });
-  }
-  initEditor(props){
-    const sampleMarkup = props.data.post_detail;
-    const blocksFromHTML = convertFromHTML(sampleMarkup);
-    const contentState = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    this.setState({
-      editorContent: EditorState.createWithContent(contentState),
-      initFlag: true
-    })
-  }
-
-  componentWillReceiveProps(nextProps){
-    if (!this.state.initFlag) {
-      this.initEditor(nextProps)
-    }
+  onEditorStateChange(editorState) {
+    this.setState({ editorState });
   }
 
   render() {
-    const { editorContent } = this.state;
+    const { editorState } = this.state;
     const { form, dispatch, isLogin, data } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
+    let odlEditorContent;
+    if (data.post_detail) {
+      const contentBlocks = convertFromHTML(data.post_detail);
+      const contentState = ContentState.createFromBlockArray(contentBlocks);
+      odlEditorContent = EditorState.createWithContent(contentState);
+    }
+
     const onSubmitHandle = (e) => {
       e.preventDefault();
-
+      console.log(convertToRaw(editorState.getCurrentContent()));
       if (isLogin) {
         validateFieldsAndScroll((err, values) => {
           if (!err) {
             const { title, type, keywords } = values;
-            const contentValue = editorContent
-              ? draftToHtml(convertToRaw(editorContent.getCurrentContent()))
+            const contentValue = editorState
+              ? draftToHtml(convertToRaw(editorState.getCurrentContent()))
               : '';
             if (contentValue.length < 1) {
               notificaionUtils('warning', '正文不能为空');
@@ -83,7 +63,6 @@ class editForm extends React.Component {
                 post_keywords: keywords,
               },
             });
-            this.setState({ editorContent: EditorState.createEmpty() });
           }
         });
       } else {
@@ -132,8 +111,7 @@ class editForm extends React.Component {
           ],
           initialValue: data.post_title,
         })(<Input />)}
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     formItems.push(
       <Form.Item {...formItemLayout} label="分类" hasFeedback>
@@ -149,11 +127,9 @@ class editForm extends React.Component {
           <Radio.Group>
             {Object.keys(typeOptions).map(key => (
               <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
-            ))}
-          </Radio.Group>,
-        )}
-      </Form.Item>,
-    );
+        ))}
+          </Radio.Group>)}
+      </Form.Item>);
 
     formItems.push(
       <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
@@ -181,16 +157,14 @@ class editForm extends React.Component {
               uploadCallback: this.uploadImageCallBack,
             },
           }}
-          editorState={editorContent}
+          defaultEditorState={odlEditorContent}
           onEditorStateChange={this.onEditorStateChange}
         />
-      </Form.Item>,
-    );
+      </Form.Item>);
     formItems.push(
       <Form.Item {...formItemLayout} label="关键字" hasFeedback>
-        {getFieldDecorator('keywords',{initialValue:data.post_keywords})(<Input />)}
-      </Form.Item>,
-    );
+        {getFieldDecorator('keywords', { initialValue: data.post_keywords })(<Input />)}
+      </Form.Item>);
 
     formItems.push(
       <Form.Item wrapperCol={{
@@ -198,15 +172,14 @@ class editForm extends React.Component {
         offset: 6,
       }}
       >
-        <Button className={styles.submitBtn} type="primary" onClick={onSubmitHandle}>
-          确认修改
-        </Button>
+        <Button className={styles.submitBtn} type="primary" htmlType="submit">
+        确认修改
+      </Button>
 
-      </Form.Item>,
-    );
+      </Form.Item>);
 
     return (
-      <Form>
+      <Form onSubmit={onSubmitHandle}>
         {formItems}
       </Form>
     );
@@ -215,11 +188,11 @@ class editForm extends React.Component {
 
 const EditForm = Form.create()(editForm);
 
-function EditPage({ isLogin, dispatch,details }) {
+function EditPage({ isLogin, dispatch, details }) {
   return (
     <div className="sysuhiker-top-wrapper">
       <h1>修改话题</h1>
-      
+
       <Row style={{
         marginTop: '16px',
       }}
@@ -234,7 +207,7 @@ function EditPage({ isLogin, dispatch,details }) {
 function mapStateToProps(state) {
   const { mode, isLogin, userId } = state.app;
   const { details } = state.teahouse;
-  return { mode, isLogin, userId,details };
+  return { mode, isLogin, userId, details };
 }
 
 export default connect(mapStateToProps)(EditPage);

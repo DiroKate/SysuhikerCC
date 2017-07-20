@@ -99,7 +99,7 @@ export default {
      */
     *getTopicInfo({
       payload,
-    }, { put, call, select }) {
+    }, { put, call }) {
       const { data } = yield call(TeahouseService.getTopicInfo, { post_id: payload.topicId });
       const { code, info } = data.data;
       if (code === 0) {
@@ -110,6 +110,8 @@ export default {
             detailId: info.post_id,
           },
         });
+      } else {
+        notificaionUtils('error', data.msg);
       }
     },
 
@@ -167,6 +169,8 @@ export default {
         });
         browserHistory.push('/bbs');
         notificaionUtils('success', '发布成功！');
+      } else {
+        notificaionUtils('error', data.msg);
       }
     },
 
@@ -193,6 +197,8 @@ export default {
           },
         });
         notificaionUtils('success', '评论成功！');
+      } else {
+        notificaionUtils('error', data.msg);
       }
     },
 
@@ -215,6 +221,8 @@ export default {
         });
         browserHistory.push('/bbs');
         notificaionUtils('success', '删除成功！');
+      } else {
+        notificaionUtils('error', data.msg);
       }
     },
 
@@ -224,7 +232,7 @@ export default {
     *deleteTopicRe({
       payload,
     }, { put, call, select }) {
-      console.log('删除话题评论',payload)
+      console.log('删除话题评论', payload);
       // const userId = yield select(state => state.app.userId);
       // const postId = yield select(state => state.teahouse.detailId);
       // const { data } = yield call(TeahouseService.sendTopicRe, {
@@ -250,8 +258,7 @@ export default {
      */
     *editTopic({
       payload,
-    }, { put, call, select }) {
-      console.log('修改话题',payload)
+    }, { call, select }) {
       const userId = yield select(state => state.app.userId);
       const postId = yield select(state => state.teahouse.detailId);
       const { data } = yield call(TeahouseService.editTopic, {
@@ -261,12 +268,12 @@ export default {
       });
       const { code } = data.data;
       if (code === 0) {
-        
         browserHistory.push(`/bbs/${postId}`);
         notificaionUtils('success', '修改成功！');
+      } else {
+        notificaionUtils('error', data.msg);
       }
     },
-
   },
 
   subscriptions: {

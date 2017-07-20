@@ -13,7 +13,6 @@ import {
   Tooltip,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import request from '../../utils/request';

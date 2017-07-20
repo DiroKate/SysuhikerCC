@@ -12,7 +12,6 @@ import {
 } from 'antd';
 import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
@@ -59,68 +58,67 @@ class DetailPage extends React.Component {
       dispatch,
     } = this.props;
 
-    const onDeleteClick = (e) => {
-      const data = showRelist[e.target.id];
-      console.log('删除：',{data})
+    const onDeleteClick = ({ target }) => {
+      const data = showRelist[target.id];
+      console.log('删除：', { data });
 
       Modal.confirm({
-        title: data.isContent?'删除文章':'删除该条评论',
-        content:data.isContent?data.title:null,
+        title: data.isContent
+          ? '删除文章'
+          : '删除该条评论',
+        content: data.isContent
+          ? data.title
+          : null,
         onOk() {
-          console.log('OK');
           if (data.isContent) {
             dispatch({
-              type:'teahouse/deleteTopic',
-              payload:{
-                post_id:data.id,
-                user_id:userId
-              }
-            })
+              type: 'teahouse/deleteTopic',
+              payload: {
+                post_id: data.id,
+                user_id: userId,
+              },
+            });
           } else {
             dispatch({
-              type:'teahouse/deleteTopicRe',
-              payload:{
-                post_id:data.id,
-                user_id:userId
-              }
-            })          
+              type: 'teahouse/deleteTopicRe',
+              payload: {
+                post_id: data.id,
+                user_id: userId,
+              },
+            });
           }
-        },
-        onCancel() {
-          console.log('Cancel');
         },
       });
     };
 
-    const onEditClick = ({target})=>{
+    const onEditClick = ({ target }) => {
       const data = showRelist[target.id];
-      console.log('onEditClick',data)
+      console.log('onEditClick', data);
 
-      if (data.isContent){
+      if (data.isContent) {
         browserHistory.push(`/bbs/edit/${data.id}`);
       } else {
-        browserHistory.push(`/bbs/editre/${data.id}`);        
+        browserHistory.push(`/bbs/editre/${data.id}`);
       }
+    };
 
-
-
-    }
-
-    const tableEditorPane=(index)=>(
+    const tableEditorPane = index => (
       <span className={styles.tableEditorPane}>
-        <a onClick={onEditClick} id={index}>编辑</a><a onClick={onDeleteClick} id={index}>删除</a>
-      </span>);
+        <a onClick={onEditClick} id={index}>编辑</a>
+        <a onClick={onDeleteClick} id={index}>删除</a>
+      </span>
+    );
 
-    const tableRowWeb = (record,index) => (
+    const tableRowWeb = (record, index) => (
       <div>
         <Row className={styles.rowHeader}>
-          <Col span={4} >
+          <Col span={4}>
             <p style={{
               paddingLeft: '1rem',
             }}
             >{record.createTime}</p>
           </Col>
-          <Col offset= {1} span={18}>
+          <Col offset={1} span={18}>
             <p>{record.title}</p>
           </Col>
           <Col span={1}>
@@ -155,7 +153,10 @@ class DetailPage extends React.Component {
 
     const tableRowMobile = record => (
       <div>
-        <Row style={{backgroundColor: '#F0F8FF'}}>
+        <Row style={{
+          backgroundColor: '#F0F8FF',
+        }}
+        >
           <Col span={5} className={styles.author}>
             <Avatar
               className={styles.authorAvatarMobile}
@@ -166,11 +167,19 @@ class DetailPage extends React.Component {
               ? record.author.substr(0, 1).toUpperCase()
               : 'SysuHiker'}
             />
-            <p style={{textAlign:'center',margin:'0.5rem 0',fontSize:'12px'}}>{record.author}</p>
+            <p style={{
+              textAlign: 'center',
+              margin: '0.5rem 0',
+              fontSize: '12px',
+            }}
+            >{record.author}</p>
           </Col>
           <Col span={17}>
             <p>{record.title}</p>
-            <p style={{marginTop:'0.5rem'}}>{record.createTime}</p>
+            <p style={{
+              marginTop: '0.5rem',
+            }}
+            >{record.createTime}</p>
           </Col>
           <Col span={2}>
             <p>{`# ${record.index}`}</p>
@@ -178,9 +187,11 @@ class DetailPage extends React.Component {
         </Row>
         <Row className={styles.rowBody}>
           <Col span={24} className={styles.content}>
-            <div className={styles.mobileContent} dangerouslySetInnerHTML={{
-              __html: record.content,
-            }}
+            <div
+              className={styles.mobileContent}
+              dangerouslySetInnerHTML={{
+                __html: record.content,
+              }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
             {tableEditorPane(index)}
@@ -267,14 +278,14 @@ class DetailPage extends React.Component {
       onEditorStateChange={this.onEditorStateChange}
     />);
 
-
-
     const mainTable = (
       <table className={styles.table}>
-        {showRelist.map((item,index) => (
+        {showRelist.map((item, index) => (
           <tr>
             <td>
-              {mode? tableRowMobile(item,index):tableRowWeb(item,index)}
+              {mode
+                ? tableRowMobile(item, index)
+                : tableRowWeb(item, index)}
             </td>
           </tr>
         ))}

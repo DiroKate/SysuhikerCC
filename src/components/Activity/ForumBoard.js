@@ -3,7 +3,6 @@ import { browserHistory } from 'dva/router';
 import { Table, Form, Button, Modal } from 'antd';
 import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import styles from './ForumBoard.less';

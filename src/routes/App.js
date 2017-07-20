@@ -6,6 +6,8 @@ import enquire from 'enquire.js';
 
 import { SysuhikerLayout } from '../components';
 import '../themes/antless/antMotion_style.less';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 
 const { Header, Content, Footer } = Layout;
 const { Nav } = SysuhikerLayout;
