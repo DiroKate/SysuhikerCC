@@ -76,9 +76,12 @@ const getBBSReList = (details, currentReList) => {
     title: details.post_title,
     content: details.post_detail,
     author: details.post_createUserNick,
+    authorId: details.post_createUserId,
     createTime: details.post_createTime,
     keywords: details.post_keywords,
     avatarUrl: details.post_createUserAvatarUrl,
+    isContent: true,
+    id:details.post_id,
   });
   currentReList.map((item, index) => {
     allDataSource.push({
@@ -86,9 +89,11 @@ const getBBSReList = (details, currentReList) => {
       title: `Re: ${details.post_title}`,
       content: item.re_detail,
       author: item.re_createUserNick,
+      authorId: item.re_createUserId,
       avatarUrl: item.re_createUserAvatarUrl,
       createTime: item.re_createTime,
       keywords: null,
+      id: item.re_postId,
     });
   });
   return allDataSource;

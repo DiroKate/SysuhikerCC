@@ -60,7 +60,7 @@ const Routers = ({ history, app }) => {
             }, 'activityPage');
           },
         }, {
-          path: 'activity/details/:id',
+          path: 'activity/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/activity'));
@@ -115,7 +115,23 @@ const Routers = ({ history, app }) => {
               cb(null, require('./routes/teahouse/detail'));
             }, 'bbs-show');
           },
+        },{
+          path: 'bbs/edit/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/teahouse'));
+              cb(null, require('./routes/teahouse/edit'));
+            }, 'bbs-edit');
+          },
         }, {
+          path: 'bbs/editre/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/teahouse'));
+              cb(null, require('./routes/teahouse/create'));
+            }, 'bbs-editre');
+          },
+        },  {
           path: 'sysuhiker/:id',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {

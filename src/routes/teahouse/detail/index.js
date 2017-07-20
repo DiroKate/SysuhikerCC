@@ -59,12 +59,59 @@ class DetailPage extends React.Component {
       dispatch,
     } = this.props;
 
-    const tableEditorPane=(
+    const onDeleteClick = (e) => {
+      const data = showRelist[e.target.id];
+      console.log('删除：',{data})
+
+      Modal.confirm({
+        title: data.isContent?'删除文章':'删除该条评论',
+        content:data.isContent?data.title:null,
+        onOk() {
+          console.log('OK');
+          if (data.isContent) {
+            dispatch({
+              type:'teahouse/deleteTopic',
+              payload:{
+                post_id:data.id,
+                user_id:userId
+              }
+            })
+          } else {
+            dispatch({
+              type:'teahouse/deleteTopicRe',
+              payload:{
+                post_id:data.id,
+                user_id:userId
+              }
+            })          
+          }
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+    };
+
+    const onEditClick = ({target})=>{
+      const data = showRelist[target.id];
+      console.log('onEditClick',data)
+
+      if (data.isContent){
+        browserHistory.push(`/bbs/edit/${data.id}`);
+      } else {
+        browserHistory.push(`/bbs/editre/${data.id}`);        
+      }
+
+
+
+    }
+
+    const tableEditorPane=(index)=>(
       <span className={styles.tableEditorPane}>
-        <a>编辑</a><a>删除</a>
+        <a onClick={onEditClick} id={index}>编辑</a><a onClick={onDeleteClick} id={index}>删除</a>
       </span>);
 
-    const tableRowWeb = record => (
+    const tableRowWeb = (record,index) => (
       <div>
         <Row className={styles.rowHeader}>
           <Col span={4} >
@@ -100,7 +147,7 @@ class DetailPage extends React.Component {
             }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
-            {tableEditorPane}
+            {tableEditorPane(index)}
           </Col>
         </Row>
       </div>
@@ -136,7 +183,7 @@ class DetailPage extends React.Component {
             }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
-            {tableEditorPane}
+            {tableEditorPane(index)}
           </Col>
         </Row>
       </div>
@@ -224,10 +271,10 @@ class DetailPage extends React.Component {
 
     const mainTable = (
       <table className={styles.table}>
-        {showRelist.map((item) => (
+        {showRelist.map((item,index) => (
           <tr>
             <td>
-              {mode? tableRowMobile(item):tableRowWeb(item)}
+              {mode? tableRowMobile(item,index):tableRowWeb(item,index)}
             </td>
           </tr>
         ))}

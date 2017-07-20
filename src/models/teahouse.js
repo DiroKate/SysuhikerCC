@@ -100,11 +100,6 @@ export default {
     *getTopicInfo({
       payload,
     }, { put, call, select }) {
-      // 判断是否已经获取了信息了
-      const topicId = yield select(state => state.teahouse.detailId);
-      if (topicId === payload.topicId) {
-        return;
-      }
       const { data } = yield call(TeahouseService.getTopicInfo, { post_id: payload.topicId });
       const { code, info } = data.data;
       if (code === 0) {
@@ -200,6 +195,78 @@ export default {
         notificaionUtils('success', '评论成功！');
       }
     },
+
+    /**
+     * 删除话题
+     */
+    *deleteTopic({
+      payload,
+    }, { put, call, select }) {
+      const { data } = yield call(TeahouseService.deleteTopic, payload);
+      const { code } = data.data;
+      if (code === 0) {
+        yield put({
+          type: 'getTopicList',
+          payload: {
+            pagesize: 10,
+            page: 1,
+            post_type: 'all',
+          },
+        });
+        browserHistory.push('/bbs');
+        notificaionUtils('success', '删除成功！');
+      }
+    },
+
+    /**
+     * 删除话题评论
+     */
+    *deleteTopicRe({
+      payload,
+    }, { put, call, select }) {
+      console.log('删除话题评论',payload)
+      // const userId = yield select(state => state.app.userId);
+      // const postId = yield select(state => state.teahouse.detailId);
+      // const { data } = yield call(TeahouseService.sendTopicRe, {
+      //   post_id: postId,
+      //   user_id: userId,
+      //   userComments,
+      // });
+      // const { code } = data.data;
+      // if (code === 0) {
+      //   yield put({
+      //     type: 'getTopicReList',
+      //     payload: {
+      //       post_id: postId,
+      //       lastFlag: true,
+      //     },
+      //   });
+      //   notificaionUtils('success', '评论成功！');
+      // }
+    },
+
+    /**
+     * 修改话题
+     */
+    *editTopic({
+      payload,
+    }, { put, call, select }) {
+      console.log('修改话题',payload)
+      const userId = yield select(state => state.app.userId);
+      const postId = yield select(state => state.teahouse.detailId);
+      const { data } = yield call(TeahouseService.editTopic, {
+        post_id: postId,
+        user_id: userId,
+        ...payload,
+      });
+      const { code } = data.data;
+      if (code === 0) {
+        
+        browserHistory.push(`/bbs/${postId}`);
+        notificaionUtils('success', '修改成功！');
+      }
+    },
+
   },
 
   subscriptions: {
@@ -229,6 +296,16 @@ export default {
             payload: {
               topicId: match[1],
               page: 1,
+            },
+          });
+        }
+
+        const editMatch = pathToRegexp('/bbs/edit/:id').exec(pathname);
+        if (editMatch) {
+          dispatch({
+            type: 'getTopicInfo',
+            payload: {
+              topicId: editMatch[1],
             },
           });
         }

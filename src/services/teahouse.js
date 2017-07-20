@@ -34,3 +34,17 @@ export async function sendNewTopic(params) {
     body: JSON.stringify(params),
   });
 }
+
+export async function editTopic(params) {
+  return request('/api/?service=BBS.EditPost', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
+export async function deleteTopic(params) {
+  return request('/api/?service=BBS.DeletePost', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}

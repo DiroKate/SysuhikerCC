@@ -282,7 +282,7 @@ export default {
           });
         }
 
-        const match = pathToRegexp('/activity/details/:id').exec(pathname);
+        const match = pathToRegexp('/activity/:id').exec(pathname);
         if (match) {
           dispatch({
             type: 'getActivityDetails',
