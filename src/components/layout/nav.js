@@ -99,7 +99,7 @@ function Nav({ data, phoneMode }) {
       </Dropdown>
     )
     : (
-      <Row type="flex" align="center" justify="end">
+      <Row type="flex" justify="end">
         <Col>
           <Menu mode="horizontal" defaultSelectedKeys={['home']} theme="dark" className={styles.menu}>
             {navChildren}
@@ -109,7 +109,7 @@ function Nav({ data, phoneMode }) {
       </Row>
     );
   return (
-    <Row type="flex" align="center" justify="space-between">
+    <Row type="flex" align="middle" justify="space-between">
       <Col>
         <LocalIcon key="logo" type="LOGO-" className={styles.logo} />
       </Col>
