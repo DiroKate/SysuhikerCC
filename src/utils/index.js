@@ -1,5 +1,8 @@
-import { message } from 'antd';
+import { message, Modal } from 'antd';
+import { browserHistory } from 'dva/router';
+
 import config from './config';
+import uploadImageCallBack from './uploadImageCallBack';
 
 const days = (start, end) => {
   const time1 = Date.parse(start);
@@ -99,6 +102,25 @@ const getBBSReList = (details, currentReList) => {
   return allDataSource;
 };
 
+/**
+ * loginFlag: T已登录, F未登录
+ * loginCallback: 已登录应执行的回调函数
+ */
+const needLogin = (loginFlag, loginCallback, content = '跳转到登录页面') => {
+  if (loginFlag) {
+    loginCallback();
+  } else {
+    Modal.warning({
+      title: '尚未登录',
+      content,
+      iconType: 'meh-o',
+      onOk() {
+        browserHistory.push('/login');
+      },
+    });
+  }
+};
+
 module.exports = {
   config,
   days,
@@ -108,4 +130,6 @@ module.exports = {
   notificaionUtils,
   joinActivityUtils,
   getBBSReList,
+  uploadImageCallBack,
+  needLogin,
 };

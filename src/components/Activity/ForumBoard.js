@@ -104,9 +104,11 @@ class ForumBoard extends React.Component {
         <Form>
           <FormItem>
             <Editor
+              localization={{ locale: 'zh' }}
               toolbarClassName={styles.editorToolbar}
               wrapperClassName={styles.editorWrapper}
               editorClassName={styles.editorEditor}
+              toolbarOnFocus
               toolbar={{
                 options: [
                   'inline', 'colorPicker', 'link', 'emoji', 'history',

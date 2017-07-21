@@ -14,7 +14,7 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils } from '../../../utils';
+import { notificaionUtils, uploadImageCallBack } from '../../../utils';
 import styles from './create.less';
 
 const BreadcrumbItem = Breadcrumb.Item;
@@ -126,6 +126,7 @@ class createForm extends React.Component {
     formItems.push(
       <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
         <Editor
+          localization={{ locale: 'zh' }}
           toolbarClassName={styles.editorToolbar}
           wrapperClassName={styles.editorWrapper}
           editorClassName={styles.editorEditor}
@@ -146,7 +147,7 @@ class createForm extends React.Component {
               inDropdown: true,
             },
             image: {
-              uploadCallback: this.uploadImageCallBack,
+              uploadCallback: uploadImageCallBack,
             },
           }}
           onEditorStateChange={this.onEditorStateChange}

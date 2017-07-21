@@ -14,7 +14,7 @@ import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils } from '../../../utils';
+import { notificaionUtils, uploadImageCallBack, needLogin } from '../../../utils';
 
 
 import styles from './detail.less';
@@ -30,25 +30,7 @@ class DetailPage extends React.Component {
   onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
-  uploadImageCallBack = async (file) => {
-    console.log('callback: ', file);
-    console.log('上传图片', this.props);
-
-    // const result = await request('/api/?service=Upload.Upload', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ file }),
-    // });
-    // console.log('result', result);
-
-    return new Promise((resolve, reject) => {
-      resolve({
-        data: {
-          link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg',
-        },
-      });
-    });
-  }
-
+  
   render() {
     const {
       isLogin,
@@ -202,26 +184,19 @@ class DetailPage extends React.Component {
       </div>
     );
 
-    const onBtnClick = () => {
-      if (isLogin) {
-        const { editorState } = this.state;
-        const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-        if (editorState.getCurrentContent().getPlainText().length < 1) {
-          notificaionUtils('warning', '正文不能为空');
-          return;
-        }
-        dispatch({ type: 'teahouse/postTopicRe', payload: contentValue });
-        this.setState({ editorState: EditorState.createEmpty() });
-      } else {
-        Modal.warning({
-          title: '尚未登录',
-          content: '评论需要先注册登录，跳转到登录页面？',
-          iconType: 'meh-o',
-          onOk() {
-            browserHistory.push('/login');
-          },
-        });
+    const loginCallback = ()=>{
+      const { editorState } = this.state;
+      const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+      if (editorState.getCurrentContent().getPlainText().length < 1) {
+        notificaionUtils('warning', '正文不能为空');
+        return;
       }
+      dispatch({ type: 'teahouse/postTopicRe', payload: contentValue });
+      this.setState({ editorState: EditorState.createEmpty() });
+    }
+
+    const onBtnClick = () => {
+      needLogin(isLogin, loginCallback, '评论需要先注册登录，跳转到登录页面？')
     };
 
     const onPageHandler = (page, pageSize) => {
@@ -251,7 +226,9 @@ class DetailPage extends React.Component {
       [styles.editorWrapperMobile]: mode,
       [styles.editorWrapperWeb]: !mode,
     });
+
     const editor = (<Editor
+      localization={{ locale: 'zh' }}
       toolbarClassName={toolbarClassName}
       wrapperClassName={wrapperClassName}
       editorClassName={styles.editorEditor}
@@ -272,11 +249,12 @@ class DetailPage extends React.Component {
           inDropdown: true,
         },
         image: {
-          uploadCallback: this.uploadImageCallBack,
+          uploadCallback: uploadImageCallBack,
         },
       }}
       editorState={this.state.editorState}
       onEditorStateChange={this.onEditorStateChange}
+      toolbarOnFocus
     />);
 
     const mainTable = (

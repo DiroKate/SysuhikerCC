@@ -13,7 +13,8 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils } from '../../../utils';
+import htmlToDraft from 'html-to-draftjs';
+import { notificaionUtils, uploadImageCallBack } from '../../../utils';
 import styles from './edit.less';
 
 class editForm extends React.Component {
@@ -34,7 +35,8 @@ class editForm extends React.Component {
 
     let odlEditorContent;
     if (data.post_detail) {
-      const contentBlocks = convertFromHTML(data.post_detail);
+      const blocksFromHtml = htmlToDraft(data.post_detail);
+      const contentBlocks = blocksFromHtml.contentBlocks;
       const contentState = ContentState.createFromBlockArray(contentBlocks);
       odlEditorContent = EditorState.createWithContent(contentState);
     }
@@ -132,6 +134,7 @@ class editForm extends React.Component {
     formItems.push(
       <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
         <Editor
+          localization={{ locale: 'zh' }}
           toolbarClassName={styles.editorToolbar}
           wrapperClassName={styles.editorWrapper}
           editorClassName={styles.editorEditor}
@@ -152,11 +155,12 @@ class editForm extends React.Component {
               inDropdown: true,
             },
             image: {
-              uploadCallback: this.uploadImageCallBack,
+              uploadCallback: uploadImageCallBack,
             },
           }}
           defaultEditorState={odlEditorContent}
           onEditorStateChange={this.onEditorStateChange}
+
         />
       </Form.Item>);
     formItems.push(

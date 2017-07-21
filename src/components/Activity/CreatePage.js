@@ -15,9 +15,7 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils } from '../../utils';
-
-import request from '../../utils/request';
+import { notificaionUtils,uploadImageCallBack } from '../../utils';
 
 import styles from './CreatePage.less';
 
@@ -33,25 +31,7 @@ class createForm extends React.Component {
   onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
-  uploadImageCallBack = async (file) => {
-    console.log('callback: ', file);
-    console.log('上传图片', this.props);
-
-    const result = await request('/api/?service=Upload.Upload', {
-      method: 'POST',
-      body: JSON.stringify({ file }),
-    });
-    console.log('result', result);
-
-    return new Promise((resolve, reject) => {
-      resolve({
-        data: {
-          link: 'http://sysuhiker.cc/upload/imgUpload/201612/油麻山山脉.jpg1480758409933.jpg',
-        },
-      });
-    });
-  }
-
+  
   render() {
     const { editorState } = this.state;
     const { form, dispatch } = this.props;
@@ -245,6 +225,7 @@ class createForm extends React.Component {
         hasFeedback
       >
         <Editor
+          localization={{ locale: 'zh' }}
           toolbarClassName={styles.editorToolbar}
           wrapperClassName={styles.editorWrapper}
           editorClassName={styles.editorEditor}
@@ -265,7 +246,7 @@ class createForm extends React.Component {
               inDropdown: true,
             },
             image: {
-              uploadCallback: this.uploadImageCallBack,
+              uploadCallback: uploadImageCallBack,
             },
           }}
           editorState={editorState}
