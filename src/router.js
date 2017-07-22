@@ -57,7 +57,7 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/activity'));
-            }, 'activityPage');
+            }, 'activity-list');
           },
         }, {
           path: 'activity/create',
@@ -65,7 +65,7 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               // registerModel(app, require('./models/users'));
               cb(null, require('./routes/activity/create/'));
-            }, 'user-create');
+            }, 'activity-create');
           },
         }, {
           path: 'activity/:id',
@@ -73,7 +73,15 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               registerModel(app, require('./models/activity'));
               cb(null, require('./routes/activity/details/'));
-            }, 'user-detail');
+            }, 'activity-show');
+          },
+        }, {
+          path: 'activity/edit/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/activity'));
+              cb(null, require('./routes/activity/edit'));
+            }, 'activity-edit');
           },
         }, {
           path: 'activity/apply/:id',

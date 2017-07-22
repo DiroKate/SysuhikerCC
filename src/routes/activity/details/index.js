@@ -3,8 +3,10 @@ import { connect } from 'dva';
 import PropTypes from 'prop-types';
 import { Breadcrumb, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
+
+import { Editor } from 'react-draft-wysiwyg';
 import { Activity } from '../../../components';
-import { compareDays } from '../../../utils';
+import { compareDays, DraftUtils } from '../../../utils';
 
 import styles from './index.less';
 
@@ -32,9 +34,7 @@ function Details(props) {
     }
     return false;
   };
-  const createMarkup = () => {
-    return { __html: activityDetails.event_detail };
-  };
+  const contentState = DraftUtils.htmlToEditorState(activityDetails.event_detail);
 
   const leaderInfoProps = {
     ...activityLeader,
@@ -86,7 +86,16 @@ function Details(props) {
             <div key="EventCard">
               <EventCard data={activityDetails} />
             </div>
-            <div key="content" dangerouslySetInnerHTML={createMarkup()} />
+            <div key="content">
+              <Editor
+                readOnly
+                defaultEditorState={contentState}
+                toolbarHidden
+                toolbarClassName="show-editor-empty-toolbar"
+              />
+            </div>
+
+
           </QueueAnim>
         </Col>
         <Col

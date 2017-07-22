@@ -10,6 +10,7 @@ import {
 import Avatar from 'react-avatar';
 import { browserHistory } from 'dva/router';
 import { LocalIcon } from './..';
+import { needLogin } from '../../utils';
 
 import styles from './MemberList.less';
 
@@ -80,27 +81,26 @@ function MemberList(props) {
     }
   }
 
-  const onClick = () => {
-    if (isLogin) {
-      browserHistory.push(`/activity/apply/${event_id}`);
-    } else {
-      Modal.confirm({
-        title: '尚未登录',
-        content: '还没登录哦，请先登录再报名～',
-        iconType: 'meh-o',
-        onOk() {
-          browserHistory.push('/login');
-        },
-      });
-    }
-  };
-  const onMenuClick = (e) => {
-    switch (e.target.rel) {
-      case 'updateActivity':
-        console.log('更新活动信息');
+  const jumpTo = (eventId, type) => {
+    console.log('jumpTo', type);
+    switch (type) {
+        // 报名活动页面
+      case 'apply':
+        browserHistory.push(`/activity/apply/${eventId}`);
         break;
-      case 'quitActivity':
 
+        // 编辑报名页面
+      case 'edit_apply':
+        console.log('更新报名信息');
+        break;
+
+        // 编辑活动信息页面;
+      case 'edit_event':
+        browserHistory.push(`/activity/edit/${eventId}`);
+        break;
+
+        // 退出活动跳转
+      case 'exit_event':
         Modal.confirm({
           title: '退出活动',
           content: '确认退出活动？\n(如需重新报名请联系活动发起人修改报名状态)',
@@ -111,12 +111,28 @@ function MemberList(props) {
           maskClosable: true,
         });
         break;
-      case 'updateApply':
-        console.log('更新报名信息');
-        break;
+
       default:
         break;
+
     }
+  };
+
+  const onEditEventHandler = () => {
+    const callback = () => {
+      jumpTo(event_id, 'edit_event');
+    };
+    needLogin(isLogin, callback, '还没登录哦，请先登录再修改活动～');
+  };
+  const onApplyEventHandler = () => {
+    const callback = () => {
+      jumpTo(event_id, 'apply');
+    };
+    needLogin(isLogin, callback, '还没登录哦，请先登录再报名活动～');
+  };
+  const onMenuClick = ({ target }) => {
+    const { rel } = target;
+    jumpTo(event_id, rel);
   };
   const gender = (
     <div className={styles.gender}>
@@ -131,7 +147,7 @@ function MemberList(props) {
    * 显示规则：
    * 活动没过期：
    * * 活动发起人：修改活动／退出活动／报名资料／对其他成员有管理员权限。
-   * * 活动成员： 修改报名资料／自己状态权限
+   * * 活动成员： 修改报名资料／自己状态权限(退出活动)
    * * 未登录或者其他： 立即参加
    * 活动过期了：
    * * 活动发起人：修改活动
@@ -139,10 +155,16 @@ function MemberList(props) {
    */
   const mainBtn = () => {
     if (isExpired && isAdmin) {
+      /**
+       * 管理员的已过期活动菜单
+       */
       return (
-        <Button type="dashed" className={styles.joinBtn} onClick={onClick}>活动已过期，修改活动</Button>
+        <Button type="dashed" className={styles.joinBtn} onClick={onEditEventHandler}>活动已过期，修改活动</Button>
       );
     } else if (isExpired) {
+      /**
+       * 非管理员的已过期活动菜单：活动已过期
+       */
       return (
         <Button disabled type="primary" className={styles.joinBtn}>活动已过期</Button>
       );
@@ -150,16 +172,23 @@ function MemberList(props) {
       const adminMenu = (
         <Menu>
           <Menu.Item>
-            <a rel="updateActivity" onClick={onMenuClick}>修改活动</a>
+            <a rel="edit_event" onClick={onMenuClick}>修改活动</a>
           </Menu.Item>
           <Menu.Item>
-            <a rel="updateApply" onClick={onMenuClick}>报名资料</a>
+            <a rel="edit_apply" onClick={onMenuClick}>报名资料</a>
           </Menu.Item>
           <Menu.Item>
-            <a rel="quitActivity" onClick={onMenuClick}>退出活动</a>
+            <a rel="exit_event" onClick={onMenuClick}>退出活动</a>
           </Menu.Item>
         </Menu>
       );
+      /**
+       * 活动创建者菜单
+       * |--管理活动
+       * |----修改活动
+       * |----修改报名资料
+       * |----退出报名
+       */
       return (
         <Dropdown overlay={adminMenu} placement="bottomLeft">
           <Button type="primary" className={styles.joinBtn}>管理活动</Button>
@@ -170,22 +199,31 @@ function MemberList(props) {
         <Menu>
           <Menu>
             <Menu.Item>
-              <a rel="updateApply" onClick={onMenuClick}>报名资料</a>
+              <a rel="edit_apply" onClick={onMenuClick}>报名资料</a>
             </Menu.Item>
             <Menu.Item>
-              <a rel="quitActivity" onClick={onMenuClick}>退出活动</a>
+              <a rel="exit_event" onClick={onMenuClick}>退出活动</a>
             </Menu.Item>
           </Menu>
         </Menu>
       );
+      /**
+       * 活动成员的菜单
+       * |-管理报名
+       * |---报名资料修改
+       * |---退出活动
+       */
       return (
         <Dropdown overlay={memberMenu} placement="bottomLeft">
           <Button type="primary" className={styles.joinBtn}>管理报名</Button>
         </Dropdown>
       );
     } else {
+      /**
+       * 未登录／未过期的活动菜单
+       */
       return (
-        <Button type="primary" className={styles.joinBtn} onClick={onClick}>立即参加</Button>
+        <Button type="primary" className={styles.joinBtn} onClick={onApplyEventHandler}>立即参加</Button>
       );
     }
   };

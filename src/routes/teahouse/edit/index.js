@@ -11,10 +11,10 @@ import {
   Modal,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, EditorState, ContentState, convertFromHTML } from 'draft-js';
+import { convertToRaw, EditorState, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { notificaionUtils, uploadImageCallBack } from '../../../utils';
+import { notificaionUtils, uploadImageCallBack, DraftUtils } from '../../../utils';
 import styles from './edit.less';
 
 class editForm extends React.Component {
@@ -33,13 +33,7 @@ class editForm extends React.Component {
     const { form, dispatch, isLogin, data } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
-    let odlEditorContent;
-    if (data.post_detail) {
-      const blocksFromHtml = htmlToDraft(data.post_detail);
-      const contentBlocks = blocksFromHtml.contentBlocks;
-      const contentState = ContentState.createFromBlockArray(contentBlocks);
-      odlEditorContent = EditorState.createWithContent(contentState);
-    }
+    const odlEditorContent = DraftUtils.htmlToEditorState(data.post_detail);
 
     const onSubmitHandle = (e) => {
       e.preventDefault();

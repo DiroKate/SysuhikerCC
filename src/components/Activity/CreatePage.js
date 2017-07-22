@@ -13,9 +13,8 @@ import {
   Tooltip,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, EditorState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils,uploadImageCallBack } from '../../utils';
+import { EditorState } from 'draft-js';
+import { config, notificaionUtils, uploadImageCallBack, DraftUtils } from '../../utils';
 
 import styles from './CreatePage.less';
 
@@ -31,7 +30,7 @@ class createForm extends React.Component {
   onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
-  
+
   render() {
     const { editorState } = this.state;
     const { form, dispatch } = this.props;
@@ -43,8 +42,8 @@ class createForm extends React.Component {
       validateFieldsAndScroll((err, values) => {
         if (!err) {
           const retValues = values;
-          const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-          if (editorState.getCurrentContent().getPlainText().length < 1) {
+          const { contentValue, isEmpty } = DraftUtils.editorStateToHtml(editorState);
+          if (isEmpty) {
             notificaionUtils('warning', '正文不能为空');
             notificaionUtils('warning', '请点击一下正文');
             return;
@@ -120,15 +119,7 @@ class createForm extends React.Component {
 
     const title = (stringInputValidate({ label: '活动名称', id: 'activityTitle', message: '请输入活动名称' }));
 
-    const activityTypesData = [
-      '休闲拉练',
-      '正常拉练',
-      '极限拉练',
-      '休闲露营',
-      '长线露营',
-      '休闲户外',
-      '非户外活动AA约伴',
-    ];
+    const { activityTypesData } = config;
     const activityType = (
       <Form.Item {...formItemLayout} label="活动类型" id="activityType" hasFeedback>
         {getFieldDecorator('activityType', {

@@ -69,12 +69,23 @@ export async function addActivity(params) {
  * 退出活动
  */
 export async function quitActivity(params) {
-  console.log('params: ', params);
   return request('/api/?service=Event.Quit', {
     method: 'POST',
     body: JSON.stringify(params),
   });
 }
+
+/**
+ * 修改活动信息
+ */
+export async function editActivity(params) {
+  console.log('editActivity: ', params);
+  return request('/api/?service=Event.EditEvent', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 
 export async function uploadImage(params) {
   console.log(params);

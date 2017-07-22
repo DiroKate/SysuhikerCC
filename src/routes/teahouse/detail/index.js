@@ -30,7 +30,7 @@ class DetailPage extends React.Component {
   onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
-  
+
   render() {
     const {
       isLogin,
@@ -184,7 +184,7 @@ class DetailPage extends React.Component {
       </div>
     );
 
-    const loginCallback = ()=>{
+    const loginCallback = () => {
       const { editorState } = this.state;
       const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
       if (editorState.getCurrentContent().getPlainText().length < 1) {
@@ -193,10 +193,10 @@ class DetailPage extends React.Component {
       }
       dispatch({ type: 'teahouse/postTopicRe', payload: contentValue });
       this.setState({ editorState: EditorState.createEmpty() });
-    }
+    };
 
     const onBtnClick = () => {
-      needLogin(isLogin, loginCallback, '评论需要先注册登录，跳转到登录页面？')
+      needLogin(isLogin, loginCallback, '评论需要先注册登录，跳转到登录页面？');
     };
 
     const onPageHandler = (page, pageSize) => {

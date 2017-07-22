@@ -1,8 +1,8 @@
 import pathToRegexp from 'path-to-regexp';
-import { routerRedux } from 'dva/router';
+import { browserHistory } from 'dva/router';
 import * as ActivityService from '../services/activity';
 import * as UsersService from '../services/users';
-import { activityPostUitls, notificaionUtils, joinActivityUtils } from '../utils';
+import { activityPostUitls, notificaionUtils, activityUpdateUitls, joinActivityUtils } from '../utils';
 
 export default {
   namespace: 'activity',
@@ -91,27 +91,26 @@ export default {
     *getActivityDetails({
       payload,
     }, { call, put, select }) {
-      // 判断是不是已经获取了活动信息了
-      const eventId = yield select(state => state.activity.activityDetails.event_id);
-      if (eventId === payload.id) {
-        return;
-      }
+      // // 判断是不是已经获取了活动信息了
+      // const eventId = yield select(state => state.activity.activityDetails.event_id);
+      // if (eventId === payload.id) {
+      //   return;
+      // }
 
       const { data } = yield call(ActivityService.getActivityDetails, { event_id: payload.id });
-      const { code } = data.data;
+      const { code, info } = data.data;
       if (code === 0) {
         yield put({
           type: 'activityDetailReducer',
           payload: {
-            ...data.data.info,
+            ...info,
           },
         });
       }
 
       const userId = yield select(state => state.activity.activityLeader.id);
-      const userData = yield call(UsersService.userInfo, { user_id: userId });
-      const userCode = userData.data.data.code;
-      const userInfo = userData.data.data.info;
+      const { data: userData } = yield call(UsersService.userInfo, { user_id: userId });
+      const { code: userCode, info: userInfo } = userData.data;
       if (userCode === 0) {
         yield put({
           type: 'getLeaderInfoReducer',
@@ -137,13 +136,13 @@ export default {
       }));
       const { code } = data.data;
       if (code === 0) {
-        yield put(routerRedux.push(`/activity/details/${payload.eventId}`));
         yield put({
           type: 'getEventJoinList',
           payload: {
             id: payload.eventId,
           },
         });
+        browserHistory.push(`/activity/details/${payload.eventId}`);
         notificaionUtils('success', '报名成功');
       } else {
         notificaionUtils('error', '报名失败');
@@ -161,7 +160,7 @@ export default {
       const { data } = yield call(ActivityService.addActivity, retValues);
       const { code } = data.data;
       if (code === 0) {
-        yield put(routerRedux.push('/activity'));
+        browserHistory.push('/activity');
         yield put({
           type: 'getAllActivities',
           payload: {
@@ -170,6 +169,23 @@ export default {
           },
         });
         notificaionUtils('success', '已经发布活动啦');
+      }
+    },
+    /**
+     * 编辑活动
+     */
+    *editActivity({ payload }, { call, select }) {
+      const userId = yield select(state => state.app.userId);
+      const activityDetails = yield select(state => state.activity.activityDetails);
+      const { event_createUserId, event_id } = activityDetails;
+      const retValues = activityUpdateUitls({ ...payload, event_createUserId, event_id }, userId);
+      const { data } = yield call(ActivityService.editActivity, retValues);
+      const { code, msg } = data;
+      if (code === 0) {
+        browserHistory.push(`/activity/${event_id}`);
+        notificaionUtils('success', '更新成功');
+      } else {
+        notificaionUtils('error', msg);
       }
     },
 
@@ -311,6 +327,16 @@ export default {
             type: 'getActivityDetails',
             payload: {
               id: match2[1],
+            },
+          });
+        }
+
+        const editMatch = pathToRegexp('/activity/edit/:id').exec(pathname);
+        if (editMatch) {
+          dispatch({
+            type: 'getActivityDetails',
+            payload: {
+              id: editMatch[1],
             },
           });
         }

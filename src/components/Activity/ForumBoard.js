@@ -5,7 +5,7 @@ import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils } from '../../utils';
+import { notificaionUtils, DraftUtils } from '../../utils';
 import styles from './ForumBoard.less';
 
 const FormItem = Form.Item;
@@ -21,12 +21,11 @@ function ForumItem(props) {
         <p className={styles.forumItemWrapperUser}>
           {userName}
         </p>
-        <div
-          className={styles.forumItemWrapperContent}
-          key="content"
-          dangerouslySetInnerHTML={{
-            __html: content,
-          }}
+        <Editor
+          readOnly
+          defaultEditorState={DraftUtils.htmlToEditorState(content)}
+          toolbarHidden
+          toolbarClassName="show-editor-empty-toolbar"
         />
         <p>{createAt}</p>
       </div>

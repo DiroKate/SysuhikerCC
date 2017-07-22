@@ -3,6 +3,7 @@ import { browserHistory } from 'dva/router';
 
 import config from './config';
 import uploadImageCallBack from './uploadImageCallBack';
+import * as DraftUtils from './draftUtils';
 
 const days = (start, end) => {
   const time1 = Date.parse(start);
@@ -28,6 +29,25 @@ const activityPostUitls = (params, userId) => ({
   event_gather_time: params.collectionTime.format('YYYY-MM-DD HH:mm:ss'),
   event_place_of_departure: params.departure,
   event_destination: params.arrivals,
+});
+
+const activityUpdateUitls = (params, userId) => ({
+  event_id: params.event_id,
+  userId,
+  event_name: params.event_name,
+  event_type: params.event_type,
+  event_detail: params.event_detail,
+  event_starttime: params.activityTime[0].format('YYYY-MM-DD HH:mm:ss'),
+  event_endtime: params.activityTime[1].format('YYYY-MM-DD HH:mm:ss'),
+  event_join_starttime: params.applyTime[0].format('YYYY-MM-DD HH:mm:ss'),
+  event_join_endtime: params.applyTime[1].format('YYYY-MM-DD HH:mm:ss'),
+  event_comments: params.event_comments,
+  event_createUserId: userId,
+  event_maxhiker: params.event_maxhiker,
+  event_gather_location: params.event_gather_location,
+  event_gather_time: params.event_gather_time.format('YYYY-MM-DD HH:mm:ss'),
+  event_place_of_departure: params.event_place_of_departure,
+  event_destination: params.event_destination,
 });
 
 const registerPostUitls = params => ({
@@ -84,21 +104,21 @@ const getBBSReList = (details, currentReList) => {
     keywords: details.post_keywords,
     avatarUrl: details.post_createUserAvatarUrl,
     isContent: true,
-    id:details.post_id,
+    id: details.post_id,
   });
-  currentReList.map((item, index) => {
+  for (const [index, value] of currentReList.entries()) {
     allDataSource.push({
       index: index + 2,
       title: `Re: ${details.post_title}`,
-      content: item.re_detail,
-      author: item.re_createUserNick,
-      authorId: item.re_createUserId,
-      avatarUrl: item.re_createUserAvatarUrl,
-      createTime: item.re_createTime,
+      content: value.re_detail,
+      author: value.re_createUserNick,
+      authorId: value.re_createUserId,
+      avatarUrl: value.re_createUserAvatarUrl,
+      createTime: value.re_createTime,
       keywords: null,
-      id: item.re_postId,
+      id: value.re_postId,
     });
-  });
+  }
   return allDataSource;
 };
 
@@ -132,4 +152,6 @@ module.exports = {
   getBBSReList,
   uploadImageCallBack,
   needLogin,
+  DraftUtils,
+  activityUpdateUitls,
 };
