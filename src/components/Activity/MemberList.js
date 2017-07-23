@@ -136,6 +136,7 @@ function MemberList(props) {
         // 编辑报名页面
       case 'edit_apply':
         console.log('更新报名信息');
+        browserHistory.push(`/activity/apply/edit/${eventId}`);
         break;
 
         // 编辑活动信息页面;

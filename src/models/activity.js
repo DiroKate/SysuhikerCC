@@ -349,24 +349,27 @@ export default {
             },
           });
         }
-        const match2 = pathToRegexp('/activity/apply/:id').exec(pathname);
-        if (match2) {
+        const getActivityDetailsDispatch = (id) => {
           dispatch({
             type: 'getActivityDetails',
             payload: {
-              id: match2[1],
+              id,
             },
           });
+        };
+        const applyMatch = pathToRegexp('/activity/apply/:id').exec(pathname);
+        if (applyMatch) {
+          getActivityDetailsDispatch(applyMatch[1]);
         }
 
         const editMatch = pathToRegexp('/activity/edit/:id').exec(pathname);
         if (editMatch) {
-          dispatch({
-            type: 'getActivityDetails',
-            payload: {
-              id: editMatch[1],
-            },
-          });
+          getActivityDetailsDispatch(editMatch[1]);
+        }
+
+        const applyEditMatch = pathToRegexp('/activity/apply/edit/:id').exec(pathname);
+        if (applyEditMatch) {
+          getActivityDetailsDispatch(applyEditMatch[1]);
         }
       });
     },

@@ -10,9 +10,7 @@ import {
   Radio,
   Input,
   Tooltip,
-  Modal,
 } from 'antd';
-import { browserHistory } from 'dva/router';
 
 import { LocalIcon } from '..';
 import { config, needLogin } from '../../utils';

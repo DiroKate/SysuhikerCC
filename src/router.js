@@ -33,7 +33,7 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               // registerModel(app, require('./models/users'));
               cb(null, require('./routes/Home/'));
-            }, 'home');
+            }, 'home2');
           },
         }, {
           path: 'login',
@@ -92,6 +92,14 @@ const Routers = ({ history, app }) => {
             }, 'apply-activity');
           },
         }, {
+          path: 'activity/apply/edit/:id',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/activity'));
+              cb(null, require('./routes/activity/applyEdit'));
+            }, 'apply-edit');
+          },
+        }, {
           path: 'about',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
@@ -105,7 +113,7 @@ const Routers = ({ history, app }) => {
             require.ensure([], (require) => {
               registerModel(app, require('./models/teahouse'));
               cb(null, require('./routes/teahouse/'));
-            }, 'teahouse-list');
+            }, 'bbs-list');
           },
         }, {
           path: 'bbs/create',
