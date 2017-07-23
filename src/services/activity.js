@@ -79,8 +79,17 @@ export async function quitActivity(params) {
  * 修改活动信息
  */
 export async function editActivity(params) {
-  console.log('editActivity: ', params);
   return request('/api/?service=Event.EditEvent', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
+/**
+ * 修改审核状态
+ */
+export async function changeJoinState(params) {
+  return request('/api/?service=Event.UpdateJoinStatus', {
     method: 'POST',
     body: JSON.stringify(params),
   });

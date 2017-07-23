@@ -174,11 +174,17 @@ export default {
     /**
      * 编辑活动
      */
-    *editActivity({ payload }, { call, select }) {
+    *editActivity({
+      payload,
+    }, { call, select }) {
       const userId = yield select(state => state.app.userId);
       const activityDetails = yield select(state => state.activity.activityDetails);
       const { event_createUserId, event_id } = activityDetails;
-      const retValues = activityUpdateUitls({ ...payload, event_createUserId, event_id }, userId);
+      const retValues = activityUpdateUitls({
+        ...payload,
+        event_createUserId,
+        event_id,
+      }, userId);
       const { data } = yield call(ActivityService.editActivity, retValues);
       const { code, msg } = data;
       if (code === 0) {
@@ -267,6 +273,9 @@ export default {
       const xxxx = yield call(ActivityService.uploadImage, payload);
     },
 
+    /**
+     * 退出活动
+     */
     *quitActivity(_, { call, put, select }) {
       const userId = yield select(state => state.app.userId);
       const eventid = yield select(state => state.activity.activityId);
@@ -275,15 +284,34 @@ export default {
         event_joinlist_eventid: eventid,
         event_joinlist_comments: '(如需重新报名请联系活动发起人修改报名状态)',
       });
-      if (data.data.code === 0) {
-        notificaionUtils('success', '退出活动成功');
+      const { code, msg } = data.data;
+      if (code === 0) {
         yield put({
           type: 'getEventJoinList',
           payload: {
             id: eventid,
           },
         });
+        notificaionUtils('success', '退出活动成功');
+      } else {
+        notificaionUtils('error', msg);
       }
+    },
+
+    /**
+     * 审核状态
+     */
+    *changeJoinState({ payload }, { select, put, call }) {
+      console.log('changeJoinState', payload);
+      const { targetUserId, status } = payload;
+      const eventId = yield select(state => state.activity.activityId);
+      const { data } = yield call(ActivityService.changeJoinState, {
+        event_joinlist_eventid: eventId,
+        event_joinlist_userid: targetUserId,
+        event_joinlist_status: status,
+      });
+      console.log(data);
+      // TODO: 修改状态后的回调
     },
   },
 

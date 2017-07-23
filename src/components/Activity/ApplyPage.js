@@ -15,7 +15,7 @@ import {
 import { browserHistory } from 'dva/router';
 
 import { LocalIcon } from '..';
-import { config } from '../../utils';
+import { config, needLogin } from '../../utils';
 import styles from './ApplyPage.less';
 
 const BreadcrumbItem = Breadcrumb.Item;
@@ -27,23 +27,14 @@ function applyForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userdata.user_id) {
+    needLogin(userdata.user_id, () => {
       validateFieldsAndScroll((err, values) => {
         if (!err) {
           const retValues = values;
           joinBtnHandle(retValues);
         }
       });
-    } else {
-      Modal.confirm({
-        title: '尚未登录',
-        content: '还没登录哦，请先登录再报名～',
-        iconType: 'meh-o',
-        onOk() {
-          browserHistory.push('/login');
-        },
-      });
-    }
+    });
   };
 
   const userRoles = userdata.user_interest

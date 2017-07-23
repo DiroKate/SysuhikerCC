@@ -6,26 +6,56 @@ import {
   Modal,
   Menu,
   Dropdown,
+  Icon,
 } from 'antd';
 import Avatar from 'react-avatar';
 import { browserHistory } from 'dva/router';
 import { LocalIcon } from './..';
-import { needLogin } from '../../utils';
+import { needLogin, config } from '../../utils';
 
 import styles from './MemberList.less';
 
 function MemberInfo(props) {
-  const { dataSource } = props;
+  const { dataSource, isAdmin, onStatusChange } = props;
   const genderMap = {
     mm: 'female',
     gg: 'male',
   };
 
+  const onStatusHandler = ({ target }) => {
+    const { rel } = target;
+    const data = rel.split('|');
+    const item = dataSource[data[0]];
+    const status = data[1];
+
+    onStatusChange(item.event_joinlist_userid, status);
+  };
+  const joinStatusMenu = recordIndex => (
+    <Menu>
+      {
+        config.joinStatus.map(item => (
+          <Menu.Item>
+            <a
+              rel={`${recordIndex}|${item}`}
+              onClick={onStatusHandler}
+            >{item}</a>
+          </Menu.Item>
+        ))
+      }
+    </Menu>
+  );
+
   const columns = [
     {
       title: '头像',
       key: 'icon',
-      render: (text, record) => (<Avatar round size={32} src={record.event_joinlist_userAvatarUrl} name={record.event_joinlist_usernick.substr(0, 1).toUpperCase()} />),
+      render: (text, record) => (
+        <Avatar
+          round
+          size={32}
+          src={record.event_joinlist_userAvatarUrl}
+          name={record.event_joinlist_usernick.substr(0, 1).toUpperCase()}
+        />),
     }, {
       title: '昵称性别',
       key: 'name_gender',
@@ -45,8 +75,22 @@ function MemberInfo(props) {
       key: 'event_joinlist_comments',
     }, {
       title: '状态',
-      dataIndex: 'event_joinlist_status',
       key: 'event_joinlist_status',
+      width: '28%',
+      render: (text, record, index) => {
+        const { event_joinlist_status: status } = record;
+        const adminView = (<Dropdown overlay={joinStatusMenu(index)}>
+          <p style={{ color: config.joinStatusColorScheme[status] }}>
+            {status} <Icon type="down" />
+          </p>
+        </Dropdown>);
+        const defaultView = (<p style={{ color: config.joinStatusColorScheme[status] }}>
+          {status}
+        </p>);
+        return (
+          isAdmin ? adminView : defaultView
+        );
+      },
     },
   ];
 
@@ -228,11 +272,26 @@ function MemberList(props) {
     }
   };
 
+  const onStatusChange = (targetUserId, status) => {
+    if (targetUserId) {
+      dispatch({
+        type: 'activity/changeJoinState',
+        payload: {
+          targetUserId, status,
+        },
+      });
+    }
+  };
+
   return (
     <div className={styles.memberList}>
       {mainBtn()}
       <Card title="报名列表" extra={gender} bordered={false}>
-        <MemberInfo dataSource={activityJoinList} />
+        <MemberInfo
+          dataSource={activityJoinList}
+          isAdmin={isAdmin}
+          onStatusChange={onStatusChange}
+        />
       </Card>
     </div>
   );
