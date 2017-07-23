@@ -117,6 +117,7 @@ const getBBSReList = (details, currentReList) => {
       createTime: value.re_createTime,
       keywords: null,
       id: value.re_postId,
+      reId: value.re_id,
     });
   }
   return allDataSource;

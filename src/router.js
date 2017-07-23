@@ -144,7 +144,7 @@ const Routers = ({ history, app }) => {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/teahouse'));
-              cb(null, require('./routes/teahouse/create'));
+              cb(null, require('./routes/teahouse/editre'));
             }, 'bbs-editre');
           },
         }, {

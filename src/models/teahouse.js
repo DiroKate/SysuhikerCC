@@ -15,6 +15,7 @@ export default {
     detailId: null, // 当前主题的ID
     showRelist: [], // 当前的分页评论列表
     currentReList: [], // 当前的所有评论列表
+    currentRe: null, // 当前评论信息
   },
 
   reducers: {
@@ -54,6 +55,20 @@ export default {
         ...state,
         showRelist,
       };
+    },
+    getCurrentReDetailReducer(state, action) {
+      const { payload: id } = action;
+      const { showRelist } = state;
+      console.log('getCurrentReDetail', action, showRelist);
+      for (const item of showRelist) {
+        if (id === item.reId) {
+          return {
+            ...state,
+            currentRe: item,
+          };
+        }
+      }
+      return state;
     },
   },
 
@@ -275,6 +290,24 @@ export default {
         notificaionUtils('error', data.msg);
       }
     },
+
+    /**
+     * 修改话题评论
+     */
+    *editTopicRe({
+      payload,
+    }, { call, select }) {
+      const postId = yield select(state => state.teahouse.detailId);
+      const { data } = yield call(TeahouseService.editTopicRe, payload);
+      const { code } = data.data;
+      if (code === 0) {
+        browserHistory.push(`/bbs/${postId}`);
+        notificaionUtils('success', '修改成功！');
+      } else {
+        notificaionUtils('error', data.msg);
+      }
+      console.log({ payload, data });
+    },
   },
 
   subscriptions: {
@@ -315,6 +348,15 @@ export default {
             payload: {
               topicId: editMatch[1],
             },
+          });
+        }
+
+
+        const editReMatch = pathToRegexp('/bbs/editre/:id').exec(pathname);
+        if (editReMatch) {
+          dispatch({
+            type: 'getCurrentReDetailReducer',
+            payload: editReMatch[1],
           });
         }
       });

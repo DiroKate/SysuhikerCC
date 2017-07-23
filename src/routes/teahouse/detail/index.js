@@ -77,20 +77,21 @@ class DetailPage extends React.Component {
 
     const onEditClick = ({ target }) => {
       const data = showRelist[target.id];
-      console.log('onEditClick', data);
-
       if (data.isContent) {
         browserHistory.push(`/bbs/edit/${data.id}`);
       } else {
-        browserHistory.push(`/bbs/editre/${data.id}`);
+        browserHistory.push(`/bbs/editre/${data.reId}`);
       }
     };
 
-    const tableEditorPane = index => (
-      <span className={styles.tableEditorPane}>
-        <a onClick={onEditClick} id={index}>编辑</a>
-        <a onClick={onDeleteClick} id={index}>删除</a>
-      </span>
+    const tableEditorPane = (index, showFlag, delelteFlag) => (
+      showFlag ?
+        <span className={styles.tableEditorPane}>
+          <a onClick={onEditClick} id={index}>编辑</a>
+          {/* 评论回复暂时不支持删除功能 */}
+          { delelteFlag ? <a onClick={onDeleteClick} id={index}>删除</a> : null}
+        </span>
+      : null
     );
 
     const tableRowWeb = (record, index) => (
@@ -129,7 +130,11 @@ class DetailPage extends React.Component {
             }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
-            {tableEditorPane(index)}
+            {
+              tableEditorPane(index,
+                userId === record.authorId,
+                record.isContent)
+            }
           </Col>
         </Row>
       </div>
@@ -178,7 +183,11 @@ class DetailPage extends React.Component {
               }}
             />
             <p className={styles.keywords}>{record.keywords}</p>
-            {tableEditorPane(index)}
+            {
+              tableEditorPane(index,
+                userId === record.authorId,
+                record.isContent)
+            }
           </Col>
         </Row>
       </div>

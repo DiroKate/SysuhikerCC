@@ -14,7 +14,7 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils, uploadImageCallBack } from '../../../utils';
+import { notificaionUtils, uploadImageCallBack, config } from '../../../utils';
 import styles from './create.less';
 
 const BreadcrumbItem = Breadcrumb.Item;
@@ -72,7 +72,7 @@ class createForm extends React.Component {
     };
 
     const formItems = [];
-    const typeOptions = ['作业攻略', '技术讨论', '活动讨论', '户外安全', '其他'];
+    const { bbsTypeOptions } = config;
 
     const formItemLayout = {
       labelCol: {
@@ -117,8 +117,8 @@ class createForm extends React.Component {
           ],
         })(
           <Radio.Group>
-            {Object.keys(typeOptions).map(key => (
-              <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
+            {Object.keys(bbsTypeOptions).map(key => (
+              <Radio value={bbsTypeOptions[key]}>{bbsTypeOptions[key]}</Radio>
         ))}
           </Radio.Group>)}
       </Form.Item>);

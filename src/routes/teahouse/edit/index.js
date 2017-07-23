@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'dva';
-import { browserHistory } from 'dva/router';
 import {
   Row,
   Col,
@@ -8,14 +7,13 @@ import {
   Button,
   Input,
   Radio,
-  Modal,
 } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, EditorState, ContentState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { notificaionUtils, uploadImageCallBack, DraftUtils } from '../../../utils';
+import { EditorState } from 'draft-js';
+import { notificaionUtils, uploadImageCallBack, DraftUtils, needLogin, config } from '../../../utils';
 import styles from './edit.less';
+
+const { htmlToEditorState, editorStateToHtml } = DraftUtils;
 
 class editForm extends React.Component {
   constructor(props) {
@@ -30,49 +28,34 @@ class editForm extends React.Component {
 
   render() {
     const { editorState } = this.state;
-    const { form, dispatch, isLogin, data } = this.props;
+    const { form, onSubmit, isLogin, data } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
-
-    const odlEditorContent = DraftUtils.htmlToEditorState(data.post_detail);
 
     const onSubmitHandle = (e) => {
       e.preventDefault();
 
-      if (isLogin) {
-        validateFieldsAndScroll((err, values) => {
-          if (!err) {
-            const { title, type, keywords } = values;
-            const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-            if (editorState.getCurrentContent().getPlainText().length < 1) {
-              notificaionUtils('warning', '正文不能为空');
-              notificaionUtils('warning', '请点击一下正文');
-              return;
+      needLogin(isLogin,
+        () => {
+          validateFieldsAndScroll((err, values) => {
+            if (!err) {
+              const { contentValue, isEmpty } = editorStateToHtml(editorState);
+              if (isEmpty) {
+                notificaionUtils('warning', '正文不能为空');
+                notificaionUtils('warning', '请点击一下正文');
+                return;
+              }
+              onSubmit({
+                ...values,
+                contentValue,
+              });
             }
-            dispatch({
-              type: 'teahouse/editTopic',
-              payload: {
-                post_title: title,
-                post_type: type,
-                post_detail: contentValue,
-                post_keywords: keywords,
-              },
-            });
-          }
-        });
-      } else {
-        Modal.warning({
-          title: '尚未登录',
-          content: '评论需要先注册登录，跳转到登录页面？',
-          iconType: 'meh-o',
-          onOk() {
-            browserHistory.push('/login');
-          },
-        });
-      }
+          });
+        },
+      '评论需要先注册登录，跳转到登录页面？');
     };
 
     const formItems = [];
-    const typeOptions = ['作业攻略', '技术讨论', '活动讨论', '户外安全', '其他'];
+    const { bbsTypeOptions } = config;
 
     const formItemLayout = {
       labelCol: {
@@ -119,44 +102,46 @@ class editForm extends React.Component {
           initialValue: data.post_type,
         })(
           <Radio.Group>
-            {Object.keys(typeOptions).map(key => (
-              <Radio value={typeOptions[key]}>{typeOptions[key]}</Radio>
+            {Object.keys(bbsTypeOptions).map(key => (
+              <Radio value={bbsTypeOptions[key]}>{bbsTypeOptions[key]}</Radio>
         ))}
           </Radio.Group>)}
       </Form.Item>);
 
-    formItems.push(
-      <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
-        <Editor
-          localization={{ locale: 'zh' }}
-          toolbarClassName={styles.editorToolbar}
-          wrapperClassName={styles.editorWrapper}
-          editorClassName={styles.editorEditor}
-          toolbar={{
-            inline: {
-              inDropdown: true,
-            },
-            list: {
-              inDropdown: true,
-            },
-            textAlign: {
-              inDropdown: true,
-            },
-            link: {
-              inDropdown: true,
-            },
-            history: {
-              inDropdown: true,
-            },
-            image: {
-              uploadCallback: uploadImageCallBack,
-            },
-          }}
-          defaultEditorState={odlEditorContent}
-          onEditorStateChange={this.onEditorStateChange}
-
-        />
-      </Form.Item>);
+    if (data.post_detail) {
+      const odlEditorContent = htmlToEditorState(data.post_detail);
+      formItems.push(
+        <Form.Item {...formItemLayout} label="文章内容" hasFeedback>
+          <Editor
+            localization={{ locale: 'zh' }}
+            toolbarClassName={styles.editorToolbar}
+            wrapperClassName={styles.editorWrapper}
+            editorClassName={styles.editorEditor}
+            toolbar={{
+              inline: {
+                inDropdown: true,
+              },
+              list: {
+                inDropdown: true,
+              },
+              textAlign: {
+                inDropdown: true,
+              },
+              link: {
+                inDropdown: true,
+              },
+              history: {
+                inDropdown: true,
+              },
+              image: {
+                uploadCallback: uploadImageCallBack,
+              },
+            }}
+            defaultEditorState={odlEditorContent}
+            onEditorStateChange={this.onEditorStateChange}
+          />
+        </Form.Item>);
+    }
     formItems.push(
       <Form.Item {...formItemLayout} label="关键字" hasFeedback>
         {getFieldDecorator('keywords', { initialValue: data.post_keywords })(<Input />)}
@@ -185,6 +170,18 @@ class editForm extends React.Component {
 const EditForm = Form.create()(editForm);
 
 function EditPage({ isLogin, dispatch, details }) {
+  const onSubmitHandle = (params) => {
+    const { title, type, contentValue, keywords } = params;
+    dispatch({
+      type: 'teahouse/editTopic',
+      payload: {
+        post_title: title,
+        post_type: type,
+        post_detail: contentValue,
+        post_keywords: keywords,
+      },
+    });
+  };
   return (
     <div className="sysuhiker-top-wrapper">
       <h1>修改话题</h1>
@@ -194,7 +191,7 @@ function EditPage({ isLogin, dispatch, details }) {
       }}
       >
         <Col>
-          <EditForm isLogin={isLogin} dispatch={dispatch} data={details} />
+          <EditForm isLogin={isLogin} onSubmit={onSubmitHandle} data={details} />
         </Col>
       </Row>
     </div>

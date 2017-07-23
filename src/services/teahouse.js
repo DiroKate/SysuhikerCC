@@ -42,6 +42,13 @@ export async function editTopic(params) {
   });
 }
 
+export async function editTopicRe(params) {
+  return request('/api/?service=BBS.EditPostRe', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 export async function deleteTopic(params) {
   return request('/api/?service=BBS.DeletePost', {
     method: 'POST',
