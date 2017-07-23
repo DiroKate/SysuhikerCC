@@ -1,17 +1,22 @@
 import React from 'react';
-import { browserHistory } from 'dva/router';
-import { Table, Form, Button, Modal } from 'antd';
+import { Table, Form, Button } from 'antd';
 import Avatar from 'react-avatar';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, EditorState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { notificaionUtils, DraftUtils } from '../../utils';
+import { EditorState } from 'draft-js';
+import { notificaionUtils, DraftUtils, needLogin } from '../../utils';
 import styles from './ForumBoard.less';
 
 const FormItem = Form.Item;
+const { htmlToEditorState, editorStateToHtml } = DraftUtils;
+
 
 function ForumItem(props) {
-  const { re_createUserEmail: userEmail, re_createUserNick: userName, re_detail: content, re_createTime: createAt, re_createUserAvatarUrl: avatarUrl } = props;
+  const { re_createUserEmail: userEmail, re_createUserNick: userName, re_detail: content, re_createTime: createAt, re_createUserAvatarUrl: avatarUrl, re_id: reId, onEdit } = props;
+
+  const onEditClick = () => {
+    onEdit(reId);
+  };
+
   return (
     <div className={styles.forumItem}>
       <div className={styles.forumItemIconWrapper}>
@@ -23,10 +28,13 @@ function ForumItem(props) {
         </p>
         <Editor
           readOnly
-          defaultEditorState={DraftUtils.htmlToEditorState(content)}
+          defaultEditorState={htmlToEditorState(content)}
           toolbarHidden
           toolbarClassName="show-editor-empty-toolbar"
         />
+        <span className={styles.tableEditorPane}>
+          <a onClick={onEditClick}>编辑</a>
+        </span>
         <p>{createAt}</p>
       </div>
     </div>
@@ -46,25 +54,18 @@ class ForumBoard extends React.Component {
   };
 
   handleSubmit = () => {
-    if (this.props.isLogin) {
-      const { editorState } = this.state;
-      const contentValue = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-      if (editorState.getCurrentContent().getPlainText().length < 1) {
-        notificaionUtils('warning', '正文不能为空');
-        return;
-      }
-      this.props.handle(contentValue);
-      this.setState({ editorState: EditorState.createEmpty() });
-    } else {
-      Modal.warning({
-        title: '尚未登录',
-        content: '报名活动需要先注册登录，跳转到登录页面？',
-        iconType: 'meh-o',
-        onOk() {
-          browserHistory.push('/login');
-        },
-      });
-    }
+    needLogin(this.props.isLogin,
+      () => {
+        const { editorState } = this.state;
+        const { contentValue, isEmpty } = editorStateToHtml(editorState);
+        if (isEmpty) {
+          notificaionUtils('warning', '正文不能为空');
+          return;
+        }
+        this.props.handle(contentValue);
+        this.setState({ editorState: EditorState.createEmpty() });
+      },
+    '报名活动需要先注册登录，跳转到登录页面？');
   }
 
   render() {
@@ -80,12 +81,14 @@ class ForumBoard extends React.Component {
         </span>
       </div>
     );
-
+    const onEditHandle = (reId) => {
+      console.log('onEditHandle', reId);
+    };
     const columns = [
       {
         title: '讨论区',
         key: 'ForumBoard',
-        render: (text, record) => (<ForumItem {...record} />),
+        render: (text, record) => (<ForumItem {...record} onEdit={onEditHandle} />),
       },
     ];
     return (

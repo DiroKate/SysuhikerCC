@@ -59,7 +59,6 @@ export default {
     getCurrentReDetailReducer(state, action) {
       const { payload: id } = action;
       const { showRelist } = state;
-      console.log('getCurrentReDetail', action, showRelist);
       for (const item of showRelist) {
         if (id === item.reId) {
           return {
@@ -306,7 +305,6 @@ export default {
       } else {
         notificaionUtils('error', data.msg);
       }
-      console.log({ payload, data });
     },
   },
 
