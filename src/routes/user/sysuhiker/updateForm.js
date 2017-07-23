@@ -8,8 +8,10 @@ import {
   Icon,
   Checkbox,
   Button,
+  Upload,
 } from 'antd';
 import { LocalIcon } from '../../../components';
+import { config, notificaionUtils } from '../../../utils';
 import styles from './sysuhiker.less';
 
 function updateForm({ form, loginUser, dispatch }) {
@@ -25,28 +27,11 @@ function updateForm({ form, loginUser, dispatch }) {
     user_interest,
     user_urgentname,
     user_urgentphone,
+    user_avatar_url,
   } = loginUser;
 
-  const roleOptions = [
-    '领队',
-    '协作',
-    '头驴',
-    '尾驴',
-    '财务',
-    '后勤',
-    '环保',
-    '作业',
-    '摄影',
-    '医护',
-    '厨师',
-    '无线通讯',
-    '骑行',
-    '游泳',
-    '跑步',
-    '定向',
-    '攀岩',
-    '奢靡腐败',
-  ];
+  let imageUrl = user_avatar_url;
+  const { roleOptions } = config;
   const formItems = [];
   const formItemLayout = {
     labelCol: {
@@ -99,181 +84,186 @@ function updateForm({ form, loginUser, dispatch }) {
     });
   };
 
-  formItems.push(
-    <Form.Item>
-      <h2>头像修改</h2>
-    </Form.Item>,
-  );
-  formItems.push(
-    <Form.Item>
-      <h2>个人信息修改</h2>
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item>
+    <h2>头像修改</h2>
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="昵称" hasFeedback>
-      {getFieldDecorator('user_nick', {
-        rules: [
-          {
-            required: true,
-            message: '请输入昵称',
-            whitespace: true,
-          },
-        ],
-        initialValue: user_nick,
-      })(
-        <Input />)}
-    </Form.Item>,
-  );
+  const uploadProps = {
+    showUploadList: false,
+    action: '/api/?service=Upload.Upload',
+    accept: 'image/*',
+    beforeUpload(file) {
+      const isLt16M = file.size < 16777216;
+      if (!isLt16M) {
+        notificaionUtils('error', 'Image must smaller than 16MB!');
+      }
+      return isLt16M;
+    },
+    onSuccess(ret) {
+      console.log('onSuccess', ret);
+      const { url } = ret.data;
+      imageUrl = url;
+    },
+    onError(err) {
+      console.log('onError', err);
+      notificaionUtils('error', err);
+    },
+  };
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="真实姓名" hasFeedback>
-      {getFieldDecorator('user_name', {
-        rules: [
-          {
-            required: true,
-            message: '请输入真实姓名',
-            whitespace: true,
-          },
-        ],
-        initialValue: user_name,
-      })(
-        <Input />)}
-    </Form.Item>,
-  );
+  formItems.push(<Upload
+    className={styles['upload-avatar-uploader']}
+    {...uploadProps}
+  >
+    {imageUrl ?
+      <img src={imageUrl} alt="" className={styles['upload-avatar']} /> :
+      <Icon type="plus" className={styles['upload-avatar-uploader-trigger']} />}
+  </Upload>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="性别">
-      {getFieldDecorator('user_gender', {
-        rules: [
-          {
-            required: true,
-            message: '请选择性别',
-          },
-        ],
-        initialValue: user_gender === 'gg'
+
+  formItems.push(<Form.Item>
+    <h2>个人信息修改</h2>
+  </Form.Item>);
+
+  formItems.push(<Form.Item {...formItemLayout} label="昵称" hasFeedback>
+    {getFieldDecorator('user_nick', {
+      rules: [
+        {
+          required: true,
+          message: '请输入昵称',
+          whitespace: true,
+        },
+      ],
+      initialValue: user_nick,
+    })(
+      <Input />)}
+  </Form.Item>);
+
+  formItems.push(<Form.Item {...formItemLayout} label="真实姓名" hasFeedback>
+    {getFieldDecorator('user_name', {
+      rules: [
+        {
+          required: true,
+          message: '请输入真实姓名',
+          whitespace: true,
+        },
+      ],
+      initialValue: user_name,
+    })(
+      <Input />)}
+  </Form.Item>);
+
+  formItems.push(<Form.Item {...formItemLayout} label="性别">
+    {getFieldDecorator('user_gender', {
+      rules: [
+        {
+          required: true,
+          message: '请选择性别',
+        },
+      ],
+      initialValue: user_gender === 'gg'
           ? 'gg'
           : 'mm',
-      })(
-        <Radio.Group>
-          <Radio value="gg">
-            <LocalIcon type="male" colorful />GG
+    })(
+      <Radio.Group>
+        <Radio value="gg">
+          <LocalIcon type="male" colorful />GG
         </Radio>
-          <Radio value="mm">
-            <LocalIcon type="female" colorful />MM
+        <Radio value="mm">
+          <LocalIcon type="female" colorful />MM
         </Radio>
-        </Radio.Group>)}
-    </Form.Item>,
-  );
+      </Radio.Group>)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="电话" hasFeedback>
-      {getFieldDecorator('user_phone', {
-        rules: [
-          {
-            type: 'string',
-            pattern: /^[0-9]+$/,
-            message: '请输入正确的电话号码',
-          }, {
-            required: true,
-            message: 'Please input your phone number!',
-          },
-        ],
-        initialValue: user_phone,
-      })(
-        <Input />)}
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item {...formItemLayout} label="电话" hasFeedback>
+    {getFieldDecorator('user_phone', {
+      rules: [
+        {
+          type: 'string',
+          pattern: /^[0-9]+$/,
+          message: '请输入正确的电话号码',
+        }, {
+          required: true,
+          message: 'Please input your phone number!',
+        },
+      ],
+      initialValue: user_phone,
+    })(
+      <Input />)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="住址" hasFeedback>
-      {getFieldDecorator('user_address', { initialValue: user_address })(<Input />)}
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item {...formItemLayout} label="住址" hasFeedback>
+    {getFieldDecorator('user_address', { initialValue: user_address })(<Input />)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="QQ" hasFeedback>
-      {getFieldDecorator('user_qq', { initialValue: user_qq })(<Input />)}
-    </Form.Item>,
-  );
-  formItems.push(
-    <Form.Item {...formItemLayoutWide} label="兴趣领域">
-      {getFieldDecorator('user_interest', {
-        initialValue: (user_interest
+  formItems.push(<Form.Item {...formItemLayout} label="QQ" hasFeedback>
+    {getFieldDecorator('user_qq', { initialValue: user_qq })(<Input />)}
+  </Form.Item>);
+  formItems.push(<Form.Item {...formItemLayoutWide} label="兴趣领域">
+    {getFieldDecorator('user_interest', {
+      initialValue: (user_interest
           ? user_interest.split('+')
           : []),
-      })(
-        <Checkbox.Group options={roleOptions} />)}
+    })(
+      <Checkbox.Group options={roleOptions} />)}
 
-    </Form.Item>,
-  );
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item
-      {...formItemLayout}
-      label={(
-        <span>
+  formItems.push(<Form.Item
+    {...formItemLayout}
+    label={(
+      <span>
         个性签名&nbsp;
         <Tooltip title="显示在首页的个性签名">
           <Icon type="question-circle-o" />
         </Tooltip>
-        </span>
+      </span>
     )}
-      hasFeedback
-    >
-      {getFieldDecorator('user_comments', { initialValue: user_comments })(
-        <Input type="textarea" />)}
-    </Form.Item>,
-  );
+    hasFeedback
+  >
+    {getFieldDecorator('user_comments', { initialValue: user_comments })(
+      <Input type="textarea" />)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item>
-      <h2>紧急联系人</h2>
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item>
+    <h2>紧急联系人</h2>
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="紧急联系人" hasFeedback>
-      {getFieldDecorator('user_urgentname', {
-        rules: [
-          {
-            required: true,
-            message: '请输入紧急联系人',
-            whitespace: true,
-          },
-        ],
-        initialValue: user_urgentname,
-      })(
-        <Input />)}
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item {...formItemLayout} label="紧急联系人" hasFeedback>
+    {getFieldDecorator('user_urgentname', {
+      rules: [
+        {
+          required: true,
+          message: '请输入紧急联系人',
+          whitespace: true,
+        },
+      ],
+      initialValue: user_urgentname,
+    })(
+      <Input />)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item {...formItemLayout} label="紧急联系人电话" hasFeedback>
-      {getFieldDecorator('user_urgentphone', {
-        rules: [
-          {
-            type: 'string',
-            pattern: /^[0-9]+$/,
-            message: '请输入正确的电话号码',
-          }, {
-            required: true,
-            message: '请输入紧急联系人电话号码',
-          },
-        ],
-        initialValue: user_urgentphone,
-      })(
-        <Input />)}
-    </Form.Item>,
-  );
+  formItems.push(<Form.Item {...formItemLayout} label="紧急联系人电话" hasFeedback>
+    {getFieldDecorator('user_urgentphone', {
+      rules: [
+        {
+          type: 'string',
+          pattern: /^[0-9]+$/,
+          message: '请输入正确的电话号码',
+        }, {
+          required: true,
+          message: '请输入紧急联系人电话号码',
+        },
+      ],
+      initialValue: user_urgentphone,
+    })(
+      <Input />)}
+  </Form.Item>);
 
-  formItems.push(
-    <Form.Item>
-      <Button className={styles.updateFormSubmitBtn} type="primary" size="large" onClick={handleSubmit}>
+  formItems.push(<Form.Item>
+    <Button className={styles.updateFormSubmitBtn} type="primary" size="large" onClick={handleSubmit}>
         提交修改
       </Button>
-    </Form.Item>,
-  );
+  </Form.Item>);
 
   return (
     <Form>

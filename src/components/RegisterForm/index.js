@@ -14,6 +14,7 @@ import {
   AutoComplete,
 } from 'antd';
 import { LocalIcon } from '..';
+import { config } from '../../utils';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -22,27 +23,7 @@ function RegisterForm(props) {
   const { form, dispatch } = props;
   const { getFieldDecorator, validateFieldsAndScroll, getFieldValue, validateFields } = form;
 
-  const roleOptions = [
-    '领队',
-    '协作',
-    '头驴',
-    '尾驴',
-    '财务',
-    '后勤',
-    '环保',
-    '作业',
-    '摄影',
-    '医护',
-    '厨师',
-    '无线',
-    '通讯',
-    '骑行',
-    '游泳',
-    '跑步',
-    '定向',
-    '攀岩',
-    '奢靡腐败',
-  ];
+  const { roleOptions } = config;
 
   const handleSubmit = (e) => {
     e.preventDefault();
