@@ -25,8 +25,8 @@ function updateForm({ form, loginUser, dispatch }) {
     user_qq,
     user_comments,
     user_interest,
-    user_urgentname,
-    user_urgentphone,
+    user_urgentName,
+    user_urgentPhone,
     user_avatar_url,
   } = loginUser;
 
@@ -70,18 +70,23 @@ function updateForm({ form, loginUser, dispatch }) {
     },
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const updateHandler = (params) => {
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         dispatch({
           type: 'app/updateUser',
           payload: {
+            ...params,
             ...values,
           },
         });
       }
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateHandler();
   };
 
   formItems.push(<Form.Item>
@@ -103,6 +108,10 @@ function updateForm({ form, loginUser, dispatch }) {
       console.log('onSuccess', ret);
       const { url } = ret.data;
       imageUrl = url;
+      console.log(imageUrl);
+      updateHandler({
+        user_avatar_url:url,
+      });
     },
     onError(err) {
       console.log('onError', err);
@@ -229,7 +238,7 @@ function updateForm({ form, loginUser, dispatch }) {
   </Form.Item>);
 
   formItems.push(<Form.Item {...formItemLayout} label="紧急联系人" hasFeedback>
-    {getFieldDecorator('user_urgentname', {
+    {getFieldDecorator('user_urgentName', {
       rules: [
         {
           required: true,
@@ -237,13 +246,13 @@ function updateForm({ form, loginUser, dispatch }) {
           whitespace: true,
         },
       ],
-      initialValue: user_urgentname,
+      initialValue: user_urgentName,
     })(
       <Input />)}
   </Form.Item>);
 
   formItems.push(<Form.Item {...formItemLayout} label="紧急联系人电话" hasFeedback>
-    {getFieldDecorator('user_urgentphone', {
+    {getFieldDecorator('user_urgentPhone', {
       rules: [
         {
           type: 'string',
@@ -254,7 +263,7 @@ function updateForm({ form, loginUser, dispatch }) {
           message: '请输入紧急联系人电话号码',
         },
       ],
-      initialValue: user_urgentphone,
+      initialValue: user_urgentPhone,
     })(
       <Input />)}
   </Form.Item>);

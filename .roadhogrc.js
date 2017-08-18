@@ -11,8 +11,8 @@ export default {
   theme: "./theme.config.js",
   proxy: {
     "/api": {
-      "target": "http://localhost/PhalApi/Public",
-      // "target": "http://192.168.8.226:8080/PhalApi/Public",
+      // "target": "http://localhost/PhalApi/Public",
+      "target": "http://192.168.8.226/PhalApi/Public",
       "changeOrigin": true,
       "pathRewrite": { "^/api" : "" }
     }

@@ -186,7 +186,7 @@ export default {
         event_id,
       }, userId);
       const { data } = yield call(ActivityService.editActivity, retValues);
-      const { code, msg } = data;
+      const { code, msg } = data.data;
       if (code === 0) {
         browserHistory.push(`/activity/${event_id}`);
         notificaionUtils('success', '更新成功');
@@ -266,6 +266,34 @@ export default {
         notificaionUtils('error', data.data.msg);
       }
     },
+
+    /**
+     * 修改活动评论，暂不提供
+     */
+    // *editReForum({
+    //   payload,
+    // }, { call, select, put }) {
+    //   const userId = yield select(state => state.app.userId);
+    //   const activityId = yield select(state => state.activity.activityId);
+    //   const { reId } = reId;
+    //   const { data } = yield call(ActivityService.editReForum, {
+    //     re_id: reId,
+    //     user_id: userId,
+    //     userComments: payload,
+    //   });
+    //   if (data.data.code === 0) {
+    //     yield put({
+    //       type: 'getEventReList',
+    //       payload: {
+    //         id: activityId,
+    //       },
+    //     });
+    //     notificaionUtils('success', '评论成功！');
+    //   } else {
+    //     notificaionUtils('error', data.data.msg);
+    //   }
+    // },
+
 
     *uploadImage({
       payload,

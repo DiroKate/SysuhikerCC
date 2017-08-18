@@ -53,12 +53,21 @@ export async function addReForum(params) {
     body: JSON.stringify(params),
   });
 }
+/**
+ * 修改活动评论
+ */
+export async function editReForum(params) {
+  return request('/api/?service=Event.EditEventRe', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 
 /**
  * 创建活动
  */
 export async function addActivity(params) {
-  console.log('params: ', params);
   return request('/api/?service=Event.AddEvent', {
     method: 'POST',
     body: JSON.stringify(params),
@@ -94,7 +103,6 @@ export async function changeJoinState(params) {
     body: JSON.stringify(params),
   });
 }
-
 
 export async function uploadImage(params) {
   console.log(params);

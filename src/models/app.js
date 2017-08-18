@@ -144,7 +144,6 @@ export default {
       const user = yield select(state => state.app.loginUser);
       const { user_id, user_email } = user;
       const { user_interest } = payload;
-
       const { data } = yield call(UsersService.updateUserInfo, {
         ...payload,
         user_id,

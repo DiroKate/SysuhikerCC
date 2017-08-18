@@ -11,7 +11,9 @@ const { htmlToEditorState, editorStateToHtml } = DraftUtils;
 
 
 function ForumItem(props) {
-  const { re_createUserEmail: userEmail, re_createUserNick: userName, re_detail: content, re_createTime: createAt, re_createUserAvatarUrl: avatarUrl, re_id: reId, onEdit } = props;
+  const { re_createUserEmail: userEmail, re_createUserNick: userName, re_detail: content, 
+    re_createTime: createAt, re_createUserAvatarUrl: avatarUrl, re_id: reId, onEdit, 
+    userId, re_createUserId } = props;
 
   const onEditClick = () => {
     onEdit(reId);
@@ -32,9 +34,11 @@ function ForumItem(props) {
           toolbarHidden
           toolbarClassName="show-editor-empty-toolbar"
         />
-        <span className={styles.tableEditorPane}>
+        {/*
+          userId===re_createUserId?(<span className={styles.tableEditorPane}>
           <a onClick={onEditClick}>编辑</a>
-        </span>
+        </span>): null
+        */}
         <p>{createAt}</p>
       </div>
     </div>
@@ -69,7 +73,7 @@ class ForumBoard extends React.Component {
   }
 
   render() {
-    const { dataSource } = this.props;
+    const { dataSource, userId, editReForumHandle } = this.props;
 
     const totalNums = dataSource.length;
 
@@ -81,14 +85,18 @@ class ForumBoard extends React.Component {
         </span>
       </div>
     );
-    const onEditHandle = (reId) => {
-      console.log('onEditHandle', reId);
-    };
+    // const onEditHandle = (reId) => {
+    //   console.log('onEditHandle', reId);
+    //   editReForumHandle({
+    //     reId,
+    //   });
+
+    // };
     const columns = [
       {
         title: '讨论区',
         key: 'ForumBoard',
-        render: (text, record) => (<ForumItem {...record} onEdit={onEditHandle} />),
+        render: (text, record) => (<ForumItem {...record} userId={userId} />),
       },
     ];
     return (

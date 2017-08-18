@@ -54,6 +54,9 @@ function Details(props) {
   const addReForumHandle = (params) => {
     dispatch({ type: 'activity/addReForum', payload: params });
   };
+  // const editReForumHandle = (params) => {
+  //   dispatch({ type: 'activity/editReForum', payload: params });
+  // };
 
   return (
     <div className={styles.details_page}>
@@ -118,7 +121,7 @@ function Details(props) {
             span: 15,
           }}
         >
-          <ForumBoard dataSource={activityReList} isLogin={isLogin} handle={addReForumHandle} />
+          <ForumBoard dataSource={activityReList} userId={userId} isLogin={isLogin} handle={addReForumHandle} />
         </Col>
       </Row>
     </div>
