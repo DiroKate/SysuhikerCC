@@ -1,21 +1,24 @@
+import config from './config';
+
 export default function uploadImageCallBack(file) {
-  console.log('uploadImageCallBack');
   return new Promise(
     (resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open('POST', 'https://api.imgur.com/3/image');
-      xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca');
+      xhr.open('POST', config.uploadPath);
       const data = new FormData(); // eslint-disable-line no-undef
-      data.append('image', file);
+      data.append('file', file);
       xhr.send(data);
       xhr.addEventListener('load', () => {
         const response = JSON.parse(xhr.responseText);
-        resolve(response);
+        const { url } = response.data;
+        const result = { data: { link: url } };
+        resolve(result);
       });
       xhr.addEventListener('error', () => {
         const error = JSON.parse(xhr.responseText);
         reject(error);
+        console.log({ error });
       });
-    }
+    },
   );
 }
