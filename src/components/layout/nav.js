@@ -101,7 +101,7 @@ function Nav({ data, phoneMode }) {
     : (
       <Row type="flex" justify="end">
         <Col>
-          <Menu mode="horizontal" defaultSelectedKeys={['home']} theme="dark" className={styles.menu}>
+          <Menu mode="horizontal" defaultSelectedKeys={['home']} theme="dark" style={{ lineHeight: '64px' }}>
             {navChildren}
             {loginMenu}
           </Menu>
