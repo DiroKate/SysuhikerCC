@@ -1,5 +1,6 @@
 module.exports = {
   logoSrc: 'https://t.alipayobjects.com/images/T1QUBfXo4fXXXXXXXX.png',
+  uploadPath: 'http://localhost:8000/api/?service=Upload.Upload',
   statement: [
     '认同“安全、环保、自助”的磨房户外理念。遵从《磨房告示》户外活动规则。',
     '服从统一指挥，发扬团队协作精神，倡导自助与必要的互助相结合的户外理念。不擅自离开活动路线。',
